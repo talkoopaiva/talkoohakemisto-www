@@ -7,6 +7,9 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
 
   var VoluntaryWork = require("modules/voluntary-work");
+  var Types = require("modules/types");
+  var Municipalities = require("modules/municipalities");
+
 
   // Defining the application router.
   module.exports = Backbone.Router.extend({
@@ -28,6 +31,7 @@ define(function(require, exports, module) {
 
       //new VoluntaryWorkListLayout().render();
     },
+
     routes: {
       "": "index",
       "list": "list"
@@ -39,6 +43,16 @@ define(function(require, exports, module) {
       var singleWork = new VoluntaryWork.Model({
         title: "Töölön torin siivous"
       });
+      var types = new Types.Model();
+      var municipalities = new Municipalities.Model();
+
+      setTimeout(continueExecution, 2000);
+
+      function continueExecution()
+      {
+        console.log(types.toJSON());
+        console.log(municipalities.toJSON());
+      }
     },
 
     list: function() {
@@ -62,7 +76,6 @@ define(function(require, exports, module) {
 
 
       console.log(this.voluntaryWorks);
-
 
     }
   });
