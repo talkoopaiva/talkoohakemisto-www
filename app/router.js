@@ -1,6 +1,8 @@
 define(function(require, exports, module) {
   "use strict";
 
+  var app = require("app");
+
   // External dependencies.
   var Backbone = require("backbone");
 
@@ -10,20 +12,21 @@ define(function(require, exports, module) {
   module.exports = Backbone.Router.extend({
     initialize: function() {
 
+      /*
       this.voluntaryWorks = new VoluntaryWork.Collection();
 
-      var Layout = Backbone.Layout.extend({
-        el: "main",
+      var VoluntaryWorkListLayout = Backbone.Layout.extend({
+        el: "voluntaryWorkList",
 
-        template: require("ldsh!./templates/main")
+        template: require("ldsh!./templates/voluntary-work-list")
 
 
-        /*, views: {
+        , views: {
           ".voluntaryWorkList": new VoluntaryWork.Views.List({ collection: this.voluntaryWorks })
-        }*/
-      });
+        }
+      });*/
 
-      new Layout().render();
+      //new VoluntaryWorkListLayout().render();
     },
     routes: {
       "": "index"
@@ -31,6 +34,9 @@ define(function(require, exports, module) {
 
     index: function() {
       console.log("Welcome to your / route.");
+      var singleWork = new VoluntaryWork.Model({
+        title: "Töölön torin siivous"
+      });
     }
   });
 });
