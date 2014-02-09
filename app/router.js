@@ -73,10 +73,9 @@ define(function(require, exports, module) {
 
     },
     form: function() {
-      console.log(this.types);
       $('#voluntaryWorkDetails').empty();
-
       var data = {types: this.types, municipalities: this.municipalities};
+      console.log('data', data);
 
       var itemView = new VoluntaryWork.Views.Form({model: data});
         itemView.render();

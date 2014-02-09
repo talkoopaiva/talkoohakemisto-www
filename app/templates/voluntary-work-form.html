@@ -4,7 +4,7 @@
 
 <div>
     <% _.each(model.types.attributes.types, function(type) { %>
-        <img src="r.png" id="form-type-<%= type.id %>" class="btn btn-default" onclick="selectImage(<%= type.id %>)"/>
+        <img src="r.png" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
     <% }); %>
 </div>
 
