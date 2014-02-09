@@ -46,7 +46,7 @@ define(function(require, exports, module) {
           data.municipality = this.model.collection.getLinkedItem('municipalities', municipalityId);
           data.type = this.model.collection.getLinkedItem('types', typeId);
 
-          data.iconUrl = app.imgRoot + 'icons/' + data.type.name.toLowerCase() + '.png';
+          data.iconUrl = app.imgRoot + 'icons/' + data.type.name.toLowerCase().replace("ö", "o").replace("ä", "a") + '.png';
 
           console.log(data);
 
