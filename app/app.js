@@ -16,7 +16,7 @@ define(function(require, exports, module) {
   app.imgRoot = app.root + "app/img/";
 
   // API endpoint.
-  app.api = "http://talkoohakemisto-api.herokuapp.com/";
+  app.api = "https://talkoohakemisto-api.herokuapp.com/";
 
   /* TAKEN FROM GITHUB-VIEWER by Albert
   // Useful defaults for GitHub Viewer.
