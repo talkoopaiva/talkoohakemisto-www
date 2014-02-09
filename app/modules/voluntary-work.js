@@ -18,9 +18,12 @@ define(function(require, exports, module) {
       // HERE GO ALL THE CHANGING VIEW COMPONENTS OF THE UI
 
       Item: Backbone.View.extend({
-        initialize: function() { },
+        initialize: function(el) {
+          console.log(el);
+        },
 
         tagName: "li",
+        className: "voluntaryWorkItem row",
 
         render: function() {
           this.$el.html( this.template( this ) );
