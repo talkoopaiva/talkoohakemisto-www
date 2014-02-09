@@ -9,7 +9,40 @@ define(function(require, exports, module) {
   var VoluntaryWorkModel = Backbone.Model.extend({
     defaults: {
       name: 'Talkoo XYZ'
+    },
+
+    validate: function (attrs) {
+
+      console.log("validating");
+      var errors = [];
+
+      if (!attrs.name) {
+        errors.push({name: 'name', message: 'Kirjoita talkoon nimi.'});
+      }
+
+      if (!attrs.description) {
+        errors.push({name: 'description', message: 'Kirjoita selite.'});
+      }
+
+      if (!attrs.name) {
+        errors.push({name: 'municipality', message: 'Valitse kunta.'});
+      }
+
+      if (!attrs.name) {
+        errors.push({name: 'address', message: 'Kirjoita osoite.'});
+      }
+
+      if (!attrs.name) {
+        errors.push({name: 'organizer', message: 'Kirjoita nimesi.'});
+      }
+
+      if (!attrs.name) {
+        errors.push({name: 'email', message: 'Kirjoita sähköpostiosoitteesi.'});
+      }
+
+      return errors.length > 0 ? errors : false;
     }
+
   });
 
   module.exports = {
@@ -32,6 +65,19 @@ define(function(require, exports, module) {
           "click .vw-type": "selectImage"
         },
 
+        showErrors: function(errors) {
+            _.each(errors, function (error) {
+                var controlGroup = this.$('.' + error.name);
+                controlGroup.addClass('error');
+                controlGroup.find('.help-inline').text(error.message);
+            }, this);
+        },
+
+        hideErrors: function () {
+            this.$('.control-group').removeClass('error');
+            this.$('.help-inline').text('');
+        },
+
         selectImage: function(element) {
           $('.vw-type').removeClass('selected').css("background-color", "white");
           $(element.target).toggleClass('selected', true).css("background-color", "red");
@@ -48,6 +94,8 @@ define(function(require, exports, module) {
 
           var name = $("#form-name").val();
 
+
+
           var VoluntaryWorkModel = Backbone.Model.extend({
             defaults: {
 
@@ -58,6 +106,22 @@ define(function(require, exports, module) {
             model: VoluntaryWorkModel,
             url: app.api + 'voluntary_works'
           });
+
+          var errors = validate({
+            name: $("#form-name").val(),
+            description: $("#form-description").val(),
+            municipality: $("#form-municipality").val(),
+            address: $("#form-address").val(),
+            organizer: $("#form-organizer").val(),
+            email: $("#form-email").val()
+          });
+
+          if (!errors) {
+              this.hideErrors();
+          } else {
+              this.showErrors(errors);
+              return;
+          }
 
           var vwcol = new VoluntaryWorkCollection();
 
@@ -162,8 +226,6 @@ define(function(require, exports, module) {
       }
     })
 
-
   };
-
 
 });
