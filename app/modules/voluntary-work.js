@@ -6,11 +6,11 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   var app = require("app");
 
-  var VoluntaryWorkModel = Backbone.Model.extend({
-    defaults: {
-      name: 'Talkoo XYZ'
-    }
-  });
+      var VoluntaryWorkModel = Backbone.Model.extend({
+        defaults: {
+          name: 'Talkoo XYZ'
+        }
+      });
 
   module.exports = {
 
