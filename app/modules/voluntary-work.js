@@ -6,13 +6,13 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   var app = require("app");
 
+  var VoluntaryWorkModel = Backbone.Model.extend({
+    defaults: {
+      name: 'Talkoo XYZ'
+    }
+  });
 
   module.exports = {
-    Collection: Backbone.Collection.extend({
-      url: function() {
-        return app.api + "voluntary_works/" + this.id + "/?callback=?";
-      }
-    }),
 
     Views: {
       // HERE GO ALL THE CHANGING VIEW COMPONENTS OF THE UI
@@ -23,7 +23,8 @@ define(function(require, exports, module) {
         tagName: "li",
 
         render: function() {
-          this.$el.html(  )
+          this.$el.html( this.template( this ) );
+          return this;
         },
 
         template: require("ldsh!../templates/voluntary-work-item")
@@ -50,9 +51,15 @@ define(function(require, exports, module) {
 
     },
 
-    Model: Backbone.Model.extend({
-      defaults: {
-        title: ''
+    Model: VoluntaryWorkModel,
+
+    Collection: Backbone.Collection.extend({
+      model: VoluntaryWorkModel,
+      url: function() {
+        return app.api + "voluntary_works.json";
+      },
+      parse: function(data) {
+        return data.voluntary_works;
       }
     })
 
