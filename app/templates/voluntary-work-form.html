@@ -2,9 +2,9 @@
 <h2>Millaiset talkoot järjestät?</h2>
 <!-- Talkootyyppi -->
 
-<div>
-    <% _.each(model.types, function(type) { %>
-        <img src="r.png" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
+<div class="vw-types">
+    <% _.each(types, function(type) { %>
+        <img src="<%= type.iconUrl %>" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
     <% }); %>
 </div>
 
@@ -24,7 +24,7 @@
 Kaupunki:
 <select id="form-municipality" name="municipality">
     <option value=""></option>
-    <% _.each(model.municipalities, function(municipality) { %>
+    <% _.each(municipalities, function(municipality) { %>
       <option value="<%= municipality.id %>"><%= municipality.name %></option>
     <% }); %>
 </select>

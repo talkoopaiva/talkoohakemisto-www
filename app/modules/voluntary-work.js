@@ -6,6 +6,10 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   var app = require("app");
 
+  var generateTypeIconUrl = function(name) {
+    return app.imgRoot + 'icons/' + name.toLowerCase().replace("ö", "o").replace("ä", "a") + '.png';
+  };
+
   var VoluntaryWorkModel = Backbone.Model.extend({
     defaults: {
       name: 'Talkoo XYZ'
@@ -23,7 +27,12 @@ define(function(require, exports, module) {
         tagName: "div",
 
         render: function() {
-          this.$el.html( this.template( this ) );
+          var data = this.model;
+          _.each(data.types, function(v,k) {
+            data.types[k]['iconUrl'] = generateTypeIconUrl(v.name);
+          });
+
+          this.$el.html( this.template( data ) );
           return this;
         },
 
@@ -96,7 +105,7 @@ define(function(require, exports, module) {
           data.municipality = this.model.collection.getLinkedItem('municipalities', municipalityId);
           data.type = this.model.collection.getLinkedItem('types', typeId);
 
-          data.iconUrl = app.imgRoot + 'icons/' + data.type.name.toLowerCase().replace("ö", "o").replace("ä", "a") + '.png';
+          data.iconUrl = generateTypeIconUrl(data.type.name);
 
           this.$el.html( this.template( data ) );
           return this;
