@@ -35,7 +35,7 @@ define(function(require, exports, module) {
           //console.log(el);
         },
 
-        tagName: "div",
+        tagName: "li",
         className: "voluntaryWorkItem row",
 
         render: function() {
