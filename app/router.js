@@ -72,9 +72,7 @@ define(function(require, exports, module) {
     },
     form: function() {
       console.log(this.types);
-      console.log("MOI!");
       $('#voluntaryWorkDetails').empty();
-
 
       var data = {types: this.types, municipalities: this.municipalities};
 

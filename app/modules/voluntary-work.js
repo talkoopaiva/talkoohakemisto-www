@@ -20,7 +20,7 @@ define(function(require, exports, module) {
       Form: Backbone.View.extend({
         initialize: function() { },
 
-        tagName: "li",
+        tagName: "div",
 
         render: function() {
           this.$el.html( this.template( this ) );
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
           console.log(el);
         },
 
-        tagName: "li",
+        tagName: "div",
         className: "voluntaryWorkItem row",
 
         render: function() {

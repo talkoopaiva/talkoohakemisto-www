@@ -3,7 +3,7 @@
 <!-- Talkootyyppi -->
 
 <div class="btn-group">
-    <% _.each(model.types, function(type) { %>
+    <% _.each(model.types.attributes.types, function(type) { %>
         <button type="button" data-id="<%= type.id %>" class="btn btn-default"><%= type.name %></button>
     <% }); %>
 </div>
@@ -21,9 +21,14 @@
 
 <h2>Missä talkoot järjestetään?</h2>
 <!-- Kaupunki -->
-<div class="input-group">
-  <input type="text" id="city" class="form-control" placeholder="Kaupunki">
-</div>
+Kaupunki:
+<select name="municipality">
+    <option value=""></option>
+    <% _.each(model.municipalities.attributes.municipalities, function(municipality) { %>
+      <option value="<%= municipality.id %>"><%= municipality.name %></option>
+    <% }); %>
+</select>
+
 <!-- Osoite -->
 <div class="input-group">
   <input type="text" id="Address" class="form-control" placeholder="Osoite">
@@ -39,5 +44,5 @@
   <input type="text" class="form-control" placeholder="Sähköpostiosoite">
 </div>
 
-<button>Järjestä talkoot</button>
+<button id="save-voluntary-work">Järjestä talkoot</button>
 
