@@ -90,7 +90,7 @@ define(function(require, exports, module) {
 
         $('#voluntaryWorkList').hide();
         $('#voluntaryWorkDetails').show();
-      }
+      };
     }
   });
 });
