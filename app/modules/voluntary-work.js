@@ -32,7 +32,7 @@ define(function(require, exports, module) {
 
       Item: Backbone.View.extend({
         initialize: function(el) {
-          console.log(el);
+          //console.log(el);
         },
 
         tagName: "li",
@@ -40,9 +40,15 @@ define(function(require, exports, module) {
 
         render: function() {
           var data = this.model.toJSON();
-          console.log(data);
           var typeId = data.links.type;
           var municipalityId = data.links.municipality;
+
+          data.municipality = this.model.collection.getLinkedItem('municipalities', municipalityId);
+          data.type = this.model.collection.getLinkedItem('types', typeId);
+
+          data.iconUrl = app.imgRoot + 'icons/' + data.type.name.toLowerCase() + '.png';
+
+          console.log(data);
 
           this.$el.html( this.template( data ) );
           return this;
@@ -80,7 +86,31 @@ define(function(require, exports, module) {
         return app.api + "voluntary_works";
       },
       parse: function(data) {
+        this.addLinkedItems(data.linked);
         return data.voluntary_works;
+      },
+      addLinkedItems: function(data) {
+        // See if linkedItems metadata already exists, otherwise init
+        if (!this.hasOwnProperty('linkedItems')) {
+          this['linkedItems'] = {};
+        }
+
+        var linkedItems = this['linkedItems'];
+        _.each(data, function(val, key) {
+          // See if linked items with this key already exists, otherwise create
+          if (!linkedItems.hasOwnProperty(key)) {
+            linkedItems[key] = {};
+          }
+          // Iterate over linked items and add them to metadata
+          _.each(val, function(item) {
+            linkedItems[key][item.id] = item;
+          });
+        });
+        // Update stored linked items
+        this['linkedItems'] = linkedItems;
+      },
+      getLinkedItem: function(key, id) {
+        return this.linkedItems[key][id];
       }
     })
 

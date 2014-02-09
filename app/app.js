@@ -13,6 +13,8 @@ define(function(require, exports, module) {
   // The root path to run the application through.
   app.root = "/";
 
+  app.imgRoot = app.root + "app/img/";
+
   // API endpoint.
   app.api = "http://talkoohakemisto-api.herokuapp.com/";
 

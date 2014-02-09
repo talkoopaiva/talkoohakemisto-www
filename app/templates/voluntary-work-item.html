@@ -1,5 +1,5 @@
 <div class="iconSide col-md-2">
-  <img src="" />
+  <div class="iconImg"><img src="<%= iconUrl %>" /></div>
 </div>
 
 <div class="infoArea col-md-8">
@@ -8,7 +8,7 @@
 
   <p class="location">
     <span class="icon"></span>
-    <strong>Helsinki,</strong> <%= street_address %>
+    <strong><%= municipality.name %>,</strong> <%= street_address %>
   </p>
 
   <p class="description">
