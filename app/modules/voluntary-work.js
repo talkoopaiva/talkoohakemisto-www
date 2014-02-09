@@ -46,7 +46,6 @@ define(function(require, exports, module) {
 
         showErrors: function(errors) {
             _.each(errors, function (error) {
-                console.log('#form-' + error.name);
                 var errorElement = $('#div-' + error.name);
                 errorElement.find('.form-control').addClass('error');
                 errorElement.find('.help-inline').text(error.message);
@@ -59,8 +58,6 @@ define(function(require, exports, module) {
         },
 
         hideError: function (e) {
-            console.log("moi");
-            console.log(e);
             $(e.currentTarget).parent().find('.form-control').removeClass('error');
             $(e.currentTarget).parent().find('.help-inline').text('');
         },
@@ -72,31 +69,33 @@ define(function(require, exports, module) {
 
 
         validate: function(attrs) {
-
-          console.log("validating");
           var errors = [];
 
+          if (!attrs.type) {
+            errors.push({name: 'type', message: 'Valitse talkootyyppi'});
+          }
+
           if (!attrs.name) {
-            errors.push({name: 'name', message: 'Kirjoita talkoon nimi'});
+            errors.push({name: 'name', message: 'Kirjoita talkoiden nimi'});
           }
 
           if (!attrs.description) {
             errors.push({name: 'description', message: 'Kirjoita selite'});
           }
 
-          if (!attrs.name) {
+          if (!attrs.municipality) {
             errors.push({name: 'municipality', message: 'Valitse kunta'});
           }
 
-          if (!attrs.name) {
+          if (!attrs.address) {
             errors.push({name: 'address', message: 'Kirjoita osoite'});
           }
 
-          if (!attrs.name) {
+          if (!attrs.organizer) {
             errors.push({name: 'organizer', message: 'Kirjoita nimesi'});
           }
 
-          if (!attrs.name) {
+          if (!attrs.email) {
             errors.push({name: 'email', message: 'Kirjoita sähköpostiosoitteesi'});
           }
 
@@ -104,13 +103,6 @@ define(function(require, exports, module) {
         },
 
         handleForm: function() {
-          //form-type-
-          console.log($("#form-name").val());
-          console.log($("#form-description").val());
-          console.log($("#form-municipality").val());
-          console.log($("#form-address").val());
-          console.log($("#form-realname").val());
-          console.log($("#form-email").val());
 
           var VoluntaryWorkModel = Backbone.Model.extend({
             defaults: {
@@ -124,6 +116,7 @@ define(function(require, exports, module) {
           });
 
           var errors = this.validate({
+            type: $('.vw-type.selected').data('type-id'),
             name: $("#form-name").val(),
             description: $("#form-description").val(),
             municipality: $("#form-municipality").val(),
@@ -132,7 +125,6 @@ define(function(require, exports, module) {
             email: $("#form-email").val()
           });
 
-          console.log(errors);
           if (!errors) {
               this.hideErrors();
           } else {
@@ -154,7 +146,8 @@ define(function(require, exports, module) {
               "organizer": $("#form-organizer").val()
           }]});
 
-          console.log(ok);
+
+          Backbone.history.navigate("list", true);
 
         },
 

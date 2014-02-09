@@ -35,7 +35,8 @@ define(function(require, exports, module) {
     routes: {
       "": "list",
       "list": "list",
-      "form": "form"
+      "form": "form",
+      "view": "view"
     },
 
     index: function() {
