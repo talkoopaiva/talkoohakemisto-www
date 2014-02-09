@@ -56,7 +56,7 @@ define(function(require, exports, module) {
     Collection: Backbone.Collection.extend({
       model: VoluntaryWorkModel,
       url: function() {
-        return app.api + "voluntary_works.json";
+        return app.api + "voluntary_works";
       },
       parse: function(data) {
         return data.voluntary_works;
