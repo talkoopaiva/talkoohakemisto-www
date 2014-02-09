@@ -33,7 +33,7 @@ define(function(require, exports, module) {
     },
 
     routes: {
-      "": "index",
+      "": "list",
       "list": "list",
       "form": "form"
     },
@@ -53,16 +53,18 @@ define(function(require, exports, module) {
       console.log('list route triggered');
 
       // Empty existing itemlist
-      $('ul.itemList').html('');
+      //$('ul.itemList').html('');
 
-      this.voluntaryWorks.fetch({
-        success: function(items) {
-          items.forEach(function(item) {
-            var itemView = new VoluntaryWork.Views.Item({model: item}).render();
-            $('ul.itemList').append(itemView.$el);
-          });
-        }
-      });
+      if($('ul.itemList > li').length < 1) {
+        this.voluntaryWorks.fetch({
+          success: function(items) {
+            items.forEach(function(item) {
+              var itemView = new VoluntaryWork.Views.Item({model: item}).render();
+              $('ul.itemList').append(itemView.$el);
+            });
+          }
+        });
+      }
 
       $('#voluntaryWorkList').show();
       $('#voluntaryWorkDetails').hide();
