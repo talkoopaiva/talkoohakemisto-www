@@ -80,11 +80,9 @@ define(function(require, exports, module) {
       }
 
       var renderForm = function(ctx) {
-        console.log('municipalities', ctx.municipalities.toJSON());
         $('#voluntaryWorkDetails').empty();
 
         var data = {types: ctx.types.toJSON(), municipalities: ctx.municipalities.toJSON()};
-        console.log('data', data);
 
         var itemView = new VoluntaryWork.Views.Form({model: data}).render();
 

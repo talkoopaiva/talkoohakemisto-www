@@ -33,7 +33,6 @@ define(function(require, exports, module) {
         },
 
         selectImage: function(element) {
-          console.log('elem', element);
           $('.vw-type').removeClass('selected').css("background-color", "white");;
           $(element.target).toggleClass('selected', true).css("background-color", "red");
         },
