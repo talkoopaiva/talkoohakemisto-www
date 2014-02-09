@@ -2,7 +2,7 @@
 <h2>Millaiset talkoot järjestät?</h2>
 <!-- Talkootyyppi -->
 
-<div class="vw-types">
+<div class="vw-types input-group">
     <% _.each(types, function(type) { %>
         <img src="<%= type.iconUrl %>" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
     <% }); %>
@@ -10,34 +10,38 @@
 
 <!-- Nimi -->
 <div class="input-group">
-  <input type="text" id="form-name" class="form-control" placeholder="Talkoiden nimi"><span
+  <input type="text" id="form-name" class="form-control control-group" placeholder="Talkoiden nimi">
 </div>
 
 <h2>Mitä talkoissa tehdään?</h2>
 <!-- Description -->
 <div class="input-group">
-  <input type="text" id="form-description" class="form-control" placeholder="">
+  <textarea  id="form-description" class="form-control control-group" placeholder=""></textarea>
 </div>
 
 <h2>Missä talkoot järjestetään?</h2>
 <!-- Kaupunki -->
 Kaupunki:
-<select id="form-municipality" name="municipality">
-    <option value=""></option>
-    <% _.each(municipalities, function(municipality) { %>
-      <option value="<%= municipality.id %>"><%= municipality.name %></option>
-    <% }); %>
-</select>
+<div class="input-group">
+    <select id="form-municipality" name="municipality" class="form-control">
+        <option value=""></option>
+        <% _.each(municipalities, function(municipality) { %>
+          <option value="<%= municipality.id %>"><%= municipality.name %></option>
+        <% }); %>
+    </select>
+</div>
 
 <!-- Osoite -->
 <div class="input-group">
-  <input type="text" id="form-address" class="form-control" placeholder="Osoite">
+  <input type="text" id="form-address" class="form-control" placeholder="Osoite"/>
+  <span class="help-inline"></span>
 </div>
 
 <h2>Yhteystiedot</h2>
 <!-- Nimi -->
 <div class="input-group">
-  <input type="text" id="form-realname" class="form-control" placeholder="Nimi">
+  <input type="text" id="form-organizer" class="form-control" placeholder="Nimi"/>
+  <span class="help-inline"></span>
 </div>
 <!-- Sähköpostiosoite -->
 <div class="input-group">

@@ -14,39 +14,6 @@ define(function(require, exports, module) {
     defaults: {
       name: 'Talkoo XYZ'
     },
-
-    validate: function (attrs) {
-
-      console.log("validating");
-      var errors = [];
-
-      if (!attrs.name) {
-        errors.push({name: 'name', message: 'Kirjoita talkoon nimi.'});
-      }
-
-      if (!attrs.description) {
-        errors.push({name: 'description', message: 'Kirjoita selite.'});
-      }
-
-      if (!attrs.name) {
-        errors.push({name: 'municipality', message: 'Valitse kunta.'});
-      }
-
-      if (!attrs.name) {
-        errors.push({name: 'address', message: 'Kirjoita osoite.'});
-      }
-
-      if (!attrs.name) {
-        errors.push({name: 'organizer', message: 'Kirjoita nimesi.'});
-      }
-
-      if (!attrs.name) {
-        errors.push({name: 'email', message: 'Kirjoita sähköpostiosoitteesi.'});
-      }
-
-      return errors.length > 0 ? errors : false;
-    }
-
   });
 
   module.exports = {
@@ -76,9 +43,10 @@ define(function(require, exports, module) {
 
         showErrors: function(errors) {
             _.each(errors, function (error) {
-                var controlGroup = this.$('.' + error.name);
-                controlGroup.addClass('error');
-                controlGroup.find('.help-inline').text(error.message);
+                console.log('#form-' + error.name);
+                var errorElement = $('#input-' + error.name);
+                errorElement.addClass('error');
+                errorElement.find('.help-inline').text(error.message);
             }, this);
         },
 
@@ -92,6 +60,39 @@ define(function(require, exports, module) {
           $(element.target).toggleClass('selected', true).css("background-color", "red");
         },
 
+
+        validate: function(attrs) {
+
+          console.log("validating");
+          var errors = [];
+
+          if (!attrs.name) {
+            errors.push({name: 'name', message: 'Kirjoita talkoon nimi.'});
+          }
+
+          if (!attrs.description) {
+            errors.push({name: 'description', message: 'Kirjoita selite.'});
+          }
+
+          if (!attrs.name) {
+            errors.push({name: 'municipality', message: 'Valitse kunta.'});
+          }
+
+          if (!attrs.name) {
+            errors.push({name: 'address', message: 'Kirjoita osoite.'});
+          }
+
+          if (!attrs.name) {
+            errors.push({name: 'organizer', message: 'Kirjoita nimesi.'});
+          }
+
+          if (!attrs.name) {
+            errors.push({name: 'email', message: 'Kirjoita sähköpostiosoitteesi.'});
+          }
+
+          return errors.length > 0 ? errors : false;
+        },
+
         handleForm: function() {
           //form-type-
           console.log($("#form-name").val());
@@ -100,10 +101,6 @@ define(function(require, exports, module) {
           console.log($("#form-address").val());
           console.log($("#form-realname").val());
           console.log($("#form-email").val());
-
-          var name = $("#form-name").val();
-
-
 
           var VoluntaryWorkModel = Backbone.Model.extend({
             defaults: {
@@ -116,7 +113,7 @@ define(function(require, exports, module) {
             url: app.api + 'voluntary_works'
           });
 
-          var errors = validate({
+          var errors = this.validate({
             name: $("#form-name").val(),
             description: $("#form-description").val(),
             municipality: $("#form-municipality").val(),
@@ -125,6 +122,7 @@ define(function(require, exports, module) {
             email: $("#form-email").val()
           });
 
+          console.log(errors);
           if (!errors) {
               this.hideErrors();
           } else {
@@ -143,7 +141,7 @@ define(function(require, exports, module) {
               },
               "contact_email": $("#form-email").val(),
               "street_address": $("#form-address").val(),
-              "organizer": $("#form-realname").val()
+              "organizer": $("#form-organizer").val()
           }]});
 
           console.log(ok);
