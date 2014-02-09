@@ -15,8 +15,8 @@ define(function(require, exports, module) {
     initialize: function() {
 
       this.voluntaryWorks = new VoluntaryWork.Collection();
-      this.types = new Types.Model();
-      this.municipalities = new Municipalities.Model();
+      this.types = new Types.Collection();
+      this.municipalities = new Municipalities.Collection();
       /*
       var VoluntaryWorkListLayout = Backbone.Layout.extend({
         el: "voluntaryWorkList",
@@ -73,16 +73,27 @@ define(function(require, exports, module) {
 
     },
     form: function() {
-      $('#voluntaryWorkDetails').empty();
-      var data = {types: this.types, municipalities: this.municipalities};
-      console.log('data', data);
+      if (this.municipalities.length < 1 || this.types.length < 1) {
+        var ctx = this;
+        $.when(this.municipalities.fetch(), this.types.fetch()).done(function() {
+          renderForm(ctx);
+        });
+      }
 
-      var itemView = new VoluntaryWork.Views.Form({model: data});
-        itemView.render();
-      $('#voluntaryWorkDetails').append(itemView.$el);
+      var renderForm = function(ctx) {
+        console.log('municipalities', ctx.municipalities.toJSON());
+        $('#voluntaryWorkDetails').empty();
 
-      $('#voluntaryWorkList').hide();
-      $('#voluntaryWorkDetails').show();
+        var data = {types: ctx.types.toJSON(), municipalities: ctx.municipalities.toJSON()};
+        console.log('data', data);
+
+        var itemView = new VoluntaryWork.Views.Form({model: data}).render();
+
+        $('#voluntaryWorkDetails').append(itemView.$el);
+
+        $('#voluntaryWorkList').hide();
+        $('#voluntaryWorkDetails').show();
+      }
     }
   });
 });

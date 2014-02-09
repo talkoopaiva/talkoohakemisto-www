@@ -3,7 +3,7 @@
 <!-- Talkootyyppi -->
 
 <div>
-    <% _.each(model.types.attributes.types, function(type) { %>
+    <% _.each(model.types, function(type) { %>
         <img src="r.png" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
     <% }); %>
 </div>
@@ -24,7 +24,7 @@
 Kaupunki:
 <select id="form-municipality" name="municipality">
     <option value=""></option>
-    <% _.each(model.municipalities.attributes.municipalities, function(municipality) { %>
+    <% _.each(model.municipalities, function(municipality) { %>
       <option value="<%= municipality.id %>"><%= municipality.name %></option>
     <% }); %>
 </select>
