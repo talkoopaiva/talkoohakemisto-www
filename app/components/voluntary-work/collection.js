@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
   var Collection = Backbone.Collection.extend({
     url: function() {
-      return app.api + "orgs/" + this.org + "/members?callback=?";
+      return app.api + "voluntary_works/" + this.id + "/?callback=?";
     }
   });
 

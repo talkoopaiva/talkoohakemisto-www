@@ -1,12 +1,14 @@
 define(function(require, exports, module) {
   "use strict";
 
+  var app = require("app");
+
   // External dependencies.
-  //var Backbone = require("backbone");
+  var Backbone = require("backbone");
 
   var VoluntaryWork = require("components/voluntary-work/index");
 
-  require("collectionCache");
+  //require("collectionCache");
   require("bootstrap");
 
   // Defining the application router.
@@ -31,13 +33,25 @@ define(function(require, exports, module) {
     },
 
     routes: {
-      "": "index"
+      "": "index",
+      "item/:id": "item"
     },
 
     index: function() {
       // Reset the state and render.
       this.reset();
       console.log("Welcome to your / route.");
+    },
+
+    item: function(id) {
+      // Reset the state and render.
+      this.reset();
+
+      // Set up voluntary work ID
+      this.voluntaryWorks.id = id;
+
+      // Fetch the data
+      this.voluntaryWorks.fetch();
     },
 
     // Shortcut for building a url.
@@ -53,7 +67,6 @@ define(function(require, exports, module) {
 
       // Reset active model.
       app.active = false;
-      this.commits.repo = false;
     }
   });
 });
