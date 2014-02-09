@@ -2,50 +2,56 @@
 <h2>Millaiset talkoot järjestät?</h2>
 <!-- Talkootyyppi -->
 
-<div class="vw-types input-group">
+<div class="vw-types" id="div-types" class="form-div">
     <% _.each(types, function(type) { %>
         <img src="<%= type.iconUrl %>" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
     <% }); %>
+    <span class="help-inline"></span>
 </div>
 
 <!-- Nimi -->
-<div class="input-group">
-  <input type="text" id="form-name" class="form-control control-group" placeholder="Talkoiden nimi">
+<div id="div-name" class="form-div">
+  <input type="text" id="form-name" class="form-control" placeholder="Talkoiden nimi">
+  <span class="help-inline"></span>
 </div>
 
 <h2>Mitä talkoissa tehdään?</h2>
 <!-- Description -->
-<div class="input-group">
-  <textarea  id="form-description" class="form-control control-group" placeholder=""></textarea>
+<div id="div-description" class="form-div">
+  <textarea  id="form-description" class="form-control" placeholder=""></textarea>
+  <span class="help-inline"></span>
+
 </div>
 
 <h2>Missä talkoot järjestetään?</h2>
 <!-- Kaupunki -->
 Kaupunki:
-<div class="input-group">
+<div id="div-municipality" class="form-div">
     <select id="form-municipality" name="municipality" class="form-control">
         <option value=""></option>
         <% _.each(municipalities, function(municipality) { %>
           <option value="<%= municipality.id %>"><%= municipality.name %></option>
         <% }); %>
     </select>
+    <span class="help-inline"></span>
 </div>
 
 <!-- Osoite -->
-<div class="input-group">
+<div id="div-address" class="form-div">
   <input type="text" id="form-address" class="form-control" placeholder="Osoite"/>
   <span class="help-inline"></span>
 </div>
 
 <h2>Yhteystiedot</h2>
 <!-- Nimi -->
-<div class="input-group">
+<div id="div-organizer" class="form-div">
   <input type="text" id="form-organizer" class="form-control" placeholder="Nimi"/>
   <span class="help-inline"></span>
 </div>
 <!-- Sähköpostiosoite -->
-<div class="input-group">
+<div id="div-email" class="form-div">
   <input type="email" id="form-email" class="form-control" placeholder="Sähköpostiosoite">
+  <span class="help-inline"></span>
 </div>
 
 <button id="save-voluntary-work">Järjestä talkoot</button>

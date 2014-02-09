@@ -39,26 +39,35 @@ define(function(require, exports, module) {
 
         events: {
           "click #save-voluntary-work": "handleForm",
-          "click .vw-type": "selectImage"
+          "click .vw-type": "selectImage",
+          "click .form-control": "hideError",
+          "change .form-control": "hideError"
         },
 
         showErrors: function(errors) {
             _.each(errors, function (error) {
                 console.log('#form-' + error.name);
-                var errorElement = $('#input-' + error.name);
-                errorElement.addClass('error');
+                var errorElement = $('#div-' + error.name);
+                errorElement.find('.form-control').addClass('error');
                 errorElement.find('.help-inline').text(error.message);
             }, this);
         },
 
         hideErrors: function () {
-            this.$('.control-group').removeClass('error');
+            this.$('.form-control').removeClass('error');
             this.$('.help-inline').text('');
+        },
+
+        hideError: function (e) {
+            console.log("moi");
+            console.log(e);
+            $(e.currentTarget).parent().find('.form-control').removeClass('error');
+            $(e.currentTarget).parent().find('.help-inline').text('');
         },
 
         selectImage: function(element) {
           $('.vw-type').removeClass('selected').css("background-color", "white");
-          $(element.target).toggleClass('selected', true).css("background-color", "red");
+          $(element.target).toggleClass('selected', true).css("background-color", "#0e76bc");
         },
 
 
@@ -68,27 +77,27 @@ define(function(require, exports, module) {
           var errors = [];
 
           if (!attrs.name) {
-            errors.push({name: 'name', message: 'Kirjoita talkoon nimi.'});
+            errors.push({name: 'name', message: 'Kirjoita talkoon nimi'});
           }
 
           if (!attrs.description) {
-            errors.push({name: 'description', message: 'Kirjoita selite.'});
+            errors.push({name: 'description', message: 'Kirjoita selite'});
           }
 
           if (!attrs.name) {
-            errors.push({name: 'municipality', message: 'Valitse kunta.'});
+            errors.push({name: 'municipality', message: 'Valitse kunta'});
           }
 
           if (!attrs.name) {
-            errors.push({name: 'address', message: 'Kirjoita osoite.'});
+            errors.push({name: 'address', message: 'Kirjoita osoite'});
           }
 
           if (!attrs.name) {
-            errors.push({name: 'organizer', message: 'Kirjoita nimesi.'});
+            errors.push({name: 'organizer', message: 'Kirjoita nimesi'});
           }
 
           if (!attrs.name) {
-            errors.push({name: 'email', message: 'Kirjoita sähköpostiosoitteesi.'});
+            errors.push({name: 'email', message: 'Kirjoita sähköpostiosoitteesi'});
           }
 
           return errors.length > 0 ? errors : false;
