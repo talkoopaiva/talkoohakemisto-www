@@ -7,8 +7,9 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
 
   var VoluntaryWork = require("modules/voluntary-work");
-
+  var Types = require("modules/types");
   var Municipalities = require("modules/municipalities");
+
 
   // Defining the application router.
   module.exports = Backbone.Router.extend({
@@ -41,17 +42,16 @@ define(function(require, exports, module) {
         title: "Töölön torin siivous"
       });
 
-      var mun = new Municipalities.Model();
-        setTimeout(continueExecution, 2000) //wait ten seconds before continuing
+      var types = new Types.Model();
+      var municipalities = new Municipalities.Model();
 
+      setTimeout(continueExecution, 2000);
 
-        function continueExecution()
-        {
-           //finish doing things after the pause
-                  console.log(mun.toJSON());
-            console.log("jee");
-
-        }
+      function continueExecution()
+      {
+        console.log(types.toJSON());
+        console.log(municipalities.toJSON());
+      }
     }
   });
 });
