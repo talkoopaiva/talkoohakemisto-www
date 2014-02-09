@@ -2,42 +2,47 @@
 <h2>Millaiset talkoot järjestät?</h2>
 <!-- Talkootyyppi -->
 
-<div class="btn-group">
-    <% _.each(model.types, function(type) { %>
-        <button type="button" data-id="<%= type.id %>" class="btn btn-default"><%= type.name %></button>
+<div>
+    <% _.each(model.types.attributes.types, function(type) { %>
+        <img src="r.png" id="form-type-<%= type.id %>" class="btn btn-default" onclick="selectImage(<%= type.id %>)"/>
     <% }); %>
 </div>
 
 <!-- Nimi -->
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Talkoiden nimi">
+  <input type="text" id="form-name" class="form-control" placeholder="Talkoiden nimi">
 </div>
 
 <h2>Mitä talkoissa tehdään?</h2>
 <!-- Description -->
 <div class="input-group">
-  <input type="text" id="description" class="form-control" placeholder="">
+  <input type="text" id="form-description" class="form-control" placeholder="">
 </div>
 
 <h2>Missä talkoot järjestetään?</h2>
 <!-- Kaupunki -->
-<div class="input-group">
-  <input type="text" id="city" class="form-control" placeholder="Kaupunki">
-</div>
+Kaupunki:
+<select id="form-municipality" name="municipality">
+    <option value=""></option>
+    <% _.each(model.municipalities.attributes.municipalities, function(municipality) { %>
+      <option value="<%= municipality.id %>"><%= municipality.name %></option>
+    <% }); %>
+</select>
+
 <!-- Osoite -->
 <div class="input-group">
-  <input type="text" id="Address" class="form-control" placeholder="Osoite">
+  <input type="text" id="form-address" class="form-control" placeholder="Osoite">
 </div>
 
 <h2>Yhteystiedot</h2>
 <!-- Nimi -->
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Nimi">
+  <input type="text" id="form-realname" class="form-control" placeholder="Nimi">
 </div>
 <!-- Sähköpostiosoite -->
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Sähköpostiosoite">
+  <input type="email" id="form-email" class="form-control" placeholder="Sähköpostiosoite">
 </div>
 
-<button>Järjestä talkoot</button>
+<button id="save-voluntary-work" onclick="handleForm()">Järjestä talkoot</button>
 
