@@ -11,7 +11,10 @@ function selectImage(number) {
     selectedImage = number;
 }
 
+
 function handleForm() {
+
+
     //form-type-
     console.log($("#form-name").val());
     console.log($("#form-description").val());
