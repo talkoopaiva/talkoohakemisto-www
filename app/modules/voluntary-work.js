@@ -39,7 +39,12 @@ define(function(require, exports, module) {
         className: "voluntaryWorkItem row",
 
         render: function() {
-          this.$el.html( this.template( this ) );
+          var data = this.model.toJSON();
+          console.log(data);
+          var typeId = data.links.type;
+          var municipalityId = data.links.municipality;
+
+          this.$el.html( this.template( data ) );
           return this;
         },
 
