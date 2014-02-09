@@ -8,6 +8,8 @@ define(function(require, exports, module) {
 
   var VoluntaryWork = require("modules/voluntary-work");
 
+  var Municipalities = require("modules/municipalities");
+
   // Defining the application router.
   module.exports = Backbone.Router.extend({
     initialize: function() {
@@ -28,6 +30,7 @@ define(function(require, exports, module) {
 
       //new VoluntaryWorkListLayout().render();
     },
+
     routes: {
       "": "index"
     },
@@ -37,6 +40,18 @@ define(function(require, exports, module) {
       var singleWork = new VoluntaryWork.Model({
         title: "Töölön torin siivous"
       });
+
+      var mun = new Municipalities.Model();
+        setTimeout(continueExecution, 2000) //wait ten seconds before continuing
+
+
+        function continueExecution()
+        {
+           //finish doing things after the pause
+                  console.log(mun.toJSON());
+            console.log("jee");
+
+        }
     }
   });
 });
