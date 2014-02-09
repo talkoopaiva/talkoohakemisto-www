@@ -33,7 +33,7 @@ define(function(require, exports, module) {
     },
 
     routes: {
-      "": "index",
+      "": "list",
       "list": "list",
       "form": "form"
     },
