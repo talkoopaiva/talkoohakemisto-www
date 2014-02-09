@@ -25,6 +25,7 @@ define(function(require, exports, module) {
         initialize: function() { },
 
         tagName: "div",
+        className: "voluntary-work-form container",
 
         render: function() {
           var data = this.model;
