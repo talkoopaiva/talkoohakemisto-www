@@ -17,6 +17,19 @@ define(function(require, exports, module) {
     Views: {
       // HERE GO ALL THE CHANGING VIEW COMPONENTS OF THE UI
 
+      Form: Backbone.View.extend({
+        initialize: function() { },
+
+        tagName: "li",
+
+        render: function() {
+          this.$el.html( this.template( this ) );
+          return this;
+        },
+
+        template: require("ldsh!../templates/voluntary-work-form")
+      }),
+
       Item: Backbone.View.extend({
         initialize: function() { },
 

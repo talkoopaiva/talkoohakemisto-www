@@ -1,0 +1,43 @@
+
+<h2>Millaiset talkoot järjestät?</h2>
+<!-- Talkootyyppi -->
+
+<div class="btn-group">
+    <% _.each(model.types, function(type) { %>
+        <button type="button" data-id="<%= type.id %>" class="btn btn-default"><%= type.name %></button>
+    <% }); %>
+</div>
+
+<!-- Nimi -->
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Talkoiden nimi">
+</div>
+
+<h2>Mitä talkoissa tehdään?</h2>
+<!-- Description -->
+<div class="input-group">
+  <input type="text" id="description" class="form-control" placeholder="">
+</div>
+
+<h2>Missä talkoot järjestetään?</h2>
+<!-- Kaupunki -->
+<div class="input-group">
+  <input type="text" id="city" class="form-control" placeholder="Kaupunki">
+</div>
+<!-- Osoite -->
+<div class="input-group">
+  <input type="text" id="Address" class="form-control" placeholder="Osoite">
+</div>
+
+<h2>Yhteystiedot</h2>
+<!-- Nimi -->
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Nimi">
+</div>
+<!-- Sähköpostiosoite -->
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Sähköpostiosoite">
+</div>
+
+<button>Järjestä talkoot</button>
+
