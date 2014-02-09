@@ -6,11 +6,11 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   var app = require("app");
 
-      var VoluntaryWorkModel = Backbone.Model.extend({
-        defaults: {
-          name: 'Talkoo XYZ'
-        }
-      });
+  var VoluntaryWorkModel = Backbone.Model.extend({
+    defaults: {
+      name: 'Talkoo XYZ'
+    }
+  });
 
   module.exports = {
 
@@ -34,13 +34,8 @@ define(function(require, exports, module) {
 
         selectImage: function(element) {
           console.log('elem', element);
-          /*
-          for (var i = 1; i <= 7; i++) {
-              $("#form-type-"+i).css("background-color", "white");
-          }
-          $("#form-type-"+number).css("background-color", "red");
-
-          selectedImage = number;*/
+          $('.vw-type').removeClass('selected').css("background-color", "white");;
+          $(element.target).toggleClass('selected', true).css("background-color", "red");
         },
 
         handleForm: function() {
@@ -72,7 +67,7 @@ define(function(require, exports, module) {
               "description": $("#form-description").val(),
               "links": {
                 "municipality": parseInt($("#form-municipality").val()),
-                "type": selectedImage
+                "type": $('.vw-type.selected').data('type-id')
               },
               "contact_email": $("#form-email").val(),
               "street_address": $("#form-address").val(),

@@ -69,9 +69,8 @@ define(function(require, exports, module) {
       $('#voluntaryWorkList').show();
       $('#voluntaryWorkDetails').hide();
 
-      console.log(this.voluntaryWorks);
-
     },
+
     form: function() {
       if (this.municipalities.length < 1 || this.types.length < 1) {
         var ctx = this;
