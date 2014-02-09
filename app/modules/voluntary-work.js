@@ -33,7 +33,7 @@ define(function(require, exports, module) {
         },
 
         selectImage: function(element) {
-          $('.vw-type').removeClass('selected').css("background-color", "white");;
+          $('.vw-type').removeClass('selected').css("background-color", "white");
           $(element.target).toggleClass('selected', true).css("background-color", "red");
         },
 
@@ -98,8 +98,6 @@ define(function(require, exports, module) {
 
           data.iconUrl = app.imgRoot + 'icons/' + data.type.name.toLowerCase().replace("ö", "o").replace("ä", "a") + '.png';
 
-          console.log(data);
-
           this.$el.html( this.template( data ) );
           return this;
         },
@@ -142,10 +140,10 @@ define(function(require, exports, module) {
       addLinkedItems: function(data) {
         // See if linkedItems metadata already exists, otherwise init
         if (!this.hasOwnProperty('linkedItems')) {
-          this['linkedItems'] = {};
+          this.linkedItems = {};
         }
 
-        var linkedItems = this['linkedItems'];
+        var linkedItems = this.linkedItems;
         _.each(data, function(val, key) {
           // See if linked items with this key already exists, otherwise create
           if (!linkedItems.hasOwnProperty(key)) {
@@ -157,7 +155,7 @@ define(function(require, exports, module) {
           });
         });
         // Update stored linked items
-        this['linkedItems'] = linkedItems;
+        this.linkedItems = linkedItems;
       },
       getLinkedItem: function(key, id) {
         return this.linkedItems[key][id];
