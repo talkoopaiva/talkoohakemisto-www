@@ -87,9 +87,9 @@ define(function(require, exports, module) {
             errors.push({name: 'municipality', message: 'Valitse kunta'});
           }
 
-          if (!attrs.address) {
-            errors.push({name: 'address', message: 'Kirjoita osoite'});
-          }
+          //if (!attrs.address) {
+          //  errors.push({name: 'address', message: 'Kirjoita osoite'});
+          //}
 
           if (!attrs.organizer) {
             errors.push({name: 'organizer', message: 'Kirjoita nimesi'});
