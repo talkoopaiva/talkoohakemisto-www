@@ -16,7 +16,7 @@ define(function(require, exports, module) {
     },
   });
 
-  module.exports = {
+  var VoluntaryWork = {
 
     Views: {
       // HERE GO ALL THE CHANGING VIEW COMPONENTS OF THE UI
@@ -30,7 +30,7 @@ define(function(require, exports, module) {
         render: function() {
           var data = this.model;
           _.each(data.types, function(v,k) {
-            data.types[k]['iconUrl'] = generateTypeIconUrl(v.name);
+            data.types[k].iconUrl = generateTypeIconUrl(v.name);
           });
 
           this.$el.html( this.template( data ) );
@@ -132,7 +132,7 @@ define(function(require, exports, module) {
               return;
           }
 
-          var vwcol = new VoluntaryWorkCollection();
+          var vwcol = this.model.voluntaryWorks;
 
           var ok = vwcol.create({voluntary_works: [{
               "name": $("#form-name").val(),
@@ -144,8 +144,12 @@ define(function(require, exports, module) {
               "contact_email": $("#form-email").val(),
               "street_address": $("#form-address").val(),
               "organizer": $("#form-organizer").val()
-          }]});
-
+          }]}, {
+            wait: true,
+            success: function() {
+              vwcol.trigger('itemAdded');
+            }
+          });
 
           Backbone.history.navigate("list", true);
 
@@ -180,7 +184,7 @@ define(function(require, exports, module) {
       }),
 
       List: Backbone.View.extend({
-        template: require("ldsh!../templates/voluntary-work-list"),
+        //template: require("ldsh!../templates/voluntary-work-list"),
 
         serialize: function() {
           return { users: this.collection };
@@ -188,7 +192,46 @@ define(function(require, exports, module) {
 
         beforeRender: function() { },
         afterRender: function() { },
-        initialize: function() { }
+        initialize: function() {
+          // Listen for events and refetch if something changed
+          var view = this;
+          this.update(function() {
+            // TODO: this should be fixed!
+            view.collection.on('itemAdded', function() {
+              view.update.call(view);
+            });
+            view.show();
+          });
+        },
+        update: function(after) {
+          var view = this;
+          console.log('updating (fetching)');
+          this.collection.fetch({
+            success: function(items) {
+              view.render();
+              if (after) {
+                after();
+              }
+            }
+          });
+        },
+        addOne: function(item) {
+          var itemView = new VoluntaryWork.Views.Item({model: item}).render();
+          $('ul.itemList').append(itemView.$el);
+        },
+        render: function() {
+          var $itemList = $('ul.itemList').empty();
+          this.collection.forEach(this.addOne);
+          // Scroll window to the top once list updated
+          window.scrollTo(0);
+        },
+        show: function() {
+          $('#voluntaryWorkDetails').hide();
+          $('#voluntaryWorkList').show();
+        },
+        hide: function() {
+          $('#voluntaryWorkList').hide();
+        }
 
       }),
 
@@ -237,5 +280,7 @@ define(function(require, exports, module) {
     })
 
   };
+
+  module.exports = VoluntaryWork;
 
 });

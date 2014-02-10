@@ -17,6 +17,10 @@ define(function(require, exports, module) {
       this.voluntaryWorks = new VoluntaryWork.Collection();
       this.types = new Types.Collection();
       this.municipalities = new Municipalities.Collection();
+
+      this.views = {
+
+      };
       /*
       var VoluntaryWorkListLayout = Backbone.Layout.extend({
         el: "voluntaryWorkList",
@@ -51,39 +55,25 @@ define(function(require, exports, module) {
     },
 
     list: function() {
-      console.log('list route triggered');
 
       // Empty existing itemlist
       //$('ul.itemList').html('');
-
-      if($('ul.itemList > li').length < 1) {
-        this.voluntaryWorks.fetch({
-          success: function(items) {
-            items.forEach(function(item) {
-              var itemView = new VoluntaryWork.Views.Item({model: item}).render();
-              $('ul.itemList').append(itemView.$el);
-            });
-          }
-        });
+      if (!this.views.voluntaryWorkList) {
+        this.views.voluntaryWorkList = new VoluntaryWork.Views.List({collection: this.voluntaryWorks});
+        console.log('list route created');
+      } else {
+        this.views.voluntaryWorkList.show();
+        console.log('list route displayed');
       }
-
-      $('#voluntaryWorkList').show();
-      $('#voluntaryWorkDetails').hide();
-
     },
 
     form: function() {
-      if (this.municipalities.length < 1 || this.types.length < 1) {
-        var ctx = this;
-        $.when(this.municipalities.fetch(), this.types.fetch()).done(function() {
-          renderForm(ctx);
-        });
-      }
+      console.log('form route triggered');
 
-      var renderForm = function(ctx) {
+      var renderForm = function(router) {
         $('#voluntaryWorkDetails').empty();
 
-        var data = {types: ctx.types.toJSON(), municipalities: ctx.municipalities.toJSON()};
+        var data = {types: router.types.toJSON(), municipalities: router.municipalities.toJSON(), voluntaryWorks: router.voluntaryWorks};
 
         var itemView = new VoluntaryWork.Views.Form({model: data}).render();
 
@@ -92,6 +82,15 @@ define(function(require, exports, module) {
         $('#voluntaryWorkList').hide();
         $('#voluntaryWorkDetails').show();
       };
+
+      var router = this;
+      if (this.municipalities.length < 1 || this.types.length < 1) {
+        $.when(this.municipalities.fetch(), this.types.fetch()).done(function() {
+          renderForm(router);
+        });
+      } else {
+        renderForm(router);
+      }
     }
   });
 });
