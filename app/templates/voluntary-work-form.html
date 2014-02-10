@@ -2,11 +2,19 @@
 <h2>Millaiset talkoot järjestät?</h2>
 <!-- Talkootyyppi -->
 
-<div class="vw-types" id="div-type" class="form-div">
+<div class="vw-types" id="div-type" class="form-div" style="">
     <% _.each(types, function(type) { %>
-        <img src="<%= type.iconUrl %>" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
+        <div style="display:inline-block; vertical-align: top; text-align:center;">
+            <img src="<%= type.iconUrl %>" style="display: block" data-type-id="<%= type.id %>" class="btn btn-default vw-type" />
+            <div style="display: inline">
+                <%= type.name %>
+            </div>
+        </div>
     <% }); %>
     <span class="help-inline"></span>
+</div>
+
+<div id="typetext">
 </div>
 
 <!-- Nimi -->
@@ -25,7 +33,7 @@
 
 <h2>Missä talkoot järjestetään?</h2>
 <!-- Kaupunki -->
-Kaupunki:
+Kaupunki tai kunta:
 <div id="div-municipality" class="form-div">
     <select id="form-municipality" name="municipality" class="form-control">
         <option value=""></option>

@@ -12,7 +12,7 @@ define(function(require, exports, module) {
 
   var VoluntaryWorkModel = Backbone.Model.extend({
     defaults: {
-      name: 'Talkoo XYZ'
+      name: ''
     },
   });
 
