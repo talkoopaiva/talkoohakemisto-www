@@ -12,7 +12,7 @@
   <link href="http://beta.talkoot.fi/wp-content/themes/talkoot/style.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Application styles. -->
-  <!-- build:[href] /styles.min.css -->
+  <!-- build:[href] /-APP_ROOT-/styles.min.css -->
   <link rel="stylesheet" href="/app/styles/index.css">
 
   <!-- /build -->
@@ -33,7 +33,7 @@
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
 		    </button>
-		    <a class="navbar-brand" href="/">Talkoopäivä 17.5.</a>
+		    <a class="navbar-brand" href="/" data-bypass="true">Talkoopäivä 17.5.</a>
 
 		  </div>
 
@@ -48,7 +48,7 @@
 				<li><a href="http://beta.talkoot.fi/">Etusivu</a></li>
 				<li><a href="http://beta.talkoot.fi/tietoa/">Tietoa</a></li>
 				<li><a href="http://beta.talkoot.fi/opas/">Opas</a></li>
-				<li><a href="#">Talkoot</a></li>
+				<li><a href="/list">Talkoot</a></li>
 			</ul>
 
 		  </div>
@@ -117,8 +117,8 @@
 
 
   <!-- Application source. -->
-  <!-- build:[src] /source.min.js -->
-  <script data-main="/app/main" src="/vendor/bower/requirejs/require.js"></script>
+  <!-- build:[src] /-APP_ROOT-/source.min.js -->
+  <script data-main="app/main" src="/vendor/bower/requirejs/require.js"></script>
   <!-- /build -->
 
     <script>

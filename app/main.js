@@ -23,7 +23,9 @@ define("kickstart", function(require) {
     var root = location.protocol + "//" + location.host + app.root;
 
     // Ensure the root is part of the anchor href, meaning it's relative.
-    if (href.prop.slice(0, root.length) === root) {
+    // if (href.prop.slice(0, root.length) === root) {
+    // Catch all links that start with /
+    if (/^\/[a-z]/.test(href.attr)) {
       // Stop the default event to ensure the link will not cause a page
       // refresh.
       evt.preventDefault();

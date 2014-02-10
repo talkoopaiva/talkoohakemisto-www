@@ -1,6 +1,10 @@
 module.exports = function(grunt) {
   "use strict";
 
+  var releaseConfig = {
+    appRoot: "/talkoohakemisto/"
+  };
+
   grunt.initConfig({
     // Wipe out previous builds and test reporting.
     clean: ["dist/", "test/reports"],
@@ -57,7 +61,7 @@ module.exports = function(grunt) {
 
         // Rewrite image paths during release to be relative to the `img`
         // directory.
-        forceRelative: "/app/img/"
+        forceRelative: "/talkoohakemisto/app/img/"
       }
     },
 
@@ -117,6 +121,27 @@ module.exports = function(grunt) {
         },
 
         files: ["dist/source.min.js"]
+      }
+    },
+
+
+    /** Replace some path references for build **/
+    replace: {
+      appJs: {
+        src: ['dist/app/app.js'],             // source files array (supports minimatch)
+        dest: 'dist/app/',             // destination directory or file
+        replacements: [{
+          from: 'app.root = "/";',                   // string replacement
+          to: 'app.root = "' + releaseConfig.appRoot + '";'
+        }]
+      },
+      html: {
+        src: ['dist/*.html'],
+        dest: 'dist/',
+        replacements: [{
+          from: '/-APP_ROOT-/',
+          to: releaseConfig.appRoot
+        }]
       }
     },
 
@@ -209,12 +234,15 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-bbb-requirejs");
   grunt.loadNpmTasks("grunt-bbb-styles");
 
+  grunt.loadNpmTasks('grunt-text-replace');
+
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", [
     "clean",
     "jshint",
     "processhtml",
     "copy",
+    "replace",
     "requirejs",
     "styles",
     "cssmin",
