@@ -2,7 +2,7 @@ module.exports = function(grunt) {
   "use strict";
 
   var releaseConfig = {
-    appRoot: "/talkoohakemisto/"
+    appRoot: "/hakemisto/"
   };
 
   grunt.initConfig({
