@@ -7,6 +7,11 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   var Layout = require("layoutmanager");
 
+  // TODO: use requre.js correctly to set "jquery" as a dependency to "bootstrap"
+  $().ready(function() {
+    require("bootstrap");
+  });
+
   // Alias the module for easier identification.
   var app = module.exports;
 
