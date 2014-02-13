@@ -103,7 +103,6 @@ define(function(require, exports, module) {
         },
 
         handleForm: function() {
-
           var VoluntaryWorkModel = Backbone.Model.extend({
             defaults: {
 
@@ -131,6 +130,8 @@ define(function(require, exports, module) {
               this.showErrors(errors);
               return;
           }
+
+          $("#save-voluntary-work").attr('disabled', true);
 
           var vwcol = this.model.voluntaryWorks;
 
