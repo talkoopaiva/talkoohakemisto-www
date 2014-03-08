@@ -23,6 +23,12 @@ define(function(require, exports, module) {
   // API endpoint.
   app.api = "https://talkoohakemisto-api.herokuapp.com/";
 
+  app.helpers = {
+    generateTypeIconUrl: function(name) {
+      return app.imgRoot + 'icons/' + name.toLowerCase().replace("ö", "o").replace("ä", "a") + '.png';
+    }
+  };
+
   /* TAKEN FROM GITHUB-VIEWER by Albert
   // Useful defaults for GitHub Viewer.
   _.extend(Backbone.Collection.prototype, {
