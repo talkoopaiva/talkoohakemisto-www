@@ -7,6 +7,17 @@ define(function(require, exports, module) {
   var app = require("app");
 
   var VoluntaryWorkModel = Backbone.Model.extend({
+    url: function() {
+      return app.api + "voluntary_works/" + this.id;
+    },
+    parse: function(data) {
+      if (data.hasOwnProperty('voluntary_works')) {
+        console.log('fetched', data.voluntary_works[0]);
+        return data.voluntary_works[0];
+      } else {
+        return data;
+      }
+    },
     defaults: {
       name: ''
     },

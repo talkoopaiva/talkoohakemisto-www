@@ -15,7 +15,8 @@ define(function(require, exports, module) {
     className: "voluntary-work-form container",
 
     render: function() {
-      var data = this.model;
+      console.log('data model', this.model);
+      var data = this.model.toJSON();
       _.each(data.types, function(v,k) {
         data.types[k].iconUrl = app.helpers.generateTypeIconUrl(v.name);
       });
@@ -125,8 +126,7 @@ define(function(require, exports, module) {
 
       submissionOngoing = true;
       $("#save-voluntary-work").attr('disabled', true);
-
-      var vwcol = this.model.voluntaryWorks;
+      var vwcol = this.collection;
 
       var ok = vwcol.create({voluntary_works: [{
           "name": $("#form-name").val(),

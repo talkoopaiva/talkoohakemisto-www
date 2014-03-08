@@ -1,6 +1,7 @@
 // This is the runtime configuration file.  It complements the Gruntfile.js by
 // supplementing shared properties.
 require.config({
+  baseUrl: "/app",
   paths: {
     // Make vendor easier to access.
     "vendor": "../vendor",

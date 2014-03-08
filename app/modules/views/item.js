@@ -11,6 +11,10 @@ define(function(require, exports, module) {
       //console.log(el);
     },
 
+    events: {
+      "click": "viewDetails"
+    },
+
     tagName: "li",
     className: "voluntaryWorkItem row",
 
@@ -28,7 +32,12 @@ define(function(require, exports, module) {
       return this;
     },
 
+    viewDetails: function() {
+      this.model.collection.trigger('viewDetails', this.model.id);
+      Backbone.history.navigate("view/" + this.model.id, true);
+    },
+
     template: require("ldsh!templates/voluntary-work-item")
-  })
+  });
 
 });

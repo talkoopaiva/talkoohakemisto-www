@@ -21,37 +21,13 @@ define(function(require, exports, module) {
       this.views = {
 
       };
-      /*
-      var VoluntaryWorkListLayout = Backbone.Layout.extend({
-        el: "voluntaryWorkList",
-
-        template: require("ldsh!./templates/voluntary-work-list")
-
-
-        , views: {
-          ".voluntaryWorkList": new VoluntaryWork.Views.List({ collection: this.voluntaryWorks })
-        }
-      });*/
-
-      //new VoluntaryWorkListLayout().render();
     },
 
     routes: {
       "": "list",
       "list": "list",
       "form": "form",
-      "view": "view"
-    },
-
-    index: function() {
-
-      console.log("Welcome to your / route.");
-      var singleWork = new VoluntaryWork.Model({
-        title: "Töölön torin siivous"
-      });
-
-
-
+      "view/:id": "form"
     },
 
     list: function() {
@@ -67,15 +43,26 @@ define(function(require, exports, module) {
       }
     },
 
-    form: function() {
+    form: function(id) {
       console.log('form route triggered');
+      var collection = this.voluntaryWorks;
 
       var renderForm = function(router) {
         $('#voluntaryWorkDetails').empty();
 
-        var data = {types: router.types.toJSON(), municipalities: router.municipalities.toJSON(), voluntaryWorks: router.voluntaryWorks};
+        var model = {};
+        if (id) {
+          var item = new VoluntaryWork.Model({id: id});
+          $.when(item.fetch()).then(function() {
+            model = item.toJSON();
+            model.types = router.types.toJSON();
+            model.municipalities = router.municipalities.toJSON();
+            var itemView = new VoluntaryWork.Views.Form({model: model, collection: router.voluntaryWorks}).render();
+            console.log('model', model);
+          });
+        }
 
-        var itemView = new VoluntaryWork.Views.Form({model: data}).render();
+
 
         $('#voluntaryWorkDetails').append(itemView.$el);
 

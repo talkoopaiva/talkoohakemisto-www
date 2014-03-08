@@ -23,7 +23,7 @@ define(function(require, exports, module) {
   // API endpoint.
   var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1)/;
   if (localhostPattern.test(window.location.href)) {
-    app.api = "http://192.168.1.101:5000/";
+    app.api = "https://talkoohakemisto-api.herokuapp.com/";
   } else {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   }
