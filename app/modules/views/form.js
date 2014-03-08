@@ -6,6 +6,8 @@ define(function(require, exports, module) {
   var app = require("app");
   var VoluntaryWork = require("modules/voluntary-work");
 
+  var submissionOngoing = false;
+
   module.exports = Backbone.View.extend({
     initialize: function() { },
 
@@ -88,6 +90,11 @@ define(function(require, exports, module) {
     },
 
     handleForm: function() {
+      if (submissionOngoing) {
+        // This is likely a double click -> don't accept
+        return;
+      }
+
       var VoluntaryWorkModel = Backbone.Model.extend({
         defaults: {
 
@@ -116,6 +123,7 @@ define(function(require, exports, module) {
           return;
       }
 
+      submissionOngoing = true;
       $("#save-voluntary-work").attr('disabled', true);
 
       var vwcol = this.model.voluntaryWorks;
@@ -134,6 +142,10 @@ define(function(require, exports, module) {
         wait: true,
         success: function() {
           vwcol.trigger('itemAdded');
+          submissionOngoing = false;
+        },
+        error: function() {
+          submissionOngoing = false;
         }
       });
 
