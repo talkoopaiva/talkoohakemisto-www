@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 
   module.exports = Backbone.View.extend({
     initialize: function(el) {
-      //console.log(el);
+
     },
 
     tagName: "li",
@@ -29,6 +29,6 @@ define(function(require, exports, module) {
     },
 
     template: require("ldsh!templates/voluntary-work-item")
-  })
+  });
 
 });

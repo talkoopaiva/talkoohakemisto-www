@@ -28,13 +28,21 @@ define(function(require, exports, module) {
     },
     update: function(after) {
       var view = this;
-      console.log('updating (fetching)');
+      $.support.cors = true;
+      //console.log('updating (fetching)');
       this.collection.fetch({
+        cache: false,
+        dataType: 'jsonp',
+        emulateJSON: true,
+        emulateHTTP: true,
         success: function(items) {
           view.render();
           if (after) {
             after();
           }
+        },
+        error:   function(model, xhr, options){
+
         }
       });
     },
