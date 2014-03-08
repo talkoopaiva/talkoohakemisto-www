@@ -21,7 +21,12 @@ define(function(require, exports, module) {
   app.imgRoot = app.root + "app/img/";
 
   // API endpoint.
-  app.api = "https://talkoohakemisto-api.herokuapp.com/";
+  var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1)/;
+  if (localhostPattern.test(window.location.href)) {
+    app.api = "http://192.168.1.101:5000/";
+  } else {
+    app.api = "https://talkoohakemisto-api.herokuapp.com/";
+  }
 
   app.helpers = {
     generateTypeIconUrl: function(name) {
