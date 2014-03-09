@@ -4,6 +4,7 @@ define(function(require, exports, module) {
   // External dependencies.
   var _ = require("underscore");
   var $ = require("jquery");
+  var jQuery = require("jquery");
   var Backbone = require("backbone");
   var Layout = require("layoutmanager");
 
@@ -21,12 +22,15 @@ define(function(require, exports, module) {
   app.imgRoot = app.root + "app/img/";
 
   // API endpoint.
+  /*
   var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1)/;
   if (localhostPattern.test(window.location.href)) {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   } else {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   }
+  */
+  app.api = "http://192.168.1.101:5000/";
 
   app.helpers = {
     generateTypeIconUrl: function(name) {

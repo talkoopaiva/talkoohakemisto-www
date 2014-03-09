@@ -45,4 +45,11 @@ define("kickstart", function(require) {
 require(["config"], function() {
   // Kick off the application.
   require(["kickstart"]);
+
+  // This is for IE8
+  if (!window.console) {
+    window.console = {
+      log: function() {}
+    };
+  }
 });

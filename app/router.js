@@ -36,10 +36,10 @@ define(function(require, exports, module) {
       //$('ul.itemList').html('');
       if (!this.views.voluntaryWorkList) {
         this.views.voluntaryWorkList = new VoluntaryWork.Views.List({collection: this.voluntaryWorks});
-        console.log('list route created');
+        //console.log('list route created');
       } else {
         this.views.voluntaryWorkList.show();
-        console.log('list route displayed');
+        //console.log('list route displayed');
       }
     },
 
