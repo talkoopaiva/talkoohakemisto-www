@@ -12,7 +12,7 @@
 </div>
 
 <div id="div-name" class="form-div">
-  <input type="text" id="form-name" class="form-control" placeholder="Talkoiden nimi" value="<%= name %>">
+  <input type="text" id="form-name" class="form-control" placeholder="Talkoiden nimi" value="<%= d.name %>">
   <span class="help-inline"></span>
 </div>
 
@@ -24,8 +24,10 @@
 <div class="vw-types" id="div-type" class="form-div" style="">
     <select id="form-type" name="type" class="form-control">
         <option value=""></option>
-    <% _.each(types, function(type) { %>
-        <option value="<%= type.id %>"><%= type.name %></option>
+    <% _.each(d.types, function(type) { %>
+        <option value="<%= type.id %>" <%= type.selected %>>
+          <%= type.name %>
+        </option>
     <% }); %>
     </select>
     <span class="help-inline"></span>
@@ -38,7 +40,7 @@
     Huomaa, että yritys ei voi järjestää talkoita, mutta esimerkiksi yrityksen henkilöstö voi.
 </div>
 <div id="div-organization" class="form-div">
-  <input type="text" id="form-organization" class="form-control" placeholder="Järjestäjä"/>
+  <input type="text" id="form-organization" class="form-control" placeholder="Järjestäjä" value="<%= d.organizer %>"/>
   <span class="help-inline"></span>
 </div>
 
@@ -49,7 +51,7 @@
     järjestäjän kotisivut. Ei pakollinen.
 </div>
 <div id="div-url" class="form-div">
-  <input type="text"  id="form-url" class="form-control" placeholder="Nettisivu"/>
+  <input type="text"  id="form-url" class="form-control" placeholder="Nettisivu" value="<%= d.url %>"/>
   <span class="help-inline"></span>
 </div>
 
@@ -59,7 +61,7 @@
     #Hashtag
 </div>
 <div id="div-hashtag" class="form-div">
-  <input type="text"  id="form-hashtag" class="form-control" placeholder="#Hashtag"/>
+  <input type="text"  id="form-hashtag" class="form-control" placeholder="#Hashtag" value="<%= d.hashtag %>"/>
   <span class="help-inline"></span>
 </div>
 
@@ -69,7 +71,7 @@
     Esimerkiksi rakennuksen, urheilukentän tai koulun nimi.
 </div>
 <div id="div-location" class="form-div">
-  <input type="text" id="form-location" class="form-control" placeholder="Sijainti"/>
+  <input type="text" id="form-location" class="form-control" placeholder="Sijainti" value="<%= d.location %>"/>
   <span class="help-inline"></span>
 </div>
 
@@ -79,7 +81,7 @@
     Talkoopaikan osoite
 </div>
 <div id="div-address" class="form-div">
-  <input type="text" id="form-address" class="form-control" placeholder="Osoite"/>
+  <input type="text" id="form-address" class="form-control" placeholder="Osoite" value="<%= d.street_address %>"/>
   <span class="help-inline"></span>
 </div>
 
@@ -91,8 +93,10 @@ Kaupunki tai kunta
 <div id="div-municipality" class="form-div">
     <select id="form-municipality" name="municipality" class="form-control">
         <option value=""></option>
-        <% _.each(municipalities, function(municipality) { %>
-          <option value="<%= municipality.id %>"><%= municipality.name %></option>
+        <% _.each(d.municipalities, function(municipality) { %>
+          <option value="<%= municipality.id %>" <%= municipality.selected %>>
+            <%= municipality.name %>
+          </option>
         <% }); %>
     </select>
     <span class="help-inline"></span>
@@ -105,7 +109,7 @@ Kaupunki tai kunta
 Kellonaika. Mainitse myös, jos talkoot järjestetään muulloin kuin 17.5.
 </div>
 <div id="div-time" class="form-div">
-  <input type="text" id="form-time" class="form-control" placeholder="Aika"/>
+  <input type="text" id="form-time" class="form-control" placeholder="Aika" value="<%= d.time %>"/>
   <span class="help-inline"></span>
 </div>
 
@@ -116,7 +120,7 @@ Kellonaika. Mainitse myös, jos talkoot järjestetään muulloin kuin 17.5.
 Mikä on talkoiden tavoite? Miksi talkoot järjestetään ja mitä talkoiden seurauksena saadaan aikaan?
 </div>
 <div id="div-goal" class="form-div">
-  <textarea id="form-goal" class="form-control" placeholder="Tavoite"></textarea>
+  <textarea id="form-goal" class="form-control" placeholder="Tavoite"><%= d.goal %></textarea>
   <span class="help-inline"></span>
 </div>
 
@@ -127,7 +131,7 @@ Mikä on talkoiden tavoite? Miksi talkoot järjestetään ja mitä talkoiden seu
 Mitä talkoissa tehdään? Mitä työtehtäviä talkoissa osallistujat pääsevät tekemään?
 </div>
 <div id="div-description" class="form-div">
-  <textarea id="form-description" class="form-control" placeholder="Suunnitelma"></textarea>
+  <textarea id="form-description" class="form-control" placeholder="Suunnitelma"><%= d.description %></textarea>
   <span class="help-inline"></span>
 </div>
 
@@ -149,21 +153,21 @@ Talkoopäivän järjestäjät voivat ottaa yhteyttä talkoisiin liittyen.
 <!-- Nimi -->
 <h3>Yhteyshenkilön nimi</h3>
 <div id="div-organizer" class="form-div">
-  <input type="text" id="form-organizer" class="form-control" placeholder="Nimi"/>
+  <input type="text" id="form-organizer" class="form-control" placeholder="Nimi" value="<%= d.organizer %>"/>
   <span class="help-inline"></span>
 </div>
 
 <!-- Sähköpostiosoite -->
 <h3>Yhteyshenkilön sähköposti</h3>
 <div id="div-email" class="form-div">
-  <input type="email" id="form-email" class="form-control" placeholder="Sähköpostiosoite">
+  <input type="email" id="form-email" class="form-control" placeholder="Sähköpostiosoite" value="<%= d.contact_email %>">
   <span class="help-inline"></span>
 </div>
 
 <!-- Phone -->
 <h3>Yhteyshenkilön puhelinnumero</h3>
 <div id="div-phone" class="form-div">
-  <input type="email" id="form-phone" class="form-control" placeholder="Puhelinnumero">
+  <input type="email" id="form-phone" class="form-control" placeholder="Puhelinnumero" value="<%= d.contact_phone %>">
   <span class="help-inline"></span>
 </div>
 

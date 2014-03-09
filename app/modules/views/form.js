@@ -27,7 +27,7 @@ define(function(require, exports, module) {
 
       data.municipalities = this.linkedItems.municipalities.toJSON();
 
-      this.$el.html( this.template( data ) );
+      this.$el.html( this.template( {d: data} ) );
       return this;
     },
 
