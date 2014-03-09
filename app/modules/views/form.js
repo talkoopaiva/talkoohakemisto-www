@@ -17,7 +17,9 @@ define(function(require, exports, module) {
     className: "voluntary-work-form container",
 
     render: function() {
-      var data = this.model.toJSON();
+      var data = this.model ? this.model.toJSON() : {};
+
+      // Generate icon URL's for vw types
       data.types = this.linkedItems.types.toJSON();
       _.each(data.types, function(v,k) {
         data.types[k].iconUrl = app.helpers.generateTypeIconUrl(v.name);

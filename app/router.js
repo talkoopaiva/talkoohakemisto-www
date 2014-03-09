@@ -49,47 +49,45 @@ define(function(require, exports, module) {
       console.log('form route triggered');
       var collection = this.voluntaryWorks;
 
-      var renderForm = function(router) {
-        $('#voluntaryWorkDetails').empty();
-
-        var constructs = {
-          collection: router.voluntaryWorks,
-          linkedItems: {
-            types: router.types,
-            municipalities: router.municipalities
-          }
-        };
-
-        var modelFetched = $.Deferred();
-
-        // If id -> then it's edit, so we have to fetch model
-        if (id) {
-          // TODO: first look in the collection
-          constructs.model = new VoluntaryWork.Model({id: id});
-          $.when(constructs.model.fetch()).then(modelFetched.resolve, modelFetched.reject);
-        } else {
-          modelFetched.resolve();
-        }
-
-        // TODO: handle REJECT case (in case API error)!
-        modelFetched.then(function() {
-          var itemView = new VoluntaryWork.Views.Form(constructs).render();
-          // TODO: DOM manipulation should be done in View instead of router
-          $('#voluntaryWorkDetails').html(itemView.$el);
-        });
-
-        $('#voluntaryWorkList').hide();
-        $('#voluntaryWorkDetails').show();
-      };
+      $('#voluntaryWorkDetails').empty();
 
       var router = this;
-      if (this.municipalities.length < 1 || this.types.length < 1) {
-        $.when(this.municipalities.fetch(), this.types.fetch()).done(function() {
-          renderForm(router);
-        });
-      } else {
-        renderForm(router);
+      var constructs = {
+        collection: router.voluntaryWorks,
+        linkedItems: {
+          types: router.types,
+          municipalities: router.municipalities
+        }
+      };
+
+      var dependencies = [];
+
+      // If id -> then it's edit, so we have to fetch model
+      if (id) {
+        // TODO: first look in the collection
+        constructs.model = new VoluntaryWork.Model({id: id});
+        dependencies.push(constructs.model.fetch());
       }
+
+      if (this.municipalities.length < 1) {
+        dependencies.push(this.municipalities.fetch());
+      }
+
+      if (this.types.length < 1) {
+        dependencies.push(this.types.fetch());
+      }
+
+      $.when.apply(this, dependencies).done(function() {
+        var itemView = new VoluntaryWork.Views.Form(constructs).render();
+
+        // TODO: DOM manipulation should be done in View instead of router
+        $('#voluntaryWorkDetails').html(itemView.$el);
+      });
+
+      $('#voluntaryWorkList').hide();
+      $('#voluntaryWorkDetails').show();
+
     }
+
   });
 });
