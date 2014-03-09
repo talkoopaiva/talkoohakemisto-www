@@ -9,17 +9,21 @@ define(function(require, exports, module) {
   var submissionOngoing = false;
 
   module.exports = Backbone.View.extend({
-    initialize: function() { },
+    initialize: function(args) {
+      this.linkedItems = args.linkedItems;
+    },
 
     tagName: "div",
     className: "voluntary-work-form container",
 
     render: function() {
-      console.log('data model', this.model);
       var data = this.model.toJSON();
+      data.types = this.linkedItems.types.toJSON();
       _.each(data.types, function(v,k) {
         data.types[k].iconUrl = app.helpers.generateTypeIconUrl(v.name);
       });
+
+      data.municipalities = this.linkedItems.municipalities.toJSON();
 
       this.$el.html( this.template( data ) );
       return this;

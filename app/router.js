@@ -44,27 +44,39 @@ define(function(require, exports, module) {
     },
 
     form: function(id) {
+      // If "id" is not present, new item creation is triggered
+
       console.log('form route triggered');
       var collection = this.voluntaryWorks;
 
       var renderForm = function(router) {
         $('#voluntaryWorkDetails').empty();
 
-        var model = {};
+        var constructs = {
+          collection: router.voluntaryWorks,
+          linkedItems: {
+            types: router.types,
+            municipalities: router.municipalities
+          }
+        };
+
+        var modelFetched = $.Deferred();
+
+        // If id -> then it's edit, so we have to fetch model
         if (id) {
-          var item = new VoluntaryWork.Model({id: id});
-          $.when(item.fetch()).then(function() {
-            model = item.toJSON();
-            model.types = router.types.toJSON();
-            model.municipalities = router.municipalities.toJSON();
-            var itemView = new VoluntaryWork.Views.Form({model: model, collection: router.voluntaryWorks}).render();
-            console.log('model', model);
-          });
+          // TODO: first look in the collection
+          constructs.model = new VoluntaryWork.Model({id: id});
+          $.when(constructs.model.fetch()).then(modelFetched.resolve, modelFetched.reject);
+        } else {
+          modelFetched.resolve();
         }
 
-
-
-        $('#voluntaryWorkDetails').append(itemView.$el);
+        // TODO: handle REJECT case (in case API error)!
+        modelFetched.then(function() {
+          var itemView = new VoluntaryWork.Views.Form(constructs).render();
+          // TODO: DOM manipulation should be done in View instead of router
+          $('#voluntaryWorkDetails').html(itemView.$el);
+        });
 
         $('#voluntaryWorkList').hide();
         $('#voluntaryWorkDetails').show();
