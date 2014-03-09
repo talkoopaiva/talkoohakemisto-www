@@ -171,6 +171,7 @@ define(function(require, exports, module) {
         emulateJSON: true,
         emulateHTTP: true,
               */
+        patch: true,
         wait: true,
         success: function() {
           vwcol.trigger('itemAdded');
@@ -180,6 +181,13 @@ define(function(require, exports, module) {
           submissionOngoing = false;
         }
       };
+
+      /*
+      this.model.set(data);
+      console.log('attributes', this.model.changedAttributes());
+      this.model.sync("update", this.model, options);
+      return;
+      */
 
       if (this.model) {
         // update existing entry
