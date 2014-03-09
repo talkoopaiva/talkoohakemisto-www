@@ -58,9 +58,9 @@ define(function(require, exports, module) {
     validate: function(attrs) {
       var errors = [];
 
-      if (!attrs.type) {
-        errors.push({name: 'type', message: 'Valitse talkootyyppi'});
-      }
+      //if (!attrs.type) {
+      //  errors.push({name: 'type', message: 'Valitse talkootyyppi'});
+      //}
 
       if (!attrs.name) {
         errors.push({name: 'name', message: 'Kirjoita talkoiden nimi'});
@@ -128,17 +128,31 @@ define(function(require, exports, module) {
 
       var vwcol = this.model.voluntaryWorks;
 
-      var ok = vwcol.create({voluntary_works: [{
+      var ok = vwcol.create(
+          {voluntary_works: [{
           "name": $("#form-name").val(),
           "description": $("#form-description").val(),
           "links": {
             "municipality": parseInt($("#form-municipality").val()),
-            "type": $('.vw-type.selected').data('type-id')
+            "type": parseInt($("#form-type").val())
           },
           "contact_email": $("#form-email").val(),
           "street_address": $("#form-address").val(),
-          "organizer": $("#form-organizer").val()
+          "organizer": $("#form-organizer").val(),
+          "organization": $("#form-organization").val(),
+          "url": $("#form-url").val(),
+          "hashtag": $("#form-hashtag").val(),
+          "location": $("#form-location").val(),
+          "time": $("#form-time").val(),
+          "goal": $("#form-goal").val(),
+          "contact_phone": $("#form-phone").val()
       }]}, {
+        cache: false,
+              /*
+        dataType: 'jsonp',
+        emulateJSON: true,
+        emulateHTTP: true,
+              */
         wait: true,
         success: function() {
           vwcol.trigger('itemAdded');

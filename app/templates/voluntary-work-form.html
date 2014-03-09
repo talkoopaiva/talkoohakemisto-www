@@ -22,7 +22,7 @@
     Valitse, mitä tyyppiä talkoo edustaa parhaiten
 </div>
 <div class="vw-types" id="div-type" class="form-div" style="">
-    <select id="form-types" name="types" class="form-control">
+    <select id="form-type" name="type" class="form-control">
         <option value=""></option>
     <% _.each(types, function(type) { %>
         <option value="<%= type.id %>"><%= type.name %></option>
@@ -51,6 +51,16 @@
 </div>
 <div id="div-url" class="form-div">
   <input type="text"  id="form-url" class="form-control" placeholder="Nettisivu"/>
+  <span class="help-inline"></span>
+</div>
+
+<!-- Url -->
+<h3>#Hashtag</h3>
+<div>
+    #Hashtag
+</div>
+<div id="div-hashtag" class="form-div">
+  <input type="text"  id="form-hashtag" class="form-control" placeholder="#Hashtag"/>
   <span class="help-inline"></span>
 </div>
 
