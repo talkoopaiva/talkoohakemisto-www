@@ -23,9 +23,20 @@ define(function(require, exports, module) {
       data.types = this.linkedItems.types.toJSON();
       _.each(data.types, function(v,k) {
         data.types[k].iconUrl = app.helpers.generateTypeIconUrl(v.name);
+        if (data.links && data.types[k].id == data.links.type) {
+          data.types[k].selected = 'selected';
+        }
       });
 
+
       data.municipalities = this.linkedItems.municipalities.toJSON();
+      if (data.links) {
+        _.each(data.municipalities, function(v,k) {
+          if (data.municipalities[k].id == data.links.municipality) {
+            data.municipalities[k].selected = 'selected';
+          }
+        });
+      }
 
       this.$el.html( this.template( {d: data} ) );
       return this;
@@ -134,8 +145,7 @@ define(function(require, exports, module) {
       $("#save-voluntary-work").attr('disabled', true);
       var vwcol = this.collection;
 
-      var ok = vwcol.create(
-          {voluntary_works: [{
+      var data = {
           "name": $("#form-name").val(),
           "description": $("#form-description").val(),
           "links": {
@@ -152,7 +162,9 @@ define(function(require, exports, module) {
           "time": $("#form-time").val(),
           "goal": $("#form-goal").val(),
           "contact_phone": $("#form-phone").val()
-      }]}, {
+      };
+
+      var options = {
         cache: false,
               /*
         dataType: 'jsonp',
@@ -167,7 +179,16 @@ define(function(require, exports, module) {
         error: function() {
           submissionOngoing = false;
         }
-      });
+      };
+
+      if (this.model) {
+        // update existing entry
+        options.patch = true;
+        this.model.save(data, options);
+      } else {
+        var ok = vwcol.create(
+            {voluntary_works: [data]}, options);
+      }
 
       Backbone.history.navigate("list", true);
 
