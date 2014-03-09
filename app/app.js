@@ -22,15 +22,12 @@ define(function(require, exports, module) {
   app.imgRoot = app.root + "app/img/";
 
   // API endpoint.
-  /*
-  var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1)/;
+  var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1|192\.168\.)/;
   if (localhostPattern.test(window.location.href)) {
-    app.api = "https://talkoohakemisto-api.herokuapp.com/";
+    app.api = "http://xdsl-250-35.nebulazone.fi:5000/";
   } else {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   }
-  */
-  app.api = "http://192.168.1.101:5000/";
 
   app.helpers = {
     generateTypeIconUrl: function(name) {
