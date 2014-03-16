@@ -202,7 +202,7 @@ define(function(require, exports, module) {
 
     },
 
-    template: require("ldsh!templates/voluntary-work-form")
+    template: require("hbs!templates/form")
   });
 
 

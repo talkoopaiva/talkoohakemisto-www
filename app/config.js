@@ -18,6 +18,8 @@ require.config({
     // Use the Lo-Dash template loader.
     "ldsh": "../vendor/bower/lodash-template-loader/loader",
 
+    "hbs": "../vendor/bower/require-handlebars-plugin/hbs",
+
     // Map remaining vendor dependencies.
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
@@ -36,6 +38,13 @@ require.config({
       // This maps the global `Backbone` object to `require("backbone")`.
       exports: "Backbone"
     }
+  },
+
+  hbs: { // optional
+      helpers: false,            // default: true
+      i18n: false,              // default: false
+      templateExtension: 'hbs', // default: 'hbs'
+      partialsUrl: ''           // default: ''
   },
 
   // Backbone.CollectionCache depends on Backbone.

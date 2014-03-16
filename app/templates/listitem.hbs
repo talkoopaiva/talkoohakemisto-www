@@ -1,18 +1,18 @@
 <div class="iconSide col-md-2 col-xs-2 col-md-offset-2 col-xs-offset-0">
-  <div class="iconImg"><img src="<%= iconUrl %>" /></div>
+  <div class="iconImg"><img src="{{iconUrl}}" /></div>
 </div>
 
 <div class="infoArea col-md-6 col-xs-8">
 
-  <h2><%= name %></h2>
+  <h2>{{name}}</h2>
 
   <p class="location">
     <span class="icon"></span>
-    <strong><%= municipality.name %></strong> <%= street_address %>
+    <strong>{{municipality.name}}</strong> {{street_address}}
   </p>
 
   <p class="description">
-    <%= description %>
+    {{description}}
   </p>
   
 </div>

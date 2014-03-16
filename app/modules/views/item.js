@@ -37,7 +37,7 @@ define(function(require, exports, module) {
       Backbone.history.navigate("view/" + this.model.id, true);
     },
 
-    template: require("ldsh!templates/voluntary-work-item")
+    template: require("hbs!templates/listitem")
   });
 
 });

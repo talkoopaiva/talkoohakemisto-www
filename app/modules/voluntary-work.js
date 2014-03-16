@@ -37,7 +37,7 @@ define(function(require, exports, module) {
       Details: Backbone.View.extend({
         initialize: function() {},
 
-        template: require("ldsh!../templates/voluntary-work-details")
+        template: require("hbs!../templates/details")
       })
 
     },
