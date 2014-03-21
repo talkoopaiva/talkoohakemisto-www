@@ -1,13 +1,9 @@
-define("kickstart", function(require) {
-  var app = require("app");
-  var Router = require("router");
-
-  var Backbone = require("backbone");
-  var $ = require("jquery");
+define("kickstart", ['require', 'jquery', 'backbone', 'router', 'app'],
+                    function(require, $, Backbone, Router, app) {
 
   // Define your master router on the application namespace and trigger all
   // navigation from this instance.
-  app.router = new Router();
+  app.router = new Router;
 
   // Trigger the initial route and enable HTML5 History API support, set the
   // root folder to '/' by default.  Change in app.js.
@@ -45,11 +41,4 @@ define("kickstart", function(require) {
 require(["config"], function() {
   // Kick off the application.
   require(["kickstart"]);
-
-  // This is for IE8
-  if (!window.console) {
-    window.console = {
-      log: function() {}
-    };
-  }
 });

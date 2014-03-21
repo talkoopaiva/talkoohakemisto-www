@@ -7,25 +7,26 @@ require.config({
     "vendor": "../vendor",
 
     // Almond is used to lighten the output filesize.
-    "almond": "../vendor/bower/almond/almond",
+    //"almond": "../vendor/bower/almond/almond",
 
     // Opt for Lo-Dash Underscore compatibility build over Underscore.
     "underscore": "../vendor/bower/lodash/dist/lodash.underscore",
 
     // Map `lodash` to a valid location for the template loader plugin.
-    "lodash": "../vendor/bower/lodash/dist/lodash",
+    //"lodash": "../vendor/bower/lodash/dist/lodash",
 
     // Use the Lo-Dash template loader.
-    "ldsh": "../vendor/bower/lodash-template-loader/loader",
+    //"ldsh": "../vendor/bower/lodash-template-loader/loader",
 
     "hbs": "../vendor/bower/require-handlebars-plugin/hbs",
 
     // Map remaining vendor dependencies.
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
+
     "bootstrap": "../vendor/bower/bootstrap/dist/js/bootstrap",
     "layoutmanager": "../vendor/bower/layoutmanager/backbone.layoutmanager",
-    "collectionCache": "../vendor/backbone.collectioncache"
+    //"collectionCache": "../vendor/backbone.collectioncache"
   },
 
   shim: {
@@ -37,6 +38,9 @@ require.config({
 
       // This maps the global `Backbone` object to `require("backbone")`.
       exports: "Backbone"
+    },
+    "underscore": {
+      exports: "_"
     }
   },
 
@@ -48,7 +52,7 @@ require.config({
   },
 
   // Backbone.CollectionCache depends on Backbone.
-  "collectionCache": ["backbone"],
+  //"collectionCache": ["backbone"],
 
   // Twitter Bootstrap depends on jQuery.
   "bootstrap": ["jquery"]

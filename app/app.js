@@ -1,20 +1,9 @@
-define(function(require, exports, module) {
+define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'],
+  function(require, module, _, $, Backbone, Layout) {
   "use strict";
 
-  // External dependencies.
-  var _ = require("underscore");
-  var $ = require("jquery");
-  var jQuery = require("jquery");
-  var Backbone = require("backbone");
-  var Layout = require("layoutmanager");
-
-  // TODO: use requre.js correctly to set "jquery" as a dependency to "bootstrap"
-  $().ready(function() {
-    require("bootstrap");
-  });
-
-  // Alias the module for easier identification.
-  var app = module.exports;
+  // Enable Backbone Events for the app module
+  var app = _.extend({}, Backbone.Events);
 
   // The root path to run the application through.
   app.root = "/";
@@ -24,7 +13,8 @@ define(function(require, exports, module) {
   // API endpoint.
   var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1|192\.168\.)/;
   if (localhostPattern.test(window.location.href)) {
-    app.api = "http://xdsl-250-35.nebulazone.fi:5000/";
+    //app.api = "http://xdsl-250-35.nebulazone.fi:5000/";
+    app.api = "http://localhost:1337/";
   } else {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   }
@@ -35,37 +25,23 @@ define(function(require, exports, module) {
     }
   };
 
-  /* TAKEN FROM GITHUB-VIEWER by Albert
-  // Useful defaults for GitHub Viewer.
-  _.extend(Backbone.Collection.prototype, {
-    cache: true,
+  // Set app object as module output
+  module.exports = app;
 
-    initialize: function(models, options) {
-      // Automatically extend in passed options.
-      _.extend(this, options);
+  /** APP WIDE CONFIGURATIONS **/
 
-      // Listen for request and sync events to control the `isRequest` flag.
-      this.on({
-        request: function() {
-          this.isRequest = true;
-        },
+  Backbone.Layout.configure({
+    manage: true,
+    el: false
+  });
 
-        sync: function() {
-          this.isRequest = false;
-        }
-      });
+  // This is for IE8
+  if (!window.console) {
+    window.console = {
+      log: function() {},
+      warn: function() {},
+      error: function() {}
+    };
+  }
 
-      // By default the collection is not in a request.
-      this.isRequest = false;
-    },
-
-    parse: function(obj) {
-      // Safety check ensuring only valid data is used.
-      if (obj.data.message !== "Not Found") {
-        return obj.data;
-      }
-
-      return this.models;
-    }
-  });*/
 });
