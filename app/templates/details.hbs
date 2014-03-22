@@ -1,0 +1,67 @@
+<div class="container">
+
+  <div class="row">
+
+
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+
+      <h1>Wikitalkoot</h1>
+      <p class="talkoot-type">{{name}}</p>
+
+      <p class="lead">{{description}}</p>
+
+      <hr>
+
+      <div class="hidden-xs">
+        <!-- TODO: Enable google map -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1983.7907131632016!2d24.832060799999994!3d60.18419629999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x468df5ed5c70024f%3A0x6e5a35fd7015dea0!2sDipoli!5e0!3m2!1sen!2sfi!4v1394299862606" style="width:100%" height="450" frameborder="0" style="border:0"></iframe>
+        <hr>
+      </div>
+
+      <div class="visible-xs">
+        <a class="btn btn-large btn-default btn-lg" href="maps:Dipoli,Espoo,Finland">
+          <i class="glyphicon glyphicon-map-marker"></i> Näytä sijainti kartalla
+        </a>
+      </div>
+
+      <ul id="talkoo-specs" class="lead">
+        <li><i class="glyphicon glyphicon-user"></i> Järjestäjä: {{organizer}}</li>
+        <li><i class="glyphicon glyphicon-map-marker"></i> Sijainti: {{stree_address}}, {{municipality.name}}</li>
+        <li><i class="glyphicon glyphicon-time"></i> Alkamisajankohta: !!FIX THIS!!</li>
+        <li><i class="glyphicon glyphicon-tag"></i> Hashtag: #FIXTHIS</li>
+        <li><i class="glyphicon glyphicon-globe"></i> <a href="#">Lisätietoja nettisivuilta</a></li>
+      </ul>
+
+      <hr>
+
+      <h3>Talkoiden toimintasuunnitelma</h3>
+      <div class="lead">
+        <p>
+         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+         consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+         cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="col-sm-12 col-md-8 col-md-offset-2 ">
+      <hr>
+      <h2>Muut talkoot</h2>
+
+      <p class="lead">Muita listattuja talkoita ympäri Suomea.</p>
+
+      <ul id="js-other-talkoot">
+
+      </ul>
+
+    </div>
+
+
+  </div>
+</div>
+
+<div class="clear"></div>

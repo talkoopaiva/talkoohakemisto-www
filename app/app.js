@@ -136,6 +136,10 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
         });
       }
 
+      if (!_.isEmpty(data.meta)) {
+        // TODO: also store the meta data into the model / collection
+      }
+
       if (model instanceof Backbone.Collection) {
         return coll;
       } else {

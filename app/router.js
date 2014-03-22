@@ -1,11 +1,9 @@
 define([
     'jquery', 'underscore', 'backbone', 'layoutmanager', 'app',
-    //'views/details', 'views/form', 'views/listitem', 'views/list',
     'models/voluntary-work',
     'collections/voluntary-works', 'collections/worktypes', 'collections/municipalities'
   ], function(
     $, _, Backbone, Layout, app,
-    //DetailsView, EditView, ListView, ListItemView,
     VoluntaryWork,
     VoluntaryWorks, WorkTypes, Municipalities
   ) {
@@ -25,11 +23,16 @@ define([
       app.types = new WorkTypes();
       app.municipalities = new Municipalities();
 
+      // Init main view to which everything else gets attached
+      app.mainView = new Backbone.View({
+        el: "#main"
+      });
+
       this.views = {
 
       };
 
-      // For testing
+      // TODO: remove this - this is only for debugging purposes
       var router = this;
       _.extend(window, {
         app: app,
@@ -46,7 +49,15 @@ define([
     },
 
     list: function() {
+      if (app.voluntaryWorks.length == 0) {
+        app.voluntaryWorks.fetch();
+      }
+      require(['views/list'], function(ListView) {
+        var listView = new ListView({collection: app.voluntaryWorks});
 
+        app.mainView.setView("", listView);
+        listView.render();
+      });
     }
 
     // list: function() {
