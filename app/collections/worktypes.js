@@ -3,7 +3,6 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
 
   return Backbone.Collection.extend(
     { // Instance properties
-      //collectionName: "types",
       model: Backbone.Model.extend({
         initialize: function(){
 

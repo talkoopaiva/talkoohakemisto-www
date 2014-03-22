@@ -71,7 +71,6 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       params.url = _.result(model, 'url') || urlError();
     }
 
-    debugger;
     // If collectionName was defined, URL is not needed
     // However, if that wasn't defined, try to guess the collectionName
     var collectionName = model.constructor.type || (function() {
@@ -110,7 +109,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     var fromJSONApi = function(data, model) {
       if (!data) {
         return data;
-      } else if (!data[collectionName] || data[collectionName].length == 0) {
+      } else if (!data[collectionName] || data[collectionName].length === 0) {
         return;
       }
 
@@ -124,7 +123,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
           linked[key] = _.indexBy(coll, 'id');
         });
 
-        var links = data.links
+        var links = data.links;
         _.each(coll, function(item) {
           _.each(item.links, function(id, name) {
             var collectionName = links[collectionName + '.' + name].type;
@@ -142,7 +141,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       } else {
         return coll[0];
       }
-    }
+    };
 
     if (method === 'create' || method === 'update') {
       params.contentType = 'application/vnd.api+json';
@@ -159,7 +158,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       options.success = function(data) {
         arguments[0] = fromJSONApi(data, model);
         success.apply(this, arguments);
-      }
+      };
     }
 
     // Don't process data on a non-GET request.
