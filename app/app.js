@@ -37,13 +37,13 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
 
   _.extend(Backbone.Collection.prototype, {
     'url': function() {
-      return app.api + this.collectionName;
+      return this.constructor.type ? (app.api + this.constructor.type) : null;
     }
   });
 
   _.extend(Backbone.Model.prototype, {
     'urlRoot': function() {
-      return app.api + this.collectionName;
+      return this.constructor.type ? (app.api + this.constructor.type) : null;
     }
   });
 
@@ -71,6 +71,22 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       params.url = _.result(model, 'url') || urlError();
     }
 
+    debugger;
+    // If collectionName was defined, URL is not needed
+    // However, if that wasn't defined, try to guess the collectionName
+    var collectionName = model.constructor.type || (function() {
+      var url = _.result(model, 'url') || urlError();
+
+      // remove possible app.api path from the beginning
+      if (url.indexOf(app.api) === 0) {
+        url = url.substring(app.api.length);
+      }
+
+      var name = url.replace(/^\/?(\w+)\/?.*$/, "$1");
+
+      return name || urlError();
+    }());
+
     // transform data to fit jsonapi.org spec
     var toJSONApi = function(attributes, model) {
       attributes = attributes || model.toJSON(options);
@@ -83,21 +99,6 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
         }
       });
 
-      // If collectionName was defined, URL is not needed
-      // However, if that wasn't defined, try to guess the collectionName
-      var collectionName = model.collectionName || (function() {
-        var url = _.result(model, 'url') || urlError();
-
-        // remove possible app.api path from the beginning
-        if (url.indexOf(app.api) === 0) {
-          url = url.substring(app.api.length);
-        }
-
-        model.collectionName = url.replace(/^\/?(\w+)\/?.*$/, "$1");
-        // return the first term, without possible '/'
-        return model.collectionName;
-      }());
-
       // Wrap data into array and object
       var result = {};
       result[collectionName] = [attributes];
@@ -109,11 +110,11 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     var fromJSONApi = function(data, model) {
       if (!data) {
         return data;
-      } else if (!data[model.collectionName] || data[model.collectionName].length == 0) {
+      } else if (!data[collectionName] || data[collectionName].length == 0) {
         return;
       }
 
-      var coll = data[model.collectionName];
+      var coll = data[collectionName];
 
       // If linked items are passed in the response, populate them automatically
       if (!_.isEmpty(data.linked)) {
@@ -126,7 +127,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
         var links = data.links
         _.each(coll, function(item) {
           _.each(item.links, function(id, name) {
-            var collectionName = links[model.collectionName + '.' + name].type;
+            var collectionName = links[collectionName + '.' + name].type;
             // TODO: perhaps new model should be created at this spot
             // another way would be to replace the "linked" attribute's values
             item[name] = linked[collectionName][id];
