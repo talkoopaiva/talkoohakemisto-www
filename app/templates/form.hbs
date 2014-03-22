@@ -1,175 +1,180 @@
-<h1>Ilmoita Talkoot Talkoohakemistoon</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-10 col-md-offset-1 ">
 
-<div>
-    Päivitämme Talkoot.fi:n talkoohakemisto, ja haluamme avata sen uusien tietojen kera.
-    Kerro tiedot talkoistasi tässä, niin nostamme sen ensimmäisenä hakemistoon päivityksen yhteydessä!
-</div>
+  <h1>Ilmoita Talkoot Talkoohakemistoon</h1>
 
-<!-- Nimi -->
-<h3>Talkoiden nimi</h3>
-<div>
-    Keksi talkoille nimi, joka kertoo tiivisti mitä talkoissa tehdään tai mikä on niiden tavoite
-</div>
+  <form id="voluntary-work-form">
 
-<div id="div-name" class="form-div">
-  <input type="text" id="form-name" class="form-control" placeholder="Talkoiden nimi" value="{{name}}">
-  <span class="help-inline"></span>
-</div>
+    <!-- Nimi -->
+    <h3>Talkoiden nimi</h3>
+    <div>
+        Keksi talkoille nimi, joka kertoo tiivisti mitä talkoissa tehdään tai mikä on niiden tavoite
+    </div>
 
-<!-- Talkootyyppi -->
-<h3>Talkootyyppi</h3>
-<div>
-    Valitse, mitä tyyppiä talkoo edustaa parhaiten
-</div>
-<div class="vw-types" id="div-type" class="form-div" style="">
-    <select id="form-type" name="type" class="form-control">
-        <option value=""></option>
-        {{#each types}}
-          <option value="{{this.id}}" {{this.selected}}>
-            {{this.name}}
-          </option>
-        {{/each}}
-    </select>
-    <span class="help-inline"></span>
-</div>
+    <div id="div-name" class="form-group">
+      <input type="text" name="name" class="form-control" placeholder="Talkoiden nimi" value="{{name}}">
+      <span class="help-block"></span>
+    </div>
 
-<!-- Järjestäjä -->
-<h3>Talkoiden järjestäjä</h3>
-<div>
-    Esimerkiksi järjestävän henkilön, ryhmän tai yhdistyksen nimi.
-    Huomaa, että yritys ei voi järjestää talkoita, mutta esimerkiksi yrityksen henkilöstö voi.
-</div>
-<div id="div-organization" class="form-div">
-  <input type="text" id="form-organization" class="form-control" placeholder="Järjestäjä" value="{{organizer}}"/>
-  <span class="help-inline"></span>
-</div>
+    <!-- Talkootyyppi -->
+    <h3>Talkootyyppi</h3>
+    <div>
+        Valitse, mitä tyyppiä talkoo edustaa parhaiten
+    </div>
+    <div class="vw-types" id="div-type" class="form-group" style="">
+        <select id="form-type" name="type" class="form-control">
+            <option value=""></option>
+            {{#each types}}
+              <option value="{{this.id}}" {{this.selected}}>
+                {{this.name}}
+              </option>
+            {{/each}}
+        </select>
+        <span class="help-block"></span>
+    </div>
 
-<!-- Url -->
-<h3>Nettisivu</h3>
-<div>
-    Talkoisiin liittyvä nettisivu, esimerkiksi Facebook-tapahtuma, uutinen tai talkoiden
-    järjestäjän kotisivut. Ei pakollinen.
-</div>
-<div id="div-url" class="form-div">
-  <input type="text"  id="form-url" class="form-control" placeholder="Nettisivu" value="{{url}}"/>
-  <span class="help-inline"></span>
-</div>
+    <!-- Järjestäjä -->
+    <h3>Talkoiden järjestäjä</h3>
+    <div>
+        Esimerkiksi järjestävän henkilön, ryhmän tai yhdistyksen nimi.
+        Huomaa, että yritys ei voi järjestää talkoita, mutta esimerkiksi yrityksen henkilöstö voi.
+    </div>
+    <div id="div-organization" class="form-group">
+      <input type="text" name="organization" class="form-control" placeholder="Järjestäjä" value="{{organizer}}"/>
+      <span class="help-block"></span>
+    </div>
 
-<!-- Url -->
-<h3>#Hashtag</h3>
-<div>
-    #Hashtag
-</div>
-<div id="div-hashtag" class="form-div">
-  <input type="text"  id="form-hashtag" class="form-control" placeholder="#Hashtag" value="{{hashtag}}"/>
-  <span class="help-inline"></span>
-</div>
+    <!-- Url -->
+    <h3>Nettisivu</h3>
+    <div>
+        Talkoisiin liittyvä nettisivu, esimerkiksi Facebook-tapahtuma, uutinen tai talkoiden
+        järjestäjän kotisivut. Ei pakollinen.
+    </div>
+    <div id="div-url" class="form-group">
+      <input type="text"  name="url" class="form-control" placeholder="Nettisivu" value="{{url}}"/>
+      <span class="help-block"></span>
+    </div>
 
-<!-- Location -->
-<h3>Sijainti</h3>
-<div>
-    Esimerkiksi rakennuksen, urheilukentän tai koulun nimi.
-</div>
-<div id="div-location" class="form-div">
-  <input type="text" id="form-location" class="form-control" placeholder="Sijainti" value="{{location}}"/>
-  <span class="help-inline"></span>
-</div>
+    <!-- Url -->
+    <h3>#Hashtag</h3>
+    <div>
+        #Hashtag
+    </div>
+    <div id="div-hashtag" class="form-group">
+      <input type="text" name="hashtag" class="form-control" placeholder="#Hashtag" value="{{hashtag}}"/>
+      <span class="help-block"></span>
+    </div>
 
-<!-- Osoite -->
-<h3>Osoite</h3>
-<div>
-    Talkoopaikan osoite
-</div>
-<div id="div-address" class="form-div">
-  <input type="text" id="form-address" class="form-control" placeholder="Osoite" value="{{street_address}}"/>
-  <span class="help-inline"></span>
-</div>
+    <!-- Location -->
+    <h3>Sijainti</h3>
+    <div>
+        Esimerkiksi rakennuksen, urheilukentän tai koulun nimi.
+    </div>
+    <div id="div-location" class="form-group">
+      <input type="text" name="location" class="form-control" placeholder="Sijainti" value="{{location}}"/>
+      <span class="help-block"></span>
+    </div>
 
-<!-- Kaupunki -->
-<h3>Kaupunki</h3>
-<div>
-Kaupunki tai kunta
-</div>
-<div id="div-municipality" class="form-div">
-    <select id="form-municipality" name="municipality" class="form-control">
-        <option value=""></option>
-        {{#each municipalities}}
-          <option value="{{this.id}}" {{this.selected}}>
-            {{this.name}}
-          </option>
-        {{/each}}
-    </select>
-    <span class="help-inline"></span>
-</div>
+    <!-- Osoite -->
+    <h3>Osoite</h3>
+    <div>
+        Talkoopaikan osoite
+    </div>
+    <div id="div-address" class="form-group">
+      <input type="text" name="street_address" class="form-control" placeholder="Osoite" value="{{street_address}}"/>
+      <span class="help-block"></span>
+    </div>
 
-
-<!-- Time -->
-<h3>Talkoiden järjestämisajankohta</h3>
-<div>
-Kellonaika. Mainitse myös, jos talkoot järjestetään muulloin kuin 17.5.
-</div>
-<div id="div-time" class="form-div">
-  <input type="text" id="form-time" class="form-control" placeholder="Aika" value="{{time}}"/>
-  <span class="help-inline"></span>
-</div>
+    <!-- Kaupunki -->
+    <h3>Kaupunki</h3>
+    <div>
+    Kaupunki tai kunta
+    </div>
+    <div id="div-municipality" class="form-group">
+        <select name="municipality" class="form-control">
+            <option value=""></option>
+            {{#each municipalities}}
+              <option value="{{this.id}}" {{this.selected}}>
+                {{this.name}}
+              </option>
+            {{/each}}
+        </select>
+        <span class="help-block"></span>
+    </div>
 
 
-<!-- Goal -->
-<h3>Talkoiden tavoite</h3>
-<div>
-Mikä on talkoiden tavoite? Miksi talkoot järjestetään ja mitä talkoiden seurauksena saadaan aikaan?
+    <!-- Time -->
+    <h3>Talkoiden järjestämisajankohta</h3>
+    <div>
+    Kellonaika. Mainitse myös, jos talkoot järjestetään muulloin kuin 17.5.
+    </div>
+    <div id="div-time" class="form-group">
+      <input type="text" name="time" class="form-control" placeholder="Aika" value="{{time}}"/>
+      <span class="help-block"></span>
+    </div>
+
+
+    <!-- Goal -->
+    <h3>Talkoiden tavoite</h3>
+    <div>
+    Mikä on talkoiden tavoite? Miksi talkoot järjestetään ja mitä talkoiden seurauksena saadaan aikaan?
+    </div>
+    <div id="div-goal" class="form-group">
+      <textarea name="goal" class="form-control" placeholder="Tavoite">{{goal}}</textarea>
+      <span class="help-block"></span>
+    </div>
+
+
+    <!-- Description -->
+    <h3>Talkoiden toimintasuunnitelma</h3>
+    <div>
+    Mitä talkoissa tehdään? Mitä työtehtäviä talkoissa osallistujat pääsevät tekemään?
+    </div>
+    <div id="div-description" class="form-group">
+      <textarea name="description" class="form-control" placeholder="Suunnitelma">{{description}}</textarea>
+      <span class="help-block"></span>
+    </div>
+
+
+    <h2>Kuva talkoista</h2>
+    <div>
+        Voit lähettää kuvan, jonka haluat talkooilmoituksen yhteyteen, osoitteeseen info@talkoot.fi.
+        Kuva voi olla esimerkiksi kohdetta kuvaava, kuva järjestäjäporukasta tai muu aiheeseen sopiva kuva.
+        Muutoin käytämme talkootyypin ikonia kuvana.
+    </div>
+
+    <h1>Yhteyshenkilön tiedot</h1>
+
+    <div>
+    Nämä tiedot ovat yhteydenpitoa varten, ja ne eivät tule julkisiksi Talkoohakemistoon.
+    Talkoopäivän järjestäjät voivat ottaa yhteyttä talkoisiin liittyen.
+    </div>
+
+    <!-- Nimi -->
+    <h3>Yhteyshenkilön nimi</h3>
+    <div id="div-organizer" class="form-group">
+      <input type="text" name="organizer" class="form-control" placeholder="Nimi" value="{{organizer}}"/>
+      <span class="help-block"></span>
+    </div>
+
+    <!-- Sähköpostiosoite -->
+    <h3>Yhteyshenkilön sähköposti</h3>
+    <div id="div-email" class="form-group">
+      <input type="email" name="contact_email" class="form-control" placeholder="Sähköpostiosoite" value="{{contact_email}}">
+      <span class="help-block"></span>
+    </div>
+
+    <!-- Phone -->
+    <h3>Yhteyshenkilön puhelinnumero</h3>
+    <div id="div-phone" class="form-group">
+      <input type="number" name="contact_phone" class="form-control" placeholder="Puhelinnumero" value="{{contact_phone}}">
+      <span class="help-block"></span>
+    </div>
+
+    <button id="save-voluntary-work" type="submit" class="btn btn-primary">Järjestä talkoot</button>
+
+  </form>
+    </div>
+  </div>
 </div>
-<div id="div-goal" class="form-div">
-  <textarea id="form-goal" class="form-control" placeholder="Tavoite">{{goal}}</textarea>
-  <span class="help-inline"></span>
-</div>
-
-
-<!-- Description -->
-<h3>Talkoiden toimintasuunnitelma</h3>
-<div>
-Mitä talkoissa tehdään? Mitä työtehtäviä talkoissa osallistujat pääsevät tekemään?
-</div>
-<div id="div-description" class="form-div">
-  <textarea id="form-description" class="form-control" placeholder="Suunnitelma">{{description}}</textarea>
-  <span class="help-inline"></span>
-</div>
-
-
-<h2>Kuva talkoista</h2>
-<div>
-    Voit lähettää kuvan, jonka haluat talkooilmoituksen yhteyteen, osoitteeseen info@talkoot.fi.
-    Kuva voi olla esimerkiksi kohdetta kuvaava, kuva järjestäjäporukasta tai muu aiheeseen sopiva kuva.
-    Muutoin käytämme talkootyypin ikonia kuvana.
-</div>
-
-<h1>Yhteyshenkilön tiedot</h1>
-
-<div>
-Nämä tiedot ovat yhteydenpitoa varten, ja ne eivät tule julkisiksi Talkoohakemistoon.
-Talkoopäivän järjestäjät voivat ottaa yhteyttä talkoisiin liittyen.
-</div>
-
-<!-- Nimi -->
-<h3>Yhteyshenkilön nimi</h3>
-<div id="div-organizer" class="form-div">
-  <input type="text" id="form-organizer" class="form-control" placeholder="Nimi" value="{{organizer}}"/>
-  <span class="help-inline"></span>
-</div>
-
-<!-- Sähköpostiosoite -->
-<h3>Yhteyshenkilön sähköposti</h3>
-<div id="div-email" class="form-div">
-  <input type="email" id="form-email" class="form-control" placeholder="Sähköpostiosoite" value="{{contact_email}}">
-  <span class="help-inline"></span>
-</div>
-
-<!-- Phone -->
-<h3>Yhteyshenkilön puhelinnumero</h3>
-<div id="div-phone" class="form-div">
-  <input type="email" id="form-phone" class="form-control" placeholder="Puhelinnumero" value="{{contact_phone}}">
-  <span class="help-inline"></span>
-</div>
-
-<button id="save-voluntary-work" class="btn btn-primary">Järjestä talkoot</button>
-
