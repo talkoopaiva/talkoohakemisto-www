@@ -14,7 +14,7 @@ define([
       "": "list",
       "list": "list",
       "form": "form",
-      "view/:id": "form"
+      "view/:id": "view"
     },
 
     initialize: function() {
@@ -49,14 +49,33 @@ define([
     },
 
     list: function() {
-      if (app.voluntaryWorks.length == 0) {
+      if (app.voluntaryWorks.length === 0) {
         app.voluntaryWorks.fetch();
       }
       require(['views/list'], function(ListView) {
-        var listView = new ListView({collection: app.voluntaryWorks});
+        var view = new ListView({collection: app.voluntaryWorks});
 
-        app.mainView.setView("", listView);
-        listView.render();
+        app.mainView.setView("", view);
+        view.render();
+      });
+    },
+
+    view: function(id) {
+      var item = app.voluntaryWorks.get(id);
+      if (!item) {
+        item = new VoluntaryWork({id: id});
+        // TODO: error handling if item with given id doesn't exist for some reason
+        item.fetch();
+      }
+      // Fetch voluntaryWorks as suggestions for others
+      if (app.voluntaryWorks.length === 0) {
+        app.voluntaryWorks.fetch();
+      }
+      require(['views/details'], function(DetailsView) {
+        var view = new DetailsView({suggestions: app.voluntaryWorks, model: item});
+
+        app.mainView.setView("", view);
+        view.render();
       });
     }
 
