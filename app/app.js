@@ -35,6 +35,151 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     el: false
   });
 
+  _.extend(Backbone.Collection.prototype, {
+    'url': function() {
+      return app.api + this.collectionName;
+    }
+  });
+
+  _.extend(Backbone.Model.prototype, {
+    'urlRoot': function() {
+      return app.api + this.collectionName;
+    }
+  });
+
+  var oldSync = Backbone.sync;
+  Backbone.sync = function(method, model, options) {
+    var methodMap = {
+      'create': 'POST',
+      'update': 'PUT',
+      'patch':  'PUT', // PATCH implementation is quite complex in jsonapi - however PUT might work fine
+      'delete': 'DELETE',
+      'read':   'GET'
+    };
+
+    // If model is neither collection nor bb model, or passed settings are unsupported, use original Backbone.sync
+    var modelIsFake = typeof model !== "object" || ( !(model instanceof Backbone.Model) && !(model instanceof Backbone.Collection) );
+    if (modelIsFake || options.data || options.emulateHTTP || options.emulateJSON) {
+      return oldSync.apply(this, arguments);
+    }
+
+    var type = methodMap[method];
+    var params = {type: type, dataType: 'json'};
+
+    // Ensure that we have a URL.
+    if (!options.url) {
+      params.url = _.result(model, 'url') || urlError();
+    }
+
+    // transform data to fit jsonapi.org spec
+    var toJSONApi = function(attributes, model) {
+      attributes = attributes || model.toJSON(options);
+
+
+      _.each(attributes, function(val, key) {
+        // if some part is an object with an id, send just the plain id
+        if (val.id) {
+          attributes[key] = val.id;
+        }
+      });
+
+      // If collectionName was defined, URL is not needed
+      // However, if that wasn't defined, try to guess the collectionName
+      var collectionName = model.collectionName || (function() {
+        var url = _.result(model, 'url') || urlError();
+
+        // remove possible app.api path from the beginning
+        if (url.indexOf(app.api) === 0) {
+          url = url.substring(app.api.length);
+        }
+
+        model.collectionName = url.replace(/^\/?(\w+)\/?.*$/, "$1");
+        // return the first term, without possible '/'
+        return model.collectionName;
+      }());
+
+      // Wrap data into array and object
+      var result = {};
+      result[collectionName] = [attributes];
+
+      return result;
+    };
+
+    // transform data from jsonapi-endpoint to fit Backbone directly
+    var fromJSONApi = function(data, model) {
+      if (!data) {
+        return data;
+      } else if (!data[model.collectionName] || data[model.collectionName].length == 0) {
+        return;
+      }
+
+      var coll = data[model.collectionName];
+
+      // If linked items are passed in the response, populate them automatically
+      if (!_.isEmpty(data.linked)) {
+        // Index linked items for faster query
+        var linked = {};
+        _.each(data.linked, function(coll, key) {
+          linked[key] = _.indexBy(coll, 'id');
+        });
+
+        var links = data.links
+        _.each(coll, function(item) {
+          _.each(item.links, function(id, name) {
+            var collectionName = links[model.collectionName + '.' + name].type;
+            // TODO: perhaps new model should be created at this spot
+            // another way would be to replace the "linked" attribute's values
+            item[name] = linked[collectionName][id];
+          });
+          // Every linked item is generated -> remove linked
+          delete item.links;
+        });
+      }
+
+      if (model instanceof Backbone.Collection) {
+        return coll;
+      } else {
+        return coll[0];
+      }
+    }
+
+    if (method === 'create' || method === 'update') {
+      params.contentType = 'application/vnd.api+json';
+      params.data = JSON.stringify( toJSONApi( options.attrs, model ) );
+    } else if (method === 'patch') {
+      arams.contentType = 'application/json-patch+json';
+      // FIX: patch syntax is very different!
+      params.data = JSON.stringify( toJSONApi( options.attrs, model ) );
+    }
+
+    // If something's going to be done with the response, transform it to Backbone format
+    if (options.success) {
+      var success = options.success;
+      options.success = function(data) {
+        arguments[0] = fromJSONApi(data, model);
+        success.apply(this, arguments);
+      }
+    }
+
+    // Don't process data on a non-GET request.
+    if (params.type !== 'GET') {
+      params.processData = false;
+    }
+
+    // If we're sending a `PATCH` request, and we're in an old Internet Explorer
+    // that still has ActiveX enabled by default, override jQuery to use that
+    // for XHR instead. Remove this line when jQuery supports `PATCH` on IE8.
+    if (params.type === 'PATCH' && noXhrPatch) {
+      params.xhr = function() {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+      };
+    }
+
+    var xhr = options.xhr = Backbone.ajax(_.extend(params, options));
+    model.trigger('request', model, xhr, options);
+    return xhr;
+  };
+
   // This is for IE8
   if (!window.console) {
     window.console = {

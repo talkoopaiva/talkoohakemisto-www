@@ -56,23 +56,23 @@ function fortuneServer() {
     "name": String
   })
 
-  .transform(
+  // .transform(
 
-    // before storing in database
-    function() {
-      // TODO: "bump" feature
-      this.timestamp = new Date();
-      return this;
-    },
+  //   // before storing in database
+  //   function() {
+  //     // TODO: "bump" feature
+  //     this.timestamp = new Date();
+  //     return this;
+  //   },
 
-    // after retrieving from database
-    function() {
-      this.timestamp = this.timestamp instanceof Date ?
-        this.timestamp.getTime() : null;
-      return this;
-    }
+  //   // after retrieving from database
+  //   function() {
+  //     this.timestamp = this.timestamp instanceof Date ?
+  //       this.timestamp.getTime() : null;
+  //     return this;
+  //   }
 
-  )
+  // )
 
   /*!
    * Start the API

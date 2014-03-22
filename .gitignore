@@ -3,3 +3,4 @@
 /vendor/bower/
 /test/coverage/
 **/.DS_Store
+/app/pvt/
