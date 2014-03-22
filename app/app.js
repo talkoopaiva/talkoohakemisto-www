@@ -190,4 +190,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     };
   }
 
+  // Load non-critical dependencies, such as possible jquery plugins aso.
+  require(['bootstrap']);
+
 });

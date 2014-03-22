@@ -24,7 +24,7 @@ require.config({
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
 
-    "bootstrap": "../vendor/bower/bootstrap/dist/js/bootstrap",
+    "bootstrap": "//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min",
     "layoutmanager": "../vendor/bower/layoutmanager/backbone.layoutmanager",
     //"collectionCache": "../vendor/backbone.collectioncache"
   },
@@ -41,7 +41,14 @@ require.config({
     },
     "underscore": {
       exports: "_"
-    }
+    },
+
+    // Twitter Bootstrap depends on jQuery.
+    "bootstrap": {
+      deps: ["jquery"]
+    },
+  // Backbone.CollectionCache depends on Backbone.
+  //"collectionCache": ["backbone"],
   },
 
   hbs: { // optional
@@ -51,9 +58,4 @@ require.config({
       partialsUrl: ''           // default: ''
   },
 
-  // Backbone.CollectionCache depends on Backbone.
-  //"collectionCache": ["backbone"],
-
-  // Twitter Bootstrap depends on jQuery.
-  "bootstrap": ["jquery"]
 });
