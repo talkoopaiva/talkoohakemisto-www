@@ -11,10 +11,11 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
   app.imgRoot = app.root + "app/img/";
 
   // API endpoint.
-  var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1|192\.168\.)/;
+  var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1|192\.168\.|\.local)/;
   if (localhostPattern.test(window.location.href)) {
     //app.api = "http://xdsl-250-35.nebulazone.fi:5000/";
-    app.api = app.root + "sample-responses/";
+    //app.api = app.root + "sample-responses/";
+    app.api = "http://jaffatron.com:5000/";
   } else {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   }
@@ -68,17 +69,25 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       // By default the collection is not in a request.
       this.isRequest = false;
 
-      // This is the same as fetch() but executes only once
+      // Model is fetched whenever it has been loaded from the server
+      // Every time load occurs .parse() is invoked (even on save)
+      var oldParse = this.parse;
+      this.hasFetched = false;
+      this.parse = function() {
+        this.hasFetched = true;
+        return oldParse.apply(this, arguments);
+      };
+
+      // This is the same as fetch() but executes only once and every time returns the same response
+      // a la Cache
       this.fetched = _.once(function(options) {
-        // If the Model has more than 1 attributes, consider it "fetched"
-        // (this is dangerous definition - beware!)
-        if ( (this instanceof Backbone.Model && this.id && _.size(this.attributes) > 1) ||
-                (this instanceof Backbone.Collection && this.models.length > 1) ) {
+        if ( (this instanceof Backbone.Model && this.id && (this.hasFetched || this.collection && this.collection.hasFetched) ) ||
+                (this instanceof Backbone.Collection && this.models.length > 0 && this.hasFetched) ) {
           // Return deferred similar to what .fetch() would have returned
           // TODO: verify that the structure is really correct (esp. this?)
           return new $.Deferred().resolveWith(this, [this.toJSON(), "success"]);
         }
-        return this.fetch(options);
+        return this.fetch.call(this, options);
       });
 
     },
@@ -102,8 +111,8 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
   Backbone.sync = function(method, model, options) {
     var methodMap = {
       'create': 'POST',
-      'update': 'PUT',
-      'patch':  'PUT', // PATCH implementation is quite complex in jsonapi - however PUT might work fine
+      'update': 'POST',
+      'patch':  'POST', // PATCH implementation is quite complex in jsonapi - however PUT might work fine
       'delete': 'DELETE',
       'read':   'GET'
     };
@@ -220,8 +229,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       params.data = JSON.stringify( toJSONApi( options.attrs, model ) );
     } else if (method === 'patch') {
       // TODO: implement patch syntax that jsonapi depands
-      // Until then assume to use PUT instead
-      //params.contentType = 'application/json-patch+json';
+      // Until then use PUT/POST instead
       params.contentType = 'application/vnd.api+json';
       params.data = JSON.stringify( toJSONApi( options.attrs, model ) );
     }
@@ -264,7 +272,12 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       // We can do JSONP for only viewing and creating
       params.dataType = 'jsonp';
       params.type = 'GET';
-      params.processData = false;
+      if (method === 'create') {
+        params.url = params.url + '/create';
+        params.data = {"data": params.data};
+      }
+      delete params.processData;
+      delete params.type;
       delete params.contentType;
     }
 

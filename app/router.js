@@ -57,9 +57,9 @@ define([
               }
             });
 
-          } else if (this.model.hasChanged()) {
+          } else if (model.hasChanged()) {
             // Save if any changes have been made and go back to list view
-            model.save(this.model.changedAttributes, {patch: true, wait: true}).then(success).fail(function() {
+            model.save(_.extend({"token": model.get('token')}, model.changedAttributes()), {patch: true, wait: true}).then(success).fail(function() {
               // FIXME: error handling in case submission didn't go through
               console.log('Error in sending data to server', arguments);
             });
@@ -87,6 +87,8 @@ define([
     },
 
     list: function() {
+      // For some reason it may not delete the previous views
+      app.mainView.removeView("");
       require(['views/list'], function(ListView) {
         var view = new ListView({collection: app.voluntaryWorks});
 
@@ -121,6 +123,12 @@ define([
     form: function(id, token) {
       var item;
       if (id) {
+        // Editing may only work on browsers with CORS support
+        if (app.helpers.supportsCors === false) {
+          alert('Tietojen muokkaus ei ole mahdollista vanhemmilla selaimilla.' +
+                "\n" + 'Suosittelemme käyttämään Chrome selainta tietojen päivitykseen.');
+          return router.navigate('list', true);
+        }
         item = this.getItem(id);
       }
 
@@ -132,7 +140,11 @@ define([
           params.model = item;
           if (token) {
             // Persist token in the model
-            params.model.token = token;
+            params.model.set('token', token);
+          } else if (!params.model.get('token')) {
+            // If token doesn't exist in the model, warn and return back to list
+            alert('Muokataksesi takoiden tietoja seuraa sähköpostiisi saapunutta muokkauslinkkiä.');
+            return router.navigate('list', true);
           }
         }
         view = new FormView(params);
