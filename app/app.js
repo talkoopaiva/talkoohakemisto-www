@@ -125,12 +125,16 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     // transform data to fit jsonapi.org spec
     var toJSONApi = function(attributes, model) {
       attributes = attributes || model.toJSON(options);
-
+      if (!attributes.links) {
+        attributes.links = {};
+      }
 
       _.each(attributes, function(val, key) {
         // if some part is an object with an id, send just the plain id
         if (val.id) {
           attributes[key] = val.id;
+          // Also, the API seems to demand then in the links-object
+          attributes.links[key] = val.id;
         }
       });
 
@@ -162,10 +166,10 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
         var links = data.links;
         _.each(coll, function(item) {
           _.each(item.links, function(id, name) {
-            var collectionName = links[collectionName + '.' + name].type;
+            var fieldName = links[collectionName + '.' + name].type;
             // TODO: perhaps new model should be created at this spot
             // another way would be to replace the "linked" attribute's values
-            item[name] = linked[collectionName][id];
+            item[name] = linked[fieldName][id];
           });
           // Every linked item is generated -> remove linked
           delete item.links;
