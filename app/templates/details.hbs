@@ -1,0 +1,59 @@
+<div class="container">
+
+  <div class="row">
+
+
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+
+      <h1>{{name}}</h1>
+
+      <p class="talkoot-type">{{type.name}}</p>
+
+      <p class="lead">{{description}}</p>
+
+      <hr>
+
+      <div class="hidden-xs">
+        <!-- TODO: Enable google map -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1983.7907131632016!2d24.832060799999994!3d60.18419629999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x468df5ed5c70024f%3A0x6e5a35fd7015dea0!2sDipoli!5e0!3m2!1sen!2sfi!4v1394299862606" style="width:100%" height="450" frameborder="0" style="border:0"></iframe>
+        <hr>
+      </div>
+
+      <div class="visible-xs">
+        <a class="btn btn-large btn-default btn-lg" href="maps:Dipoli,Espoo,Finland">
+          <i class="glyphicon glyphicon-map-marker"></i> Näytä sijainti kartalla
+        </a>
+      </div>
+
+      <ul id="talkoo-specs" class="lead">
+        <li><i class="glyphicon glyphicon-user"></i> Järjestäjä: {{organizer}}, {{contact_phone}}</li>
+        <li><i class="glyphicon glyphicon-map-marker"></i> Sijainti: {{stree_address}}, {{municipality.name}}</li>
+        <li><i class="glyphicon glyphicon-time"></i> Alkamisajankohta: {{time}}</li>
+        {{#if hashtag}}<li><i class="glyphicon glyphicon-tag"></i> Hashtag: {{hashtag}}</li>{{/if}}
+        {{#if url}}<li><i class="glyphicon glyphicon-globe"></i> <a href="{{url}}">Lisätietoja nettisivuilta</a></li>{{/if}}
+      </ul>
+
+      <hr>
+
+      <h3>Talkoiden toimintasuunnitelma</h3>
+      <div class="lead">
+        <p>
+         {{goal}}
+        </p>
+      </div>
+
+    </div>
+
+    <div class="col-sm-12 col-md-8 col-md-offset-2 ">
+      <hr>
+      <h2>Muut talkoot</h2>
+
+      <p class="lead">Muita listattuja talkoita ympäri Suomea.</p>
+
+      <ul id="other-talkoot"></ul>
+
+    </div>
+
+
+  </div>
+</div>

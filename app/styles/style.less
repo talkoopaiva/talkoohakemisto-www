@@ -1,0 +1,366 @@
+/*
+Theme Name: Talkoopäivä
+Author: Petri Vilén
+*/
+
+
+
+body {
+  background: #fafafa;
+}
+
+
+h1 {
+  font-family: Lobster;
+  font-size: 4em;
+  color: #0e76bc;
+}
+
+h2 {
+  font-family: Lobster;
+  font-size: 3em;
+  color: #0e76bc;
+
+}
+
+#main {
+  padding: 60px 0 120px;
+}
+
+
+/*  ==================================
+        NAVIGATION
+    ==================================  */
+
+.navbar {
+    margin-bottom: 0;
+}
+.navbar-default {
+    background: #fff;
+    padding: 10px;
+    border-bottom: none;
+    .navbar-brand {
+        font-family: Lobster;
+        font-size: 2em;
+        color: #0e76bc;
+    }
+}
+.btn-nav {
+    padding: 7px 0;
+    margin-left: 20px;
+}
+.navbar-nav {
+    a {
+        text-transform: uppercase;
+    }
+}
+
+
+
+/*  ==================================
+        FRONT PAGE
+    ==================================  */
+
+
+#front-contents {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+}
+#iframe {
+    width: 560px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+.box {
+    background: #fff;
+    padding: 20px;
+    height: 150px;
+    text-align: center;
+}
+#wrapper {
+    background: url(http://www.talkoot.fi/wp-content/uploads/2014/03/4813630413_9cff31a3ea_b.jpg) no-repeat center;
+    background-size: cover;
+    h1 {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        width: 100%;
+        color: #fff;
+        text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+        font-size: 4em;
+    }
+}
+.readmore {
+    color: #fff;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+    font-size: 2em;
+    margin-top: 50px;
+}
+.readmore:hover {
+    color: #ccc;
+    text-decoration: none;
+}
+
+
+
+
+/*  ==================================
+        GRID
+    ==================================  */
+
+
+.panel-grid {
+    clear:both;
+    padding: 20px 0;
+}
+.panel {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    background: none;
+    p {
+        font-size: 1.2em;
+        font-weight: 300;
+    }
+    ul {
+        margin: 15px 0;
+    }
+    li {
+        margin: 8px 0;
+        padding: 0;
+        font-size: 1.2em;
+        list-style: square;
+        font-weight: 300;
+    }
+    img {
+        max-width: 100%;
+    }
+    strong {
+        font-family: Lobster, Helvetica, sans-serif;
+        font-size: 1.6em;
+    }
+}
+p.lead {
+    font-size: 1.5em;
+}
+
+
+
+
+/*  ==================================
+        SIDEBAR
+    ==================================  */
+
+
+
+#sidebar {
+    h3 {
+        font-size: 1.3em;
+        font-weight: bold;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        margin-bottom: 40px;
+        li {
+            font-size: 1.2em;
+            font-weight: 300;
+            a {
+                color: #666;
+            }
+            a:hover {
+                color: #0e76bc;
+                text-decoration: none;
+            }
+        }
+        li.current_page_item {
+            a {
+                color: #0e76bc;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+
+
+
+/*  ==================================
+        RANDOM
+    ==================================  */
+
+
+#fb-footer {
+  background: #fff;
+  padding: 30px 0;
+}
+
+
+
+
+/*  ==================================
+        RANDOM
+    ==================================  */
+
+
+
+h3.widget-title {
+  display: none;
+}
+
+.clear { clear: both; }
+
+
+
+
+/*  ==================================
+        HAKEMISTO
+    ==================================  */
+
+ul#talkoot {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.single-talkoot {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    a {
+        color: #333;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: none;
+    }
+}
+.single-talkoot:hover {
+    border-color: #aaa;
+}
+.img-talkoot {
+    width: 150px;
+    height: 150px;
+    background: #ddd;
+    float: left;
+    margin-right: 20px;
+}
+.talkoot-type {
+    text-transform: uppercase;
+    color: #999;
+}
+.talkoot-info {
+    margin-left: 170px;
+    h3 {
+        margin: 0;
+        padding: 0;
+        color: #000;
+    }
+}
+.talkoot-meta {
+    color: #aaa;
+    i {
+        color: #666;
+    }
+}
+.talkoot-desc {
+    height: 3em;
+    overflow: hidden;
+}
+
+
+
+/*  ==================================
+      SINGLE TALKOOT
+    ==================================  */
+
+#talkoo-header {
+    height: 400px;
+    background: #ccc;
+    margin-top: -50px;
+    overflow:hidden;
+    background-position: center center;
+    background-size: cover;
+}
+#talkoo-specs {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+    color: #666;
+    i {
+        margin-right: 15px;
+    }
+}
+
+
+
+/*  ==================================
+        MOBILE
+    ==================================  */
+
+
+@media (max-width: 767px) {
+
+  #wrapper h2 {
+    margin: 80px 0 0;
+    padding: 30px 10px;
+    position: relative;
+    top: none;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+    font-size: 2em;
+  }
+
+  #front-contents {
+    padding-top: 40px;
+    position: relative;
+    bottom: none;
+  }
+
+  .img-talkoot {
+    max-width: 80px;
+    height: 100%;
+    background: #ddd;
+    float: left;
+    margin-right: 10px;
+  }
+
+  .talkoot-info {
+    margin-left: 90px;
+  }
+
+  .single-talkoot {
+    border: none;
+    margin-bottom: 0px;
+    padding: 0;
+    background: #fff;
+    padding: 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+
+  .talkoot-desc {
+    display: none;
+  }
+
+
+  h1, #wrapper h1 {
+    font-size: 2em;
+  }
+
+  #wrapper {
+    padding-top: 100px;
+  }
+
+  .readmore {
+    margin-top: 25px;
+    font-size: 1.3em;
+  }
+
+
+
+}

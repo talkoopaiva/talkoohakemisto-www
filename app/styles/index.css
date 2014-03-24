@@ -4,4 +4,6 @@
 
 /*-- Application stylesheets. -----------------------------------------------*/
 
+@import "style.less";
+
 @import "main.less";

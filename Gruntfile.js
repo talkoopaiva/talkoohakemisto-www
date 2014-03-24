@@ -38,9 +38,25 @@ module.exports = function(grunt) {
           // Wrap everything in an IIFE.
           wrap: true,
 
+          // Modules to stub out in the optimized file.
+          stubModules: ['text', 'hbars'],
+
           // Do not preserve any license comments when working with source
           // maps.  These options are incompatible.
-          preserveLicenseComments: false
+          preserveLicenseComments: false,
+
+          // This is needed for the require-handlebars library
+          // (didn't seem to match anything, not sure if it's needed /Albert)
+          // onBuildWrite : function(moduleName, path, content){
+          //     // replace handlebars with the runtime version
+          //     if (moduleName === 'Handlebars') {
+          //       console.log('matched: ' + moduleName + ' : ' + path);
+          //         path = path.replace('handlebars.js','handlebars.runtime.js');
+          //         console.log('newpath: ' + path);
+          //         content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
+          //     }
+          //     return content;
+          // }
         }
       }
     },
@@ -96,6 +112,37 @@ module.exports = function(grunt) {
       }
     },
 
+    talkooserver: {
+
+    },
+
+    watch: {
+      options: {
+        spawn: true
+      },
+      livereload: {
+        files: [
+          'app/**/*',
+          '*.html'
+        ],
+        options: {
+          livereload: true
+        }
+      }
+    },
+
+    // Enables running several task at the same time
+    concurrent: {
+      options: {
+        logConcurrentOutput: true,
+      },
+      watch: [
+        'watch',
+        'server',
+        'talkooserver'
+      ]
+    },
+
     processhtml: {
       release: {
         files: {
@@ -144,77 +191,6 @@ module.exports = function(grunt) {
           to: releaseConfig.appRoot
         }]
       }
-    },
-
-    // Unit testing is provided by Karma.  Change the two commented locations
-    // below to either: mocha, jasmine, or qunit.
-    karma: {
-      options: {
-        basePath: process.cwd(),
-        singleRun: true,
-        captureTimeout: 7000,
-        autoWatch: true,
-        logLevel: "ERROR",
-
-        reporters: ["dots", "coverage"],
-        browsers: ["PhantomJS"],
-
-        // Change this to the framework you want to use.
-        frameworks: ["mocha"],
-
-        plugins: [
-          "karma-jasmine",
-          "karma-mocha",
-          "karma-qunit",
-          "karma-phantomjs-launcher",
-          "karma-coverage"
-        ],
-
-        preprocessors: {
-          "app/**/*.js": "coverage"
-        },
-
-        coverageReporter: {
-          type: "lcov",
-          dir: "test/coverage"
-        },
-
-        files: [
-          // You can optionally remove this or swap out for a different expect.
-          "vendor/bower/chai/chai.js",
-          "vendor/bower/requirejs/require.js",
-          "test/runner.js",
-
-          { pattern: "app/**/*.*", included: false },
-          // Derives test framework from Karma configuration.
-          {
-            pattern: "test/<%= karma.options.frameworks[0] %>/**/*.spec.js",
-            included: false
-          },
-          { pattern: "vendor/**/*.js", included: false }
-        ]
-      },
-
-      // This creates a server that will automatically run your tests when you
-      // save a file and display results in the terminal.
-      daemon: {
-        options: {
-          singleRun: false
-        }
-      },
-
-      // This is useful for running the tests just once.
-      run: {
-        options: {
-          singleRun: true
-        }
-      }
-    },
-
-    coveralls: {
-      options: {
-        coverage_dir: "test/coverage/PhantomJS 1.9.2 (Linux)/"
-      }
     }
   });
 
@@ -224,18 +200,20 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-compress");
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Third-party tasks.
-  grunt.loadNpmTasks("grunt-karma");
-  grunt.loadNpmTasks("grunt-karma-coveralls");
   grunt.loadNpmTasks("grunt-processhtml");
+  grunt.loadNpmTasks('grunt-text-replace');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   // Grunt BBB tasks.
   grunt.loadNpmTasks("grunt-bbb-server");
   grunt.loadNpmTasks("grunt-bbb-requirejs");
   grunt.loadNpmTasks("grunt-bbb-styles");
 
-  grunt.loadNpmTasks('grunt-text-replace');
+  // Own
+  grunt.loadNpmTasks("../etc/grunt-talkoo-server");
 
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", [
@@ -247,5 +225,9 @@ module.exports = function(grunt) {
     "requirejs",
     "styles",
     "cssmin",
+  ]);
+
+  grunt.registerTask("dev", [
+    "concurrent"
   ]);
 };
