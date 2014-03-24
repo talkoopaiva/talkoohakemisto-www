@@ -125,18 +125,30 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     // transform data to fit jsonapi.org spec
     var toJSONApi = function(attributes, model) {
       attributes = attributes || model.toJSON(options);
-      if (!attributes.links) {
-        attributes.links = {};
-      }
+      var links = {};
 
       _.each(attributes, function(val, key) {
         // if some part is an object with an id, send just the plain id
         if (val.id) {
           attributes[key] = val.id;
           // Also, the API seems to demand then in the links-object
-          attributes.links[key] = val.id;
+          links[key] = val.id;
         }
       });
+
+      _.each(model.links, function(plural, singular) {
+        if (_.has(attributes, singular)) {
+          // If any linked fields are found, gather them
+          links[singular] = attributes[singular];
+          // Delete links from the root
+          delete attributes[singular];
+        }
+        // TODO: add handling for one-to-many relationships
+      });
+
+      if (!_.isEmpty(links)) {
+        attributes.links = links;
+      }
 
       // Wrap data into array and object
       var result = {};

@@ -131,7 +131,8 @@ define([
         if (item) {
           params.model = item;
           if (token) {
-            params.token = token;
+            // Persist token in the model
+            params.model.token = token;
           }
         }
         view = new FormView(params);

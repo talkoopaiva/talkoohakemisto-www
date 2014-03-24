@@ -27,7 +27,7 @@ require.config({
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
 
-    "bootstrap": "//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min",
+    "bootstrap": "../vendor/bower/bootstrap/dist/js/bootstrap.min",
     "layoutmanager": "../vendor/bower/layoutmanager/backbone.layoutmanager",
     //"collectionCache": "../vendor/backbone.collectioncache"
   },

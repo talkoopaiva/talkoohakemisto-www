@@ -1,6 +1,6 @@
 /*-- Bootstrap. -------------------------------------------------------------*/
 
-@import "../../vendor/bower/bootstrap/dist/css/bootstrap.css";
+@import "bootstrap-site.less";
 
 /*-- Application stylesheets. -----------------------------------------------*/
 

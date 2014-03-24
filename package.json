@@ -1,27 +1,30 @@
 {
-  "name": "backbone-boilerplate",
+  "name": "talkoohakemisto",
   "version": "1.0.0",
-
   "devDependencies": {
-    "grunt": "~0.4.1",
     "bbb": "~0.2.0",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-contrib-copy": "~0.5.0",
+    "grunt": "~0.4.1",
+    "grunt-bbb-requirejs": "~0.1.0-alpha.6",
+    "grunt-bbb-server": "~0.1.0-alpha.13",
+    "grunt-bbb-styles": "~0.1.0-alpha.5",
+    "grunt-concurrent": "~0.5.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-compress": "~0.6.0",
-    "grunt-processhtml": "~0.2.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-concurrent": "~0.5.0"
+    "grunt-processhtml": "~0.2.0",
+    "grunt-text-replace": "~0.3.11"
   },
-
   "peerDependencies": {
-    "generator-bbb": "*",
     "bower": "*",
     "grunt-cli": "*"
   },
-
   "scripts": {
     "test": "grunt karma:run coveralls"
+  },
+  "dependencies": {
+    "grunt-bbb-requirejs": "0.1.0-alpha.8"
   }
 }

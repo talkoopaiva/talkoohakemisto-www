@@ -7,6 +7,11 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
     // },
     urlRoot: app.api + "voluntary_works",
 
+    links: {
+      "type": "types",
+      "municipality": "municipalities"
+    },
+
     parse: function(data) {
       if (data.hasOwnProperty('voluntary_works')) {
         console.log('fetched', data.voluntary_works[0]);
@@ -19,9 +24,9 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
     validate: function(attrs) {
       var errors = [];
 
-      //if (!attrs.type) {
-      //  errors.push({name: 'type', message: 'Valitse talkootyyppi'});
-      //}
+      if (!attrs.type) {
+       errors.push({name: 'type', message: 'Valitse talkootyyppi'});
+      }
 
       if (!attrs.name) {
         errors.push({name: 'name', message: 'Kirjoita talkoiden nimi'});

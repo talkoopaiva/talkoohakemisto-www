@@ -63,6 +63,7 @@ function fortuneServer() {
     "name": String
   })
 
+  // TODO: add linked items aso.
   // .transform(
 
   //   // before storing in database

@@ -46,10 +46,9 @@ module.exports = function(grunt) {
               // replace handlebars with the runtime version
               if (moduleName === 'Handlebars') {
                   path = path.replace('handlebars.js','handlebars.runtime.js');
-                  console.log('replacing handlebars !!!', path);
                   content = grunt.file.read(path).toString();
+                  // Set Handlebars as a grobal variable
                   content = content.replace('var Handlebars', 'window.Handlebars');
-                  //content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
               }
               return content;
           },
@@ -113,10 +112,6 @@ module.exports = function(grunt) {
       }
     },
 
-    talkooserver: {
-
-    },
-
     watch: {
       options: {
         spawn: true
@@ -140,7 +135,7 @@ module.exports = function(grunt) {
       watch: [
         'watch',
         'server',
-        'talkooserver'
+        //'talkooserver'
       ]
     },
 
@@ -213,8 +208,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-bbb-requirejs");
   grunt.loadNpmTasks("grunt-bbb-styles");
 
-  // Own
-  grunt.loadNpmTasks("../etc/grunt-talkoo-server");
+  // Local jsonapi database server for testing (at 127.0.0.1:1337)
+  // grunt.loadNpmTasks("../etc/grunt-talkoo-server");
 
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", [
