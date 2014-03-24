@@ -35,17 +35,53 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     el: false
   });
 
-  _.extend(Backbone.Collection.prototype, {
-    'url': function() {
-      return this.constructor.type ? (app.api + this.constructor.type) : null;
-    }
-  });
+  // Common extensions for model & collection
+  var extensions = {
+    initialize: function(models, options) {
 
-  _.extend(Backbone.Model.prototype, {
-    'urlRoot': function() {
+      // Listen for request and sync events to control the `isRequest` flag.
+      this.on({
+        request: function() {
+          this.isRequest = true;
+        },
+
+        sync: function() {
+          this.isRequest = false;
+        }
+      });
+
+      // By default the collection is not in a request.
+      this.isRequest = false;
+
+      // This is the same as fetch() but executes only once
+      this.fetched = _.once(function(options) {
+        // If the Model has more than 1 attributes, consider it "fetched"
+        // (this is dangerous definition - beware!)
+        if ( (this instanceof Backbone.Model && this.id && _.size(this.attributes) > 1) ||
+                (this instanceof Backbone.Collection && this.models.length > 1) ) {
+          // Return deferred similar to what .fetch() would have returned
+          // TODO: verify that the structure is really correct (esp. this?)
+          return new $.Deferred().resolveWith(this, [this.toJSON(), "success"]);
+        }
+        return this.fetch(options);
+      });
+
+    },
+  };
+
+  // Extend Collection prototype
+  _.extend(Backbone.Collection.prototype, _.extend({
+    url: function() {
       return this.constructor.type ? (app.api + this.constructor.type) : null;
     }
-  });
+  }, extensions));
+
+  // Extend Model prototype
+  _.extend(Backbone.Model.prototype, _.extend({
+    urlRoot: function() {
+      return this.constructor.type ? (app.api + this.constructor.type) : null;
+    }
+  }, extensions));
 
   var oldSync = Backbone.sync;
   Backbone.sync = function(method, model, options) {
@@ -187,9 +223,9 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
   // This is for IE8
   if (!window.console) {
     window.console = {
-      log: function() {},
-      warn: function() {},
-      error: function() {}
+      log: $.noop,
+      warn: $.noop,
+      error: $.noop
     };
   }
 

@@ -1,36 +1,36 @@
-define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', 'hbs!../templates/details'],
+define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', 'hbars!templates/details'],
         function(module, _, Backbone, $, app, ItemView, template) {
   module.exports = Backbone.Layout.extend({
     template: template,
     serialize: function() {
+      var data = this.model.toJSON();
       // TODO: create icon URL based on the WorkType
-      // Generate URL to details view
-      return this.model.toJSON();
-    },
-    addView: function(model, render) {
-      // Insert a nested View into this View.
-      var view = this.insertView("#other-talkoot", new ItemView({ model: model }));
+      // TODO: Generate URL to details view
 
-      // Only trigger render if it not inserted inside `beforeRender`.
-      if (render !== false) {
-        view.render();
+      // Show only organization if isset
+      if (data.organization) {
+        data.organizer = data.organization;
+        delete data.organization;
       }
+      return data;
     },
 
-    beforeRender: function() {
+    afterRender: function() {
+      var view = this;
       var currentModel = this.model;
-      _.chain(this.suggestions.models).sample(5).each(function(model) {
-        // Don't show the same item in suggestions
-        if (model === currentModel) {
-          return true;
-        }
-        this.addView(model, false);
-      }, this);
+
+      // Load with it's own time...
+      this.suggestions.fetched().then(function() {
+        _.chain(view.suggestions.models).sample(5).each(function(model) {
+          // Don't show the same item in suggestions
+          if (model === currentModel) {
+            return true;
+          }
+          // Insert a nested View into this View.
+          view.insertView("#other-talkoot", new ItemView({ model: model })).render();
+        });
+      });
     },
 
-    initialize: function() {
-      //this.listenTo(this.suggestions, "add", this.addView);
-      //this.model.on("change", this.render());
-    }
   });
 });

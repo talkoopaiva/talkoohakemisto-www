@@ -1,11 +1,17 @@
-define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbs!../templates/listitem'],
-        function(module, _, Backbone, $, app, template) {
+define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/listitem', 'templates/helpers/iconUrl'],
+        function(module, _, Backbone, $, app, template, iconUrl) {
   module.exports = Backbone.Layout.extend({
+
     template: template,
+
     serialize: function() {
-      // TODO: create icon URL based on the WorkType
+      var data = this.model.toJSON();
+
       // Generate URL to details view
-      return this.model.toJSON();
+      data.detailsPage = app.root + 'view/' + this.model.id;
+
+      return data;
     }
+
   });
 });

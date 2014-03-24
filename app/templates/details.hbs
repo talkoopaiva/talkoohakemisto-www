@@ -5,8 +5,9 @@
 
     <div class="col-sm-12 col-md-8 col-md-offset-2">
 
-      <h1>Wikitalkoot</h1>
-      <p class="talkoot-type">{{name}}</p>
+      <h1>{{name}}</h1>
+
+      <p class="talkoot-type">{{type.name}}</p>
 
       <p class="lead">{{description}}</p>
 
@@ -25,11 +26,11 @@
       </div>
 
       <ul id="talkoo-specs" class="lead">
-        <li><i class="glyphicon glyphicon-user"></i> Järjestäjä: {{organizer}}</li>
+        <li><i class="glyphicon glyphicon-user"></i> Järjestäjä: {{organizer}}, {{contact_phone}}</li>
         <li><i class="glyphicon glyphicon-map-marker"></i> Sijainti: {{stree_address}}, {{municipality.name}}</li>
-        <li><i class="glyphicon glyphicon-time"></i> Alkamisajankohta: !!FIX THIS!!</li>
-        <li><i class="glyphicon glyphicon-tag"></i> Hashtag: #FIXTHIS</li>
-        <li><i class="glyphicon glyphicon-globe"></i> <a href="#">Lisätietoja nettisivuilta</a></li>
+        <li><i class="glyphicon glyphicon-time"></i> Alkamisajankohta: {{time}}</li>
+        {{#if hashtag}}<li><i class="glyphicon glyphicon-tag"></i> Hashtag: {{hashtag}}</li>{{/if}}
+        {{#if url}}<li><i class="glyphicon glyphicon-globe"></i> <a href="{{url}}">Lisätietoja nettisivuilta</a></li>{{/if}}
       </ul>
 
       <hr>
@@ -37,12 +38,7 @@
       <h3>Talkoiden toimintasuunnitelma</h3>
       <div class="lead">
         <p>
-         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-         consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-         cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+         {{goal}}
         </p>
       </div>
 

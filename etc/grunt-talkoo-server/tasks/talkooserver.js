@@ -39,13 +39,20 @@ function fortuneServer() {
   })
 
   .resource('voluntary_works', {
-      "contact_email": String,
-      "description": String,
-      "municipality": "municipality",
-      "type": "type",
       "name": String,
       "organizer": String,
-      "street_address": String
+      "description": String,
+      "street_address": String,
+      "contact_email": String,
+      "municipality": "municipality",
+      "type": "type",
+      "url": String,
+      "hashtag": String,
+      "location": String,
+      "time": String,
+      "goal": String,
+      "contact_phone": String,
+      "organization": String
   })
 
   .resource('type', {

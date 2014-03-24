@@ -3,7 +3,6 @@
     <div class="col-sm-12 col-md-10 col-md-offset-1 ">
 
   <h1>Ilmoita Talkoot Talkoohakemistoon</h1>
-
   <form id="voluntary-work-form">
 
     <!-- Nimi -->
@@ -23,15 +22,8 @@
         Valitse, mitä tyyppiä talkoo edustaa parhaiten
     </div>
     <div class="vw-types" id="div-type" class="form-group" style="">
-        <select id="form-type" name="type" class="form-control">
-            <option value=""></option>
-            {{#each types}}
-              <option value="{{this.id}}" {{this.selected}}>
-                {{this.name}}
-              </option>
-            {{/each}}
-        </select>
-        <span class="help-block"></span>
+      {{{select types selected="type" id="form-type" name="type" class="form-control"}}}
+      <span class="help-block"></span>
     </div>
 
     <!-- Järjestäjä -->
@@ -52,7 +44,7 @@
         järjestäjän kotisivut. Ei pakollinen.
     </div>
     <div id="div-url" class="form-group">
-      <input type="text"  name="url" class="form-control" placeholder="Nettisivu" value="{{url}}"/>
+      <input type="url" name="url" class="form-control" placeholder="Nettisivu" value="{{url}}"/>
       <span class="help-block"></span>
     </div>
 
@@ -92,25 +84,18 @@
     Kaupunki tai kunta
     </div>
     <div id="div-municipality" class="form-group">
-        <select name="municipality" class="form-control">
-            <option value=""></option>
-            {{#each municipalities}}
-              <option value="{{this.id}}" {{this.selected}}>
-                {{this.name}}
-              </option>
-            {{/each}}
-        </select>
-        <span class="help-block"></span>
+      {{{select municipalities selected="municipality" name="municipality" class="form-control"}}}
+      <span class="help-block"></span>
     </div>
 
 
     <!-- Time -->
     <h3>Talkoiden järjestämisajankohta</h3>
     <div>
-    Kellonaika. Mainitse myös, jos talkoot järjestetään muulloin kuin 17.5.
+    Kellonaika.
     </div>
     <div id="div-time" class="form-group">
-      <input type="text" name="time" class="form-control" placeholder="Aika" value="{{time}}"/>
+      <input type="time" name="time" class="form-control" placeholder="Aika" value="{{time}}"/>
       <span class="help-block"></span>
     </div>
 
@@ -144,7 +129,7 @@
         Muutoin käytämme talkootyypin ikonia kuvana.
     </div>
 
-    <h1>Yhteyshenkilön tiedot</h1>
+    <h2>Yhteyshenkilön tiedot</h2>
 
     <div>
     Nämä tiedot ovat yhteydenpitoa varten, ja ne eivät tule julkisiksi Talkoohakemistoon.
@@ -168,7 +153,7 @@
     <!-- Phone -->
     <h3>Yhteyshenkilön puhelinnumero</h3>
     <div id="div-phone" class="form-group">
-      <input type="number" name="contact_phone" class="form-control" placeholder="Puhelinnumero" value="{{contact_phone}}">
+      <input type="tel" name="contact_phone" class="form-control" placeholder="Puhelinnumero" value="{{contact_phone}}">
       <span class="help-block"></span>
     </div>
 

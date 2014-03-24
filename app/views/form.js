@@ -1,5 +1,6 @@
-define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbs!../templates/form', 'models/voluntary-work'],
-        function(module, _, Backbone, $, app, template, VoluntaryWork) {
+define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/form',
+        'models/voluntary-work', '../templates/helpers/select'],
+        function(module, _, Backbone, $, app, template, VoluntaryWork, getSelectList) {
   module.exports = Backbone.Layout.extend({
     template: template,
 
@@ -11,18 +12,24 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbs!../templates/f
     },
 
     initialize: function() {
+      //
       if (!this.model) {
         this.model = new VoluntaryWork();
       }
       // On validation error, point the errors
       this.model.on('invalid', function(model, errors) {
+        console.log('validation errors', errors);
         this.showErrors.call(this, errors);
       }, this);
     },
 
     serialize: function() {
-      // TODO: prepare data for form rendering
-      return this.model ? this.model.toJSON() : {};
+      // Load existing model or leave fields empty
+      var data = this.model ? this.model.toJSON() : {};
+      // Attached types and municipalities to template data
+      _.extend(data, {municipalities: this.municipalities.toJSON(), types: this.types.toJSON()});
+
+      return data;
     },
 
     showErrors: function(errors) {
@@ -66,13 +73,13 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbs!../templates/f
 
       // Hide possible errors from previous submission
       this.hideErrors();
-
       // Set attributes and validate - if not, cancel
       if (!this.model.set(attr, {validate: true})) {
         return;
-      };
+      }
 
-      app.trigger('voluntary-work-submission', [model, attr]);
+      // Trigger submission for app to handle
+      app.trigger('voluntary-work-submission', this.model, attr);
     }
 
   });

@@ -43,8 +43,13 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
         errors.push({name: 'organizer', message: 'Kirjoita nimesi'});
       }
 
-      if (!attrs.email) {
-        errors.push({name: 'email', message: 'Kirjoita sähköpostiosoitteesi'});
+      if (!attrs.contact_email) {
+        errors.push({name: 'contact_email', message: 'Kirjoita sähköpostiosoitteesi'});
+      }
+
+      // Make sure hashtag has the hash prepended
+      if (attrs.hashtag && attrs.hashtag[0] !== '#') {
+        attrs.hashtag = '#' + attrs.hashtag;
       }
 
       return errors.length > 0 ? errors : false;

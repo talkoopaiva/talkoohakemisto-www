@@ -38,9 +38,23 @@ module.exports = function(grunt) {
           // Wrap everything in an IIFE.
           wrap: true,
 
+          // Modules to stub out in the optimized file.
+          stubModules: ['text', 'hbars'],
+
           // Do not preserve any license comments when working with source
           // maps.  These options are incompatible.
-          preserveLicenseComments: false
+          preserveLicenseComments: false,
+
+          // This is needed for the require-handlebars library
+          onBuildWrite : function(moduleName, path, content){
+              // replace handlebars with the runtime version
+              if (moduleName === 'Handlebars') {
+                  path = path.replace('handlebars.js','handlebars.runtime.js');
+                  content = grunt.file.read(path).toString();
+                  content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
+              }
+              return content;
+          }
         }
       }
     },
@@ -122,7 +136,8 @@ module.exports = function(grunt) {
       },
       watch: [
         'watch',
-        'server'
+        'server',
+        'talkooserver'
       ]
     },
 

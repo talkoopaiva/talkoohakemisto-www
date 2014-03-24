@@ -7,7 +7,9 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
         initialize: function(){
 
         }
-      })
+      }),
+
+      comparator: 'name'
     },
     { // Class properties
       type: "municipalities"

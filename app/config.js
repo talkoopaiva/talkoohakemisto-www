@@ -7,7 +7,7 @@ require.config({
     "vendor": "../vendor",
 
     // Almond is used to lighten the output filesize.
-    //"almond": "../vendor/bower/almond/almond",
+    "almond": "../vendor/bower/almond/almond",
 
     // Opt for Lo-Dash Underscore compatibility build over Underscore.
     "underscore": "../vendor/bower/lodash/dist/lodash.underscore",
@@ -18,7 +18,9 @@ require.config({
     // Use the Lo-Dash template loader.
     //"ldsh": "../vendor/bower/lodash-template-loader/loader",
 
-    "hbs": "../vendor/bower/require-handlebars-plugin/hbs",
+    "Handlebars": "../vendor/bower/handlebars/handlebars",
+    "text": "../vendor/bower/text/text",
+    "hbars": "../vendor/bower/require-handlebars/hbars",
 
     // Map remaining vendor dependencies.
     "jquery": "../vendor/bower/jquery/jquery",
@@ -47,15 +49,16 @@ require.config({
     "bootstrap": {
       deps: ["jquery"]
     },
+
+    "Handlebars": {
+        exports: "Handlebars"
+    },
   // Backbone.CollectionCache depends on Backbone.
   //"collectionCache": ["backbone"],
   },
 
-  hbs: { // optional
-      helpers: false,            // default: true
-      i18n: false,              // default: false
-      templateExtension: 'hbs', // default: 'hbs'
-      partialsUrl: ''           // default: ''
-  },
+  hbars: {
+    extension: ".hbs"
+  }
 
 });

@@ -33,30 +33,45 @@ define([
         el: "#main"
       });
 
-      this.views = {
+      this.on('route', function(name, args) {
+        window.scrollTo(0,0);
+      });
 
-      };
+      var router = this;
 
       app.on({
         "voluntary-work-submission": function(model, attributes) {
 
+          var success = function() {
+            router.navigate('/', true);
+          };
+
           if (model.isNew()) {
             // Create a new item and navigate back to list view as submission is done
-            this.voluntaryWorks.create(model, {wait: true}).then(this.list);
+            app.voluntaryWorks.create(model, {
+              wait: true,
+              success: success,
+              error: function() {
+                // FIXME: error handling in case submission didn't go through
+                console.log('Error in sending data to server', arguments);
+              }
+            });
 
           } else if (this.model.hasChanged()) {
             // Save if any changes have been made and go back to list view
-            model.save(this.model.changedAttributes, {patch: true, wait: true}).then(this.list);
+            model.save(this.model.changedAttributes, {patch: true, wait: true}).then(success).fail(function() {
+              // FIXME: error handling in case submission didn't go through
+              console.log('Error in sending data to server', arguments);
+            });
 
           } else {
-            // No changes to save -> navigate directly
-            this.list();
+            // No changes to save -> navigate directly to list view
+            success();
           }
         }
       }, this);
 
-      // TODO: remove this - this is only for debugging purposes
-      var router = this;
+      // TODO: remove all below - this is only for debugging purposes
       _.extend(window, {
         app: app,
         router: router,
@@ -72,28 +87,34 @@ define([
     },
 
     list: function() {
-      if (app.voluntaryWorks.length === 0) {
-        app.voluntaryWorks.fetch();
-      }
       require(['views/list'], function(ListView) {
         var view = new ListView({collection: app.voluntaryWorks});
 
         app.mainView.setView("", view);
-        view.render();
+
+        app.voluntaryWorks.fetched().then(function() {
+          view.render();
+        }).fail(function(xhr, message, error) {
+          // FIXME: error handling
+          console.log('Request failed', message, error);
+        });
       });
     },
 
     view: function(id) {
-      // Fetch voluntaryWorks as suggestions for others
-      if (app.voluntaryWorks.length === 0) {
-        app.voluntaryWorks.fetch();
-      }
-      this.getItem(id);
+      var item = this.getItem(id);
       require(['views/details'], function(DetailsView) {
         var view = new DetailsView({suggestions: app.voluntaryWorks, model: item});
 
         app.mainView.setView("", view);
-        view.render();
+
+        // render once item details are ready, load suggestions lazily
+        item.fetched().then(function() {
+          view.render();
+        }).fail(function(xhr, message, error) {
+          // FIXME: error handling
+          console.log('Request failed', message, error);
+        });
       });
     },
 
@@ -104,7 +125,9 @@ define([
       }
 
       require(['views/form'], function(FormView) {
-        var view, params;
+        var view;
+        var params = {types: app.types, municipalities: app.municipalities};
+
         if (item) {
           params = {model: item};
           if (token) {
@@ -113,7 +136,14 @@ define([
         }
         view = new FormView(params);
         app.mainView.setView("", view);
-        view.render();
+
+        // Render view only once all required collections / items are fetched
+        $.when(app.types.fetched(), app.municipalities.fetched(), item && item.fetched()).then(function() {
+          view.render();
+        }).fail(function() {
+          // FIXME: error handling
+          console.log('edit view failed', arguments);
+        });
       });
     },
 
@@ -123,8 +153,6 @@ define([
       var item = app.voluntaryWorks.get(id);
       if (!item) {
         item = new VoluntaryWork({id: id});
-        // TODO: error handling if item with given id doesn't exist for some reason
-        item.fetch();
       }
       return item;
     }
