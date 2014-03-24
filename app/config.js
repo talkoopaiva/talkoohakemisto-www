@@ -19,6 +19,7 @@ require.config({
     //"ldsh": "../vendor/bower/lodash-template-loader/loader",
 
     "Handlebars": "../vendor/bower/handlebars/handlebars",
+
     "text": "../vendor/bower/text/text",
     "hbars": "../vendor/bower/require-handlebars/hbars",
 
@@ -51,8 +52,8 @@ require.config({
     },
 
     "Handlebars": {
-        exports: "Handlebars"
-    },
+      exports: "Handlebars"
+    }
   // Backbone.CollectionCache depends on Backbone.
   //"collectionCache": ["backbone"],
   },

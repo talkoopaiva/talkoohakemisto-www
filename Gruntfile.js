@@ -41,22 +41,23 @@ module.exports = function(grunt) {
           // Modules to stub out in the optimized file.
           stubModules: ['text', 'hbars'],
 
+          // This is needed for the require-handlebars library
+          onBuildWrite : function(moduleName, path, content){
+              // replace handlebars with the runtime version
+              if (moduleName === 'Handlebars') {
+                  path = path.replace('handlebars.js','handlebars.runtime.js');
+                  console.log('replacing handlebars !!!', path);
+                  content = grunt.file.read(path).toString();
+                  content = content.replace('var Handlebars', 'window.Handlebars');
+                  //content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
+              }
+              return content;
+          },
+
           // Do not preserve any license comments when working with source
           // maps.  These options are incompatible.
           preserveLicenseComments: false,
 
-          // This is needed for the require-handlebars library
-          // (didn't seem to match anything, not sure if it's needed /Albert)
-          // onBuildWrite : function(moduleName, path, content){
-          //     // replace handlebars with the runtime version
-          //     if (moduleName === 'Handlebars') {
-          //       console.log('matched: ' + moduleName + ' : ' + path);
-          //         path = path.replace('handlebars.js','handlebars.runtime.js');
-          //         console.log('newpath: ' + path);
-          //         content = content.replace(/(define\()(function)/, '$1"handlebars", $2');
-          //     }
-          //     return content;
-          // }
         }
       }
     },
