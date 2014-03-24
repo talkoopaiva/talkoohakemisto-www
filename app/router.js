@@ -129,7 +129,7 @@ define([
         var params = {types: app.types, municipalities: app.municipalities};
 
         if (item) {
-          params = {model: item};
+          params.model = item;
           if (token) {
             params.token = token;
           }

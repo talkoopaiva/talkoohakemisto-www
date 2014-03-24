@@ -2,10 +2,13 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', '
         function(module, _, Backbone, $, app, ItemView, template) {
   module.exports = Backbone.Layout.extend({
     template: template,
+
+    initialize: function(options) {
+      this.suggestions = options.suggestions;
+    },
+
     serialize: function() {
       var data = this.model.toJSON();
-      // TODO: create icon URL based on the WorkType
-      // TODO: Generate URL to details view
 
       // Show only organization if isset
       if (data.organization) {

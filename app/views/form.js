@@ -11,11 +11,13 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
       "change .form-control": "hideErrors"
     },
 
-    initialize: function() {
+    initialize: function(options) {
       //
       if (!this.model) {
         this.model = new VoluntaryWork();
       }
+      this.municipalities = options.municipalities;
+      this.types = options.types;
       // On validation error, point the errors
       this.model.on('invalid', function(model, errors) {
         console.log('validation errors', errors);
