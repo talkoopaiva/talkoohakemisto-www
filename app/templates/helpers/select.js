@@ -31,8 +31,10 @@ define(['jquery', 'underscore', 'Handlebars'], function ( $, _, Handlebars ) {
       // Get variable name from hash
       var entity = _.chain(options).result('hash').result('selected').value();
       if (entity) {
-        // Get variable value from context
-        selected = this[selected];
+        // entity may be for ex. municipality.id, so we need to traverse context to get to the value
+        selected = _.reduce(entity.split('.'), function(res, key) {
+          return _.result(res, key);
+        }, this);
       }
     }
 
