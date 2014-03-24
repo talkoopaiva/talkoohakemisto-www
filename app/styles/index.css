@@ -4,5 +4,6 @@
 
 /*-- Application stylesheets. -----------------------------------------------*/
 
-@import "http://talkoot.fi/wp-content/themes/talkoot/style.css";
+@import "style.less";
+
 @import "main.less";
