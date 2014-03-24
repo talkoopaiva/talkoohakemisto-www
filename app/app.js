@@ -22,7 +22,22 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
   app.helpers = {
     generateTypeIconUrl: function(name) {
       return app.imgRoot + 'icons/' + name.toLowerCase().replace("ö", "o").replace("ä", "a") + '.png';
-    }
+    },
+
+    // Detect if XHR CORS is supported
+    // http://j.mp/1jwl6hB
+    supportsCors: (function() {
+      var xhr = new XMLHttpRequest();
+      if ("withCredentials" in xhr) {
+        // Supports CORS
+        return true;
+      } else if (typeof XDomainRequest != "undefined") {
+        // IE
+        // Also API and site protocols have to match
+        return (app.api.indexOf(location.protocol) === 0 || app.api[0] === '/') && 'XDomainRequest';
+      }
+      return false;
+    }())
   };
 
   // Set app object as module output
@@ -189,7 +204,8 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       }
 
       if (!_.isEmpty(data.meta)) {
-        // TODO: also store the meta data into the model / collection
+        // Store the meta data into the model / collection
+        model.meta = data.meta;
       }
 
       if (model instanceof Backbone.Collection) {
@@ -203,8 +219,10 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       params.contentType = 'application/vnd.api+json';
       params.data = JSON.stringify( toJSONApi( options.attrs, model ) );
     } else if (method === 'patch') {
-      arams.contentType = 'application/json-patch+json';
-      // FIX: patch syntax is very different!
+      // TODO: implement patch syntax that jsonapi depands
+      // Until then assume to use PUT instead
+      //params.contentType = 'application/json-patch+json';
+      params.contentType = 'application/vnd.api+json';
       params.data = JSON.stringify( toJSONApi( options.attrs, model ) );
     }
 
@@ -222,16 +240,35 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
       params.processData = false;
     }
 
+    _.extend(params, options);
+
     // If we're sending a `PATCH` request, and we're in an old Internet Explorer
     // that still has ActiveX enabled by default, override jQuery to use that
     // for XHR instead. Remove this line when jQuery supports `PATCH` on IE8.
-    if (params.type === 'PATCH' && noXhrPatch) {
-      params.xhr = function() {
-        return new ActiveXObject("Microsoft.XMLHTTP");
-      };
+    // if (params.type === 'PATCH' && noXhrPatch) {
+    //   params.xhr = function() {
+    //     return new ActiveXObject("Microsoft.XMLHTTP");
+    //   };
+    // }
+
+    // IE sucks at CORS so we need to do some ritual dance
+    if (app.helpers.supportsCors === 'XDomainRequest' ) {
+      if ( method === 'read' ) {
+        options.type = 'GET';
+      } else {
+        options.type = 'POST';
+      }
+      options.contentType = 'text/plain';
+
+    } else if ( app.helpers.supportsCors === false && ['create', 'read'].indexOf(method) !== -1 ) {
+      // We can do JSONP for only viewing and creating
+      params.dataType = 'jsonp';
+      params.type = 'GET';
+      params.processData = false;
+      delete params.contentType;
     }
 
-    var xhr = options.xhr = Backbone.ajax(_.extend(params, options));
+    var xhr = options.xhr = Backbone.ajax(params);
     model.trigger('request', model, xhr, options);
     return xhr;
   };

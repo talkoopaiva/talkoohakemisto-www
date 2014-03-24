@@ -12,10 +12,19 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
     },
 
     initialize: function(options) {
-      //
       if (!this.model) {
         this.model = new VoluntaryWork();
       }
+
+      // Editing may only work on browsers with CORS support
+      if (!this.model.isNew() && app.helpers.supportsCors === false) {
+        alert('Tietojen muokkaus ei ole mahdollista vanhemmilla selaimilla.' +
+              "\n" + 'Suosittelemme käyttämään Chrome selainta tietojen päivitykseen.');
+        this.render = function() {
+          app.router.navigate('/', true);
+        };
+      }
+
       this.municipalities = options.municipalities;
       this.types = options.types;
       // On validation error, point the errors
