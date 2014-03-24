@@ -14,7 +14,7 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
   var localhostPattern = /(localhost|0\.0\.0\.0|127\.0\.0\.1|192\.168\.)/;
   if (localhostPattern.test(window.location.href)) {
     //app.api = "http://xdsl-250-35.nebulazone.fi:5000/";
-    app.api = "/sample-responses/";
+    app.api = app.root + "sample-responses/";
   } else {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   }
