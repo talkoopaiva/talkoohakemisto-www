@@ -33,6 +33,7 @@ define([
         el: "#main"
       });
 
+      // Whenever navigating to a new route, scroll to the top
       this.on('route', function(name, args) {
         window.scrollTo(0,0);
       });
