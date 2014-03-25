@@ -1,5 +1,5 @@
 define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/form',
-        'models/voluntary-work', '../templates/helpers/select'],
+        'models/voluntary-work', 'templates/helpers/select'],
         function(module, _, Backbone, $, app, template, VoluntaryWork, getSelectList) {
   module.exports = Backbone.Layout.extend({
     template: template,

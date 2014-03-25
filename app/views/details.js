@@ -1,4 +1,4 @@
-define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', 'hbars!templates/details'],
+define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', 'hbars!templates/details', 'templates/helpers/mapaddress'],
         function(module, _, Backbone, $, app, ItemView, template) {
   module.exports = Backbone.Layout.extend({
     template: template,

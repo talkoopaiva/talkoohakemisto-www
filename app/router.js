@@ -72,18 +72,18 @@ define([
       }, this);
 
       // TODO: remove all below - this is only for debugging purposes
-      _.extend(window, {
-        app: app,
-        router: router,
-        models: {
-          VoluntaryWork: VoluntaryWork
-        },
-        collections: {
-          VoluntaryWorks: VoluntaryWorks,
-          Municipalities: Municipalities,
-          Types: WorkTypes
-        }
-      });
+      // _.extend(window, {
+      //   app: app,
+      //   router: router,
+      //   models: {
+      //     VoluntaryWork: VoluntaryWork
+      //   },
+      //   collections: {
+      //     VoluntaryWorks: VoluntaryWorks,
+      //     Municipalities: Municipalities,
+      //     Types: WorkTypes
+      //   }
+      // });
     },
 
     list: function() {
