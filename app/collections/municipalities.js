@@ -9,7 +9,10 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
         }
       }),
 
-      comparator: 'name'
+      comparator: 'name',
+
+      // Let's load from a static file
+      url: app.root + 'app/data/municipalities.json',
     },
     { // Class properties
       type: "municipalities"
