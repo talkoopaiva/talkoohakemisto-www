@@ -262,11 +262,11 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     // IE sucks at CORS so we need to do some ritual dance
     if (app.helpers.supportsCors === 'XDomainRequest' ) {
       if ( method === 'read' ) {
-        options.type = 'GET';
+        params.type = 'GET';
       } else {
-        options.type = 'POST';
+        params.type = 'POST';
       }
-      options.contentType = 'text/plain';
+      params.contentType = 'text/plain';
 
     } else if ( app.helpers.supportsCors === false && ['create', 'read'].indexOf(method) !== -1 ) {
       // We can do JSONP for only viewing and creating
