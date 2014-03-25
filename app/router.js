@@ -87,7 +87,7 @@ define([
     },
 
     list: function() {
-      // For some reason it may not delete the previous views
+      // For some reason LayoutManager may not delete the previously attached views, so let's remove them
       app.mainView.removeView("");
       require(['views/list'], function(ListView) {
         var view = new ListView({collection: app.voluntaryWorks});
@@ -104,6 +104,7 @@ define([
     },
 
     view: function(id) {
+      app.mainView.removeView("");
       var item = this.getItem(id);
       require(['views/details'], function(DetailsView) {
         var view = new DetailsView({suggestions: app.voluntaryWorks, model: item});
@@ -121,13 +122,14 @@ define([
     },
 
     form: function(id, token) {
+      app.mainView.removeView("");
       var item;
       if (id) {
         // Editing may only work on browsers with CORS support
         if (app.helpers.supportsCors === false) {
           alert('Tietojen muokkaus ei ole mahdollista vanhemmilla selaimilla.' +
                 "\n" + 'Suosittelemme käyttämään Chrome selainta tietojen päivitykseen.');
-          return router.navigate('list', true);
+          return app.router.navigate('list', true);
         }
         item = this.getItem(id);
       }
@@ -144,7 +146,7 @@ define([
           } else if (!params.model.get('token')) {
             // If token doesn't exist in the model, warn and return back to list
             alert('Muokataksesi takoiden tietoja seuraa sähköpostiisi saapunutta muokkauslinkkiä.');
-            return router.navigate('list', true);
+            return app.router.navigate('list', true);
           }
         }
         view = new FormView(params);

@@ -2,23 +2,10 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
   "use strict";
 
   return Backbone.Model.extend({
-    // url: function() {
-    //   return app.api + "voluntary_works/" + this.id;
-    // },
-    urlRoot: app.api + "voluntary_works",
 
     links: {
       "type": "types",
       "municipality": "municipalities"
-    },
-
-    parse: function(data) {
-      if (data.hasOwnProperty('voluntary_works')) {
-        console.log('fetched', data.voluntary_works[0]);
-        return data.voluntary_works[0];
-      } else {
-        return data;
-      }
     },
 
     validate: function(attrs) {
@@ -60,6 +47,8 @@ define(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, app
       return errors.length > 0 ? errors : false;
     },
 
+  },{
+    type: "voluntary_works"
   });
 
 });

@@ -1,5 +1,6 @@
 define(['jquery', 'underscore', 'Handlebars'], function ( $, _, Handlebars ) {
 
+  var selectTmpl = _.template('<select <%= attributes %>><%= options %></select>');
   var optionTmpl = _.template('<option value="<%= id %>"<%= selected %>><%= name %></option>');
 
   /**
@@ -16,13 +17,6 @@ define(['jquery', 'underscore', 'Handlebars'], function ( $, _, Handlebars ) {
       return '';
     }
 
-    // Set hash as attributes for the select
-    var res = '<select ';
-    res += _.map(options.hash, function(value, key) {
-      return key + '="' + value + '"';
-    }).join(" ");
-    res += '>';
-
     // see if selected property is directly given in options
     var selected = _.result(options, 'selected');
 
@@ -38,19 +32,28 @@ define(['jquery', 'underscore', 'Handlebars'], function ( $, _, Handlebars ) {
       }
     }
 
+    var optionsStr = '';
     if (!selected) {
-      res += optionTmpl({id:"", selected:"", name: "-- Valitse: --"});
+      optionsStr += optionTmpl({id:"", selected:"", name: "-- Valitse: --"});
     }
     _.each(items, function(item) {
       item.selected = item.id == selected ? ' selected="selected"' : '';
-      res += optionTmpl(item);
+      optionsStr += optionTmpl(item);
     });
 
-    res += '</select>';
+    // Set hash as attributes for the select
+    var attributeStr = _.map(options.hash, function(value, key) {
+      return key + '="' + value + '"';
+    }).join(" ");
 
-    return res;
+    return selectTmpl({"attributes": attributeStr, "options": optionsStr});
   }
 
-  Handlebars.registerHelper('select', createSelectList);
+  Handlebars.registerHelper('select', function() {
+    var str = createSelectList.apply(this, arguments);
+    // Don't escape the resulting html
+    return new Handlebars.SafeString(str);
+  });
+
   return createSelectList;
 });
