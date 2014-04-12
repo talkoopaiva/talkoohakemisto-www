@@ -5,10 +5,12 @@ RewriteBase    /hakemisto/
 RewriteCond %{REQUEST_FILENAME} -f [or]
 RewriteCond %{REQUEST_FILENAME} -d
 
+# If previous conds are true, skip following 3 rewrites
 RewriteRule .? - [S=3]
 
 # If request is coming from a bot, rewrite to index.php - otherwise index.html
 RewriteCond %{HTTP_USER_AGENT} (bot|crawl|facebookexternal|twitter|linkedin) [NC]
+# If match found, skip 1 rewrite
 RewriteRule .? - [S=1]
 RewriteRule (.*) index.html [L,S=1]
 RewriteRule (.*) index.php [L]
