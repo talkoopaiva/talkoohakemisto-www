@@ -31,6 +31,8 @@ require.config({
     "layoutmanager": "../vendor/bower/layoutmanager/backbone.layoutmanager",
 
     "geocomplete": "../vendor/bower/ubilabs-geocomplete/jquery.geocomplete",
+    "moment": "../vendor/bower/moment/moment",
+    "datetimepicker": "../vendor/bower/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker",
     //"collectionCache": "../vendor/backbone.collectioncache"
     //
     //
@@ -44,7 +46,7 @@ require.config({
     noext: '../vendor/bower/requirejs-plugins/src/noext',
     mdown: '../vendor/bower/requirejs-plugins/src/mdown',
     propertyParser : '../vendor/bower/requirejs-plugins/src/propertyParser',
-    markdownConverter : '../vendor/bower/requirejs-plugins/src/Markdown.Converter'
+    markdownConverter : '../vendor/bower/requirejs-plugins/lib/Markdown.Converter'
   },
 
   shim: {
@@ -63,6 +65,14 @@ require.config({
 
     // Twitter Bootstrap depends on jQuery.
     "bootstrap": {
+      deps: ["jquery"]
+    },
+
+    "datetimepicker": {
+      deps: ["jquery", "bootstrap", "moment"]
+    },
+
+    "geocomplete": {
       deps: ["jquery"]
     },
 

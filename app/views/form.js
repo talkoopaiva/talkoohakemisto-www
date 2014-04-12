@@ -32,6 +32,32 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
           $('input[name="street_address"]').geocomplete();
         })
       });
+
+      require(['datetimepicker'], function() {
+        var options = {
+          pickDate: false,
+          minuteStepping: 15,
+          useCurrent: false,
+          showToday: false,
+          language: "fi",
+          pick12HourFormat: false,
+          use24hours: true,
+          format: "H:mm"
+        };
+        $.fn.datetimepicker.defaults = options;
+
+        var startPicker = $('#datetimepicker_start').datetimepicker(options).data("DateTimePicker");
+
+        var endPicker = $('#datetimepicker_end').datetimepicker(options).data("DateTimePicker");
+
+        $("#datetimepicker_start").on("dp.change",function (e) {
+           $('#datetimepicker_end').data("DateTimePicker").setMinDate(e.date);
+        }).find('input').click(startPicker.show);
+
+        $("#datetimepicker_end").on("dp.change",function (e) {
+           $('#datetimepicker_start').data("DateTimePicker").setMaxDate(e.date);
+        }).find('input').click(endPicker.show);
+      });
     },
 
     serialize: function() {
