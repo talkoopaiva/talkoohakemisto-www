@@ -30,7 +30,7 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
       require(['async!//maps.googleapis.com/maps/api/js?sensor=false&libraries=places'], function() {
         require(['geocomplete'], function() {
           $('input[name="street_address"]').geocomplete();
-        })
+        });
       });
     },
 
