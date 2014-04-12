@@ -193,7 +193,7 @@ module.exports = function(grunt) {
       your_target: {
         options: {
           authKey: "hakemisto",
-	  host: "talkoot.fi",
+	      host: "talkoot.fi",
           dest: "/",
           port: 21
         },
