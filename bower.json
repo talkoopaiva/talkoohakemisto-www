@@ -12,6 +12,8 @@
     "require-handlebars": "*",
     "requirejs": "~2.1.8",
     "text": "~2.0.10",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "ubilabs-geocomplete": "~1.5.1",
+    "requirejs-plugins": "~1.0.2"
   }
 }
