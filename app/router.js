@@ -25,7 +25,6 @@ define([
     initialize: function() {
 
       app.voluntaryWorks = new VoluntaryWorks();
-      app.types = new WorkTypes();
       app.municipalities = new Municipalities();
 
       // Init main view to which everything else gets attached
@@ -135,8 +134,14 @@ define([
         item = this.getItem(id);
       }
 
-      require(['views/form'], function(FormView) {
+      require(['views/form', 'data/types'], function(FormView, types) {
         var view;
+
+        // Load types lazily on the first load
+        if (!app.types) {
+          app.types = new WorkTypes(types);
+        }
+
         var params = {types: app.types, municipalities: app.municipalities};
 
         if (item) {
@@ -154,7 +159,7 @@ define([
         app.mainView.setView("", view);
 
         // Render view only once all required collections / items are fetched
-        $.when(app.types.fetched(), app.municipalities.fetched(), item && item.fetched()).then(function() {
+        $.when(app.municipalities.fetched(), item && item.fetched()).then(function() {
           view.render();
         }).fail(function() {
           // FIXME: error handling
