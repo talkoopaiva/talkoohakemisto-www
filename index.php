@@ -28,7 +28,7 @@ if (preg_match("/\/view\//i", $phpself)) {
     // Fetch data from API...
     $ch = curl_init();
     // TODO: change this to live server
-    curl_setopt($ch, CURLOPT_URL, "http://jaffatron.com:5000/voluntary_works/" . $id);
+    curl_setopt($ch, CURLOPT_URL, "https://talkoohakemisto-api.herokuapp.com/voluntary_works/" . $id);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $output = curl_exec($ch);
     curl_close($ch);
