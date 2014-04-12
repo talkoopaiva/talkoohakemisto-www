@@ -60,7 +60,7 @@ if (preg_match("/\/view\//i", $phpself)) {
             'title' => 'Talkoopäivä 17.5. '.$vw->name.', '.$muni,
             'url' => 'http://talkoot.fi/hakemisto/view/' . $id,
             'image' => 'http://talkoot.fi/hakemisto/app/img/icons/'. $type .'.png',
-            'description' => $wv->description
+            'description' => $vw->description
         );
 
         $replacement = '';
