@@ -29,7 +29,22 @@ require.config({
 
     "bootstrap": "../vendor/bower/bootstrap/dist/js/bootstrap.min",
     "layoutmanager": "../vendor/bower/layoutmanager/backbone.layoutmanager",
+
+    "geocomplete": "../vendor/bower/ubilabs-geocomplete/jquery.geocomplete",
     //"collectionCache": "../vendor/backbone.collectioncache"
+    //
+    //
+
+    //create alias to plugins (not needed if plugins are on the baseUrl)
+    async: '../vendor/bower/requirejs-plugins/src/async',
+    font: '../vendor/bower/requirejs-plugins/src/font',
+    goog: '../vendor/bower/requirejs-plugins/src/goog',
+    image: '../vendor/bower/requirejs-plugins/src/image',
+    json: '../vendor/bower/requirejs-plugins/src/json',
+    noext: '../vendor/bower/requirejs-plugins/src/noext',
+    mdown: '../vendor/bower/requirejs-plugins/src/mdown',
+    propertyParser : '../vendor/bower/requirejs-plugins/src/propertyParser',
+    markdownConverter : '../vendor/bower/requirejs-plugins/src/Markdown.Converter'
   },
 
   shim: {

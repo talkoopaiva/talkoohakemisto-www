@@ -58,16 +58,6 @@
       <span class="help-block"></span>
     </div>
 
-    <!-- Location -->
-    <h3>Sijainti</h3>
-    <div>
-        Esimerkiksi rakennuksen, urheilukentän tai koulun nimi.
-    </div>
-    <div id="div-location" class="form-group">
-      <input type="text" name="location" class="form-control" placeholder="Sijainti" value="{{location}}"/>
-      <span class="help-block"></span>
-    </div>
-
     <!-- Osoite -->
     <h3>Osoite</h3>
     <div>
@@ -78,16 +68,15 @@
       <span class="help-block"></span>
     </div>
 
-    <!-- Kaupunki -->
-    <h3>Kaupunki</h3>
+    <!-- Location -->
+    <h3>Sijainti</h3>
     <div>
-    Kaupunki tai kunta
+        Esimerkiksi rakennuksen, urheilukentän tai koulun nimi.
     </div>
-    <div id="div-municipality" class="form-group">
-      {{select municipalities selected="municipality.id" name="municipality" class="form-control"}}
+    <div id="div-location" class="form-group">
+      <input type="text" name="location" class="form-control" placeholder="Sijainti" value="{{location}}"/>
       <span class="help-block"></span>
     </div>
-
 
     <!-- Time -->
     <h3>Talkoiden järjestämisajankohta</h3>
