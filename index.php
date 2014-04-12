@@ -8,6 +8,7 @@
 $index = file_get_contents('index.html');
 
 $phpself = $_SERVER['REQUEST_URI'];
+$host = $_SERVER['HTTP_HOST'];
 
 if (preg_match("/\/view\//i", $phpself)) {
 
@@ -58,8 +59,8 @@ if (preg_match("/\/view\//i", $phpself)) {
         // TODO: Construct data based on the fetched details
         $ogData = array(
             'title' => 'Talkoopäivä 17.5. '.$vw->name.', '.$muni,
-            'url' => 'http://talkoot.fi/hakemisto/view/' . $id,
-            'image' => 'http://talkoot.fi/hakemisto/app/img/icons/'. $type .'.png',
+            'url' => 'http://' . $host .'/hakemisto/view/' . $id,
+            'image' => 'http://' . $host .'/hakemisto/app/img/icons/'. $type .'.png',
             'description' => $vw->description
         );
 
