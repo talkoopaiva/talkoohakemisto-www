@@ -9,7 +9,7 @@
 
       <p class="talkoot-type">{{type.name}}</p>
 
-      <p class="lead">{{description}}</p>
+      <p class="lead">{{goal}}</p>
 
       <hr>
 
@@ -27,8 +27,8 @@
 
       <ul id="talkoo-specs" class="lead">
         <li><i class="glyphicon glyphicon-user"></i> Järjestäjä: {{organizer}}, {{contact_phone}}</li>
-        <li><i class="glyphicon glyphicon-map-marker"></i> Sijainti: {{stree_address}}, {{municipality.name}}</li>
-        <li><i class="glyphicon glyphicon-time"></i> Alkamisajankohta: {{time}}</li>
+        <li><i class="glyphicon glyphicon-map-marker"></i> Sijainti: {{location}}, {{municipality.name}}</li>
+        <li><i class="glyphicon glyphicon-time"></i> Ajankohta: {{time}}</li>
         {{#if hashtag}}<li><i class="glyphicon glyphicon-tag"></i> Hashtag: {{hashtag}}</li>{{/if}}
         {{#if url}}<li><i class="glyphicon glyphicon-globe"></i> <a href="{{url}}">Lisätietoja nettisivuilta</a></li>{{/if}}
       </ul>
@@ -38,7 +38,7 @@
       <h3>Talkoiden toimintasuunnitelma</h3>
       <div class="lead">
         <p>
-         {{goal}}
+         {{description}}
         </p>
       </div>
 
