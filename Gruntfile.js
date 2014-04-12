@@ -153,7 +153,8 @@ module.exports = function(grunt) {
         files: [
           { src: ["app/**"], dest: "dist/" },
           { src: "vendor/**", dest: "dist/" },
-          { src: "etc/.htaccess", dest: "dist/.htaccess" }
+          { src: "etc/.htaccess", dest: "dist/.htaccess" },
+          { src: "index.php", dest: "dist/" }
         ]
       }
     },

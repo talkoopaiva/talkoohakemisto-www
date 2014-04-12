@@ -1,5 +1,14 @@
 RewriteEngine On
+RewriteBase    /hakemisto/
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule (.*) index.html [L]
+# If such file doesn't exist, handle the URL
+RewriteCond %{REQUEST_FILENAME} -f [or]
+RewriteCond %{REQUEST_FILENAME} -d
+
+RewriteRule .? - [S=3]
+
+# If request is coming from a bot, rewrite to index.php - otherwise index.html
+RewriteCond %{HTTP_USER_AGENT} (bot|crawl|facebookexternal|twitter|linkedin) [NC]
+RewriteRule .? - [S=1]
+RewriteRule (.*) index.html [L,S=1]
+RewriteRule (.*) index.php [L]
