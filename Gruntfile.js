@@ -188,6 +188,19 @@ module.exports = function(grunt) {
           to: releaseConfig.appRoot
         }]
       }
+    },
+    ftp_push: {
+      your_target: {
+        options: {
+          authKey: "hakemisto",
+	  host: "talkoot.fi",
+          dest: "/",
+          port: 21
+        },
+        files: [
+          {expand: true, cwd: 'dist', src: ['**/*']}
+        ]
+      }
     }
   });
 
@@ -227,4 +240,6 @@ module.exports = function(grunt) {
   grunt.registerTask("dev", [
     "concurrent"
   ]);
+
+  grunt.loadNpmTasks('grunt-ftp-push');
 };
