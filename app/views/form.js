@@ -29,7 +29,10 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
     afterRender: function() {
       require(['async!//maps.googleapis.com/maps/api/js?sensor=false&libraries=places'], function() {
         require(['geocomplete'], function() {
-          $('input[name="street_address"]').geocomplete();
+          // FIXME: this is ugly but somehow after building to production gmaps is not loaded yet - i.e. async doesnt work!
+          setTimeout(function() {
+            $('input[name="street_address"]').geocomplete();
+          }, 3000);
         });
       });
     },
