@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 
         // Rewrite image paths during release to be relative to the `img`
         // directory.
-        forceRelative: "/talkoohakemisto/app/img/"
+        //forceRelative: "/talkoohakemisto/app/img/"
       }
     },
 
