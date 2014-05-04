@@ -159,7 +159,7 @@ define([
         app.mainView.setView("", view);
 
         // Render view only once all required collections / items are fetched
-        $.when(app.municipalities.fetched(), item && item.fetched()).then(function() {
+        $.when(app.municipalities.fetched(), item && item.fetch()).then(function() {
           view.render();
         }).fail(function() {
           // FIXME: error handling

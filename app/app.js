@@ -129,6 +129,15 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
     // Ensure that we have a URL.
     if (!options.url) {
       params.url = _.result(model, 'url') || urlError();
+
+      // Append token to the URL in case bb.Model is being fetched and it has a token set
+      // NOTE: actually cookies would be better use for this, but whatever...
+      if (method === 'read' && model instanceof Backbone.Model) {
+        var token = model.get('token');
+        if (token) {
+          params.url += '/' + token;
+        }
+      }
     }
 
     // If collectionName was defined, URL is not needed
