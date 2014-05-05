@@ -41,7 +41,7 @@ if (preg_match("/\/view\//i", $phpself)) {
 
         $detailSegment = '
         <h1>'. $vw->name .'</h1>
-        <p>'. $vw->description .'</p>
+        <p>'. $vw->goal .'</p>
         <h3>'. $muni .'</h3>
         <p>'. $type .'</p>
         ';
@@ -61,7 +61,7 @@ if (preg_match("/\/view\//i", $phpself)) {
             'title' => 'Talkoopäivä 17.5. '.$vw->name.', '.$muni,
             'url' => 'http://' . $host .'/hakemisto/view/' . $id,
             'image' => 'http://' . $host .'/hakemisto/app/img/icons/'. $type .'.png',
-            'description' => $vw->description
+            'description' => $vw->goal
         );
 
         $replacement = '';
