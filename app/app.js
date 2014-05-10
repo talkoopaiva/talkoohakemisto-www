@@ -15,7 +15,8 @@ define(['require', 'module', 'underscore', 'jquery', 'backbone', 'layoutmanager'
   if (localhostPattern.test(window.location.href)) {
     //app.api = "http://xdsl-250-35.nebulazone.fi:5000/";
     //app.api = app.root + "sample-responses/";
-    app.api = "http://jaffatron.com:5000/";
+    //app.api = "http://jaffatron.com:5000/";
+    app.api = "https://talkoohakemisto-api.herokuapp.com/";
   } else {
     app.api = "https://talkoohakemisto-api.herokuapp.com/";
   }

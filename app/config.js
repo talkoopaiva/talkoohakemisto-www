@@ -31,6 +31,7 @@ require.config({
     "layoutmanager": "../vendor/bower/layoutmanager/backbone.layoutmanager",
 
     "geocomplete": "../vendor/bower/ubilabs-geocomplete/jquery.geocomplete",
+    "gmaps": "../vendor/bower/gmaps/gmaps",
     //"collectionCache": "../vendor/backbone.collectioncache"
     //
     //

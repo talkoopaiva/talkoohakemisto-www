@@ -15,6 +15,43 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', '
 
     afterRender: function() {
       this.listenTo(this.collection, "add", this.addView);
+      window.vw = this.collection;
+      require(['async!//maps.google.com/maps/api/js?sensor=true'], function() {
+
+        require(['gmaps'], function() {
+          // FIXME: this is ugly but somehow after building to production gmaps is not loaded yet - i.e. async doesnt work!
+          setTimeout(function() {
+              col = window.vw;
+              map = new GMaps({
+                div: '#map',
+                  lat: 63,
+                  lng: 24,
+                  zoom: 5
+              });
+              col.each(function(model) {
+                a = model.attributes;
+                map.addMarker({
+                  icon: "/app/img/icons/" + a.type.name.toLowerCase() + "-marker.png",
+                  lat: a.lat,
+                  lng: a.lng,
+                  title: a.name,
+
+                    infoWindow: {
+                      content: '<h3>'+ a.name+'</h3>' +
+                      '<div class="talkoot-type">'+ a.type.name +'</div>' +
+                      '<div class="talkoot-desc">'+ a.description + '</div>' +
+                      '<div class="talkoot-meta">' +
+                        '<i class="glyphicon glyphicon-map-marker"></i> '+ a.location + '<br>' +
+                        '<div class="hidden-xs"><i class="glyphicon glyphicon-user"></i> '+ a.organization +'</div>'+
+                      '</div>'
+                    }
+
+                });
+              }, this);
+
+          }, 30);
+        });
+      });
     }
   });
 });
