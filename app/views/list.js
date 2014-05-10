@@ -16,11 +16,12 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', '
     afterRender: function() {
       this.listenTo(this.collection, "add", this.addView);
       window.vw = this.collection;
-      require(['async!//maps.google.com/maps/api/js?sensor=true'], function() {
+      //require(['async!//maps.google.com/maps/api/js?sensor=true'], function() {
 
-        require(['gmaps'], function() {
-          // FIXME: this is ugly but somehow after building to production gmaps is not loaded yet - i.e. async doesnt work!
-          setTimeout(function() {
+      // FIXME: this is ugly but somehow after building to production gmaps is not loaded yet - i.e. async doesnt work!
+      setTimeout(function() {
+          require(['gmaps'], function() {
+
               col = window.vw;
               map = new GMaps({
                 div: '#map',
@@ -31,7 +32,7 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', '
               col.each(function(model) {
                 a = model.attributes;
                 map.addMarker({
-                  icon: "/app/img/icons/" + a.type.name.toLowerCase() + "-marker.png",
+                  icon: "app/img/icons/" + a.type.name.toLowerCase() + "-marker.png",
                   lat: a.lat,
                   lng: a.lng,
                   title: a.name,
@@ -49,9 +50,9 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', '
                 });
               }, this);
 
-          }, 30);
-        });
-      });
+          });
+        }, 30);
+      //});
     }
   });
 });
