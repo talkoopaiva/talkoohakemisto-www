@@ -37,7 +37,7 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', '
                   title: a.name,
 
                     infoWindow: {
-                      content: '<h3>'+ a.name+'</h3>' +
+                      content: '<h3><a href="view/'+ a.id +'">'+ a.name+'</a></h3>' +
                       '<div class="talkoot-type">'+ a.type.name +'</div>' +
                       '<div class="talkoot-desc">'+ a.description + '</div>' +
                       '<div class="talkoot-meta">' +
