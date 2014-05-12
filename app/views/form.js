@@ -59,8 +59,8 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
               try {
                 var municipalityId = view.municipalities.findWhere({name: location.municipality}).id;
                 $('select[name="municipality"]').val(municipalityId);
-              } catch(e) {
-                console.log(e, "No municipality found with entered name");
+              } catch(error) {
+                console.log(error, "No municipality found with entered name");
               }
 
               view.addressSelected = location;
