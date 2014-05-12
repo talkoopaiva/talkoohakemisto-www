@@ -27,14 +27,50 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
     },
 
     afterRender: function() {
+      var view = this;
       require(['async!//maps.googleapis.com/maps/api/js?sensor=false&libraries=places'], function() {
         require(['geocomplete'], function() {
           // FIXME: this is ugly but somehow after building to production gmaps is not loaded yet - i.e. async doesnt work!
           setTimeout(function() {
-            $('input[name="street_address"]').geocomplete();
+            $('input[name="street_address"]').geocomplete({
+              // map: "#previewMap",
+              // markerOptions: {
+              //   draggable: true
+              // },
+              // // all available types: https://developers.google.com/places/documentation/supported_types
+              // types: []
+              country: 'fi',
+              componentRestrictions: {country: 'fi'}, // restrict to Finland
+              blur: true // make choose automatically on blur
+            }).bind("geocode:result geocode:multiple", function(e, res) {
+
+              var location = {};
+              _.forEach(res.address_components, function(v, k) {
+                if (v.types[0] === 'locality') {
+                  location.municipality = v.long_name;
+                  return true;
+                }
+              });
+
+              location.address = res.formatted_address;
+              location.lat = res.geometry.location.k;
+              location.lng = res.geometry.location.A;
+
+              try {
+                var municipalityId = view.municipalities.findWhere({name: location.municipality}).id;
+                $('select[name="municipality"]').val(municipalityId);
+              } catch(e) {
+                console.log(e, "No municipality found with entered name");
+              }
+
+              view.addressSelected = location;
+
+            });
           }, 3000);
         });
       });
+
+
     },
 
     serialize: function() {
@@ -84,6 +120,13 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'hbars!templates/fo
         result[field.name] = field.value;
         return result;
       }, {});
+
+      // Add latitude and longitude
+      // Make sure the address in the field is the one that was selected
+      if (this.addressSelected && this.addressSelected.address == attr.street_address) {
+        attr.lat = this.addressSelected.lat;
+        attr.lng = this.addressSelected.lng;
+      }
 
       // Hide possible errors from previous submission
       this.hideErrors();
