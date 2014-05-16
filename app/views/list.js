@@ -29,29 +29,49 @@ define(['module', 'underscore', 'backbone', 'jquery', 'app', 'views/listitem', '
                   lng: 24,
                   zoom: 5
               });
+              a = [];
               col.each(function(model) {
-                a = model.attributes;
-                  if(!!a.lng && !!a.lat) {
-                    map.addMarker({
-                      icon: "app/img/icons/" + a.type.name.toLowerCase() + "-marker.png",
-                      lat: a.lat,
-                      lng: a.lng,
-                      title: a.name,
-
-                        infoWindow: {
-                          content: '<h3><a href="view/'+ a.id +'">'+ a.name+'</a></h3>' +
-                          '<div class="talkoot-type">'+ a.type.name +'</div>' +
-                          '<div class="talkoot-desc">'+ a.goal + '</div>' +
-                          '<div class="talkoot-meta">' +
-                            '<i class="glyphicon glyphicon-map-marker"></i> '+ a.location + '<br>' +
-                            '<div class="hidden-xs"><i class="glyphicon glyphicon-user"></i> '+ a.organization +'</div>'+
-                          '</div>'
-                        }
-
-                    });
+                att = model.attributes;
+                  if(!!att.lng && !!att.lat) {
+                      var found = false;
+                      for (var i = 0; i < a.length; i++) {
+                          if (Math.abs(a[i][0].lat - att.lat) < 0.01 && Math.abs(a[i][0].lng - att.lng) < 0.01) {
+                              a[i].push(att);
+                              found = true;
+                          }
+                      }
+                      if (!found) {
+                          this.a.push(new Array(att));
+                      }
                   }
               }, this);
+              for (var i = 0; i < a.length; i++) {
 
+                var content = '';
+                if(a[i].length == 1) {
+                    b = a[i][0];
+                    content = '<h3><a href="view/' + b.id +'">' + b.name + '</a></h3>' +
+                    '<div class="talkoot-type">' + b.type.name +'</div>' +
+                    '<div class="talkoot-desc">' + b.goal + '</div>' +
+                    '<div class="talkoot-meta">' +
+                    '<i class="glyphicon glyphicon-map-marker"></i> ' + b.location + '<br>' +
+                    '<div class="hidden-xs"><i class="glyphicon glyphicon-user"></i> ' + b.organization + '</div>' +
+                    '</div>';
+                } else {
+                    for (var j = 0; j < a[i].length; j++) {
+                       content += '<h3><a href="view/'+ a[i][j].id +'">'+ a[i][j].name+'</a></h3>';
+                    }
+                }
+                map.addMarker({
+                  icon: "app/img/icons/" + a[i][0].type.name.toLowerCase() + "-marker.png",
+                  lat: a[i][0].lat,
+                  lng: a[i][0].lng,
+                  title: a[i][0].name,
+                  infoWindow: {
+                    content: content
+                  }
+                });
+              }
           });
         }, 30);
       //});
