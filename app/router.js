@@ -151,7 +151,7 @@ define([
             params.model.set('token', token);
           } else if (!params.model.get('token')) {
             // If token doesn't exist in the model, warn and return back to list
-            alert('Muokataksesi takoiden tietoja seuraa sähköpostiisi saapunutta muokkauslinkkiä.');
+            alert('Muokataksesi talkoiden tietoja seuraa sähköpostiisi saapunutta muokkauslinkkiä.');
             return app.router.navigate('list', true);
           }
         }
@@ -168,7 +168,7 @@ define([
       });
     },
 
-
+    
     // HELPER FUNCTIONS
     getItem: function(id) {
       var item = app.voluntaryWorks.get(id);
@@ -177,7 +177,7 @@ define([
       }
       return item;
     }
-
+  
   });
 
   return VoluntaryWorkRouter;
