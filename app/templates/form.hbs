@@ -1,7 +1,27 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-10 col-md-offset-1 ">
-
+  
+  <script>
+  function s3_upload(){
+        var s3upload = new S3Upload({
+        file_dom_selector: 'file',
+        s3_sign_put_url: 'http://localhost:5000/voluntary_works/sign_s3/',
+        s3_object_name: $('input[type=file]').val(),
+        onProgress: function(percent, message) {
+            $('#status').html('Upload progress: ' + percent + '%' + message);
+        },
+        onFinishS3Put: function(url) {
+            $('#status').html('Upload completed. Uploaded to: '+ url);
+            $("#picture_url").val(url);
+            $("#preview").html('<img src="'+url+'" style="display:block; max-width:230px;max-height:155px;width:auto;height:auto;" />');
+        },
+        onError: function(status) {
+            $('#status').html('Upload error: ' + status);
+        }
+    });
+  }
+  </script>
   <h1>Ilmoita Talkoot Talkoohakemistoon</h1>
   <form id="voluntary-work-form">
 
@@ -123,11 +143,21 @@
 
 
     <h2>Kuva talkoista</h2>
-    <div>
-        Voit lähettää kuvan, jonka haluat talkooilmoituksen yhteyteen, osoitteeseen info@talkoot.fi.
-        Kuva voi olla esimerkiksi kohdetta kuvaava, kuva järjestäjäporukasta tai muu aiheeseen sopiva kuva.
-        Muutoin käytämme talkootyypin ikonia kuvana.
+    
+    <input type="file" id="file" onchange="s3_upload()" />
+    <p id="status">Please select a file</p>
+
+    <div id="preview">
+    {{#if picture_url}}
+    <img src="{{picture_url}}" 
+    style="display:block;
+           max-width:230px;
+           max-height:155px;
+           width:auto;
+           height:auto;"/>
+    {{/if}}
     </div>
+    <input type="hidden" id="picture_url" name="picture_url" value="{{picture_url}}" />
 
     <h2>Yhteyshenkilön tiedot</h2>
 

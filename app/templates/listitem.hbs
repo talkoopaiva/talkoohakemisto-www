@@ -1,7 +1,11 @@
 <li class="single-talkoot">
   <a href="{{detailsPage}}">
     <div class="img-talkoot">
-      <img src="{{iconUrl type.name}}" class="img-responsive" />
+     {{#if picture_url}}
+     <img src="{{picture_url}}" class="img-responsive"/>
+     {{else}}
+     <img src="{{iconUrl type.name}}" class="img-responsive" />
+     {{/if}}
     </div>
     <div class="talkoot-info">
       <h3>{{name}}</h3>
